@@ -1,0 +1,12 @@
+{
+    "kinc.kincPath": "${LIBSPATH}/Kinc",
+    "kinc.buildDir": "build",
+    "C_Cpp.formatting": "vcFormat",
+    "C_Cpp.vcFormat.wrap.preserveBlocks": "oneLiners",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "sameLine",
+    "C_Cpp.vcFormat.space.beforeFunctionOpenParenthesis": "remove",
+    "files.associations": {
+        "system_error": "cpp",
+        "xlocale": "cpp"
+    }
+}

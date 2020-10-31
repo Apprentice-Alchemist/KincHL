@@ -1,0 +1,5 @@
+src/*.glsl
+src/*.glsl
+build/*
+*.hl
+build.bat

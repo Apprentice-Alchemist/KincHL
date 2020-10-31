@@ -1,0 +1,4 @@
+-cp haxe
+-m Main
+--debug
+-hl out.hl

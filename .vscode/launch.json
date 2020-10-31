@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "name": "Kinc: Launch",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "C:/LanguageToolkits/HaxeToolkit/hashlink/hl.exe",
+            // "program": "${workspaceRoot}/cbin/main.exe",
+            "cwd": "${workspaceFolder}",
+            "logging": {
+                "moduleLoad": true,
+                "trace": true
+            },
+            "args": ["out.hl"]
+        },
+        {
+            "type": "hl",
+            "name": "Launch HL",
+            "request": "launch",
+            "program": "out.hl",
+            "cwd": "${workspaceFolder}"
+        }
+    ],
+    "compounds": []
+}

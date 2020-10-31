@@ -1,0 +1,6 @@
+{
+    "wrapping":{
+        "arrayMatrixWrap": "noMatrixWrap",
+        "arrayWrap": {"defaultAdditionalIndent": 0,"defaultLocation": "beforeLast","defaultWrap": "noWrap"}
+    }
+}

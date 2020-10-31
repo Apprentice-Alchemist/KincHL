@@ -1,0 +1,45 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${vcpkgRoot}/x64-windows/include",
+                "${vcpkgRoot}/x86-windows/include",
+                "C:\\Users\\horseboy\\Development\\Libs\\Kinc\\Sources",
+                "C:\\Users\\horseboy\\Development\\Libs\\Kinc\\Backends\\System\\Windows\\Sources",
+                "C:\\Users\\horseboy\\Development\\Libs\\Kinc\\Backends\\System\\Microsoft\\Sources",
+                "C:\\Users\\horseboy\\Development\\Libs\\Kinc\\Backends\\System\\Windows\\Libraries\\DirectShow\\BaseClasses",
+                "C:\\Users\\horseboy\\Development\\Libs\\Kinc\\Backends\\Graphics4\\Direct3D11\\Sources",
+                "C:\\Users\\horseboy\\Development\\Libs\\Kinc\\Backends\\Audio2\\WASAPI\\Sources",
+                "C:\\Users\\horseboy\\Development\\Libs\\Kinc\\Backends\\Graphics5\\G5onG4\\Sources",
+                "C:\\Users\\horseboy\\Development\\Libs\\Kinc\\Backends\\Audio3\\A3onA2\\Sources",
+                "${HASHLINK}/include"
+            ],
+            "defines": [
+                "KORE_G1",
+                "KORE_G2",
+                "KORE_G3",
+                "KORE_A1",
+                "KORE_A2",
+                "KORE_LZ4X",
+                "KORE_WINDOWS",
+                "KORE_MICROSOFT",
+                "_CRT_SECURE_NO_WARNINGS",
+                "_WINSOCK_DEPRECATED_NO_WARNINGS",
+                "KORE_DIRECT3D",
+                "KORE_DIRECT3D11",
+                "KORE_G4",
+                "KORE_G5",
+                "KORE_G5ONG4",
+                "KORE_A3"
+            ],
+            "windowsSdkVersion": "10.0.18362.0",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.24.28314/bin/Hostx64/x64/cl.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}
