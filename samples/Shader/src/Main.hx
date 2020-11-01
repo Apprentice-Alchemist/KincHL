@@ -17,13 +17,15 @@ class Main {
 	public static function main() {
 		Kinc.init("Title", 300, 300, null, null);
 
+		vertex_shader = new Shader();
+		vertex_shader.initFromFile("Deployment/shader.vert", VERTEX);
+		fragment_shader = new Shader();
+        fragment_shader.initFromFile("Deployment/shader.frag", FRAGMENT);
+        
 		structure = new kinc.g4.VertexStructure();
 		structure.add("pos", FLOAT3);
-		vertex_shader = new kinc.g4.Shader();
-		vertex_shader.initFromFile("Deployment/shader.vert", VERTEX);
-		fragment_shader = new kinc.g4.Shader();
-		fragment_shader.initFromFile("Deployment/shader.frag", FRAGMENT);
-		pipeline = new kinc.g4.Pipeline();
+        
+		pipeline = new Pipeline();
 		pipeline.vertex_shader = vertex_shader;
 		pipeline.fragment_shader = fragment_shader;
 		pipeline.input_layout = [structure];
@@ -54,6 +56,7 @@ class Main {
 			i[2] = 2;
 			index_buffer.unlock();
 		}
+
 		Callbacks.set_update_callback(function() {
 			Graphics4.begin(0);
 			Graphics4.clear(1, 0x000000, 2, 4);

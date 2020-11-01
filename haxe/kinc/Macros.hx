@@ -15,7 +15,7 @@ using StringTools;
 
 #if macro
 class Macros {
-	public static function build_struct(s:String) {
+	public static function build_struct(s:String, ?no_new:Bool = false, ?no_alloc = false, ?no_destroy = false) {
 		var type = Context.getLocalType();
 		var actual_type = switch type {
 			case TInst(t, params):
@@ -95,40 +95,42 @@ class Macros {
 				default:
 			}
 		}
-		ret.push({
-			name: "alloc",
-			pos: haxe.macro.Context.currentPos(),
-			kind: FFun({
-				args: [],
-				expr: macro return null,
-				ret: switch Context.getLocalType() {
-					case TAbstract(t, params): t.get().type.toComplexType();
-					default: null;
-				}
-			}),
-			access: [AStatic],
-			meta: [{
-				name: ":hlNative",
-				params: [macro "kinc", macro $v{s + "_hl_alloc"}],
-				pos: haxe.macro.Context.currentPos()
-			}]
-		});
-		ret.push({
-			name: "destroy",
-			pos: haxe.macro.Context.currentPos(),
-			kind: FFun({
-				args: [],
-				expr: macro {},
-				ret: TPath({pack: [], name: "Void"})
-			}),
-			access: [APublic],
-			meta: [{
-				name: ":hlNative",
-				params: [macro "kinc", macro $v{s + "_hl_destroy"}],
-				pos: haxe.macro.Context.currentPos()
-			}]
-		});
-		if (!meta.has(":no_new"))
+		if (!no_alloc)
+			ret.push({
+				name: "alloc",
+				pos: haxe.macro.Context.currentPos(),
+				kind: FFun({
+					args: [],
+					expr: macro return null,
+					ret: switch Context.getLocalType() {
+						case TAbstract(t, params): t.get().type.toComplexType();
+						default: null;
+					}
+				}),
+				access: [AStatic],
+				meta: [{
+					name: ":hlNative",
+					params: [macro "kinc", macro $v{s + "_hl_alloc"}],
+					pos: haxe.macro.Context.currentPos()
+				}]
+			});
+		if (!no_destroy)
+			ret.push({
+				name: "destroy",
+				pos: haxe.macro.Context.currentPos(),
+				kind: FFun({
+					args: [],
+					expr: macro {},
+					ret: TPath({pack: [], name: "Void"})
+				}),
+				access: [APublic],
+				meta: [{
+					name: ":hlNative",
+					params: [macro "kinc", macro $v{s + "_hl_destroy"}],
+					pos: haxe.macro.Context.currentPos()
+				}]
+			});
+		if (!no_new)
 			ret.push({
 				name: "new",
 				pos: haxe.macro.Context.currentPos(),
@@ -170,13 +172,14 @@ class Macros {
 		var paramst:ComplexType = null;
 		var hl_name:String = null;
 		switch type {
-			case TInst(t, params): 
+			case TInst(t, params):
 				paramst = params[0].toComplexType();
 				switch params[1] {
 					case TInst(t, params): hl_name = t.get().name.substr(1);
 					case x: trace(x);
 				}
-			default: throw "Expected TInst";
+			default:
+				throw "Expected TInst";
 		}
 		var tparams = switch type {
 			case TInst(t, params):
@@ -278,7 +281,11 @@ class Macros {
 							for (x in 0...arr.length) {
 								ret[x] = arr[x];
 							}
-							ret[arr.length] = $e{macro (function(){$e{get_return(paramst)}})()};
+							ret[arr.length] = $e{
+								macro(function() {
+									$e{get_return(paramst)}
+								})()
+							};
 							return ret;
 						},
 						ret: null

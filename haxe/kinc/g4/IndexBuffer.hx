@@ -15,6 +15,7 @@ abstract IndexBuffer(hl.Abstract<"kinc_g4_index_buffer_t">) to hl.Abstract<"kinc
 	}
 
 	@:hlNative("kinc", "hl_g4_index_buffer_unlock") public function unlock():Void {}
+	@:hlNative("kinc","hl_g4_index_buffer_count") public function count():Int {return 0;};
 }
 
 enum abstract IndexBufferFormat(Int) to Int {

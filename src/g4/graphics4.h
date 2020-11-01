@@ -9,4 +9,7 @@
 #include <kinc/graphics4/vertexstructure.h>
 #include <kinc/graphics4/vertexbuffer.h>
 #include <kinc/graphics4/indexbuffer.h>
+
+#define _LOC _ABSTRACT(kinc_g4_constant_location_t)
+#define _TUNIT _ABSTRACT(kinc_g4_texture_unit_t)
 #endif

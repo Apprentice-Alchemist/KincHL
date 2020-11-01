@@ -1,4 +1,5 @@
 -cp haxe
+-cp samples/Shader/src
 -m Main
 --debug
 -hl out.hl
