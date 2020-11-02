@@ -30,15 +30,15 @@ HL_PRIM bool HL_NAME(hl_g4_non_pow2_textures_supported)() { return kinc_g4_non_p
 HL_PRIM void HL_NAME(hl_g4_restore_render_target)() { kinc_g4_restore_render_target(); }
 HL_PRIM void HL_NAME(hl_g4_set_render_targets)(kinc_g4_render_target_t** targets, int count) { kinc_g4_set_render_targets(targets, count); }
 HL_PRIM void HL_NAME(hl_g4_set_render_target_face)(kinc_g4_render_target_t* texture, int face) { kinc_g4_set_render_target_face(texture, face); }
-HL_PRIM void HL_NAME(hl_g4_set_texture)(kinc_g4_texture_unit_t* unit, kinc_g4_texture_t* texture) { kinc_g4_set_texture(*unit, texture); }
-HL_PRIM void HL_NAME(hl_g4_set_image_texture)(kinc_g4_texture_unit_t* unit, kinc_g4_texture_t* texture) { kinc_g4_set_image_texture(*unit, texture); }
+HL_PRIM void HL_NAME(hl_g4_set_texture)(hl_tex_unit* unit, kinc_g4_texture_t* texture) { kinc_g4_set_texture(unit->loc, texture); }
+HL_PRIM void HL_NAME(hl_g4_set_image_texture)(hl_tex_unit* unit, kinc_g4_texture_t* texture) { kinc_g4_set_image_texture(unit->loc, texture); }
 HL_PRIM bool HL_NAME(hl_g4_init_occlusion_query)(unsigned* occlusionQuery) { return kinc_g4_init_occlusion_query(occlusionQuery); }
 HL_PRIM void HL_NAME(hl_g4_delete_occlusion_query)(unsigned occlusionQuery) { kinc_g4_delete_occlusion_query(occlusionQuery); }
 HL_PRIM void HL_NAME(hl_g4_start_occlusion_query)(unsigned occlusionQuery) { kinc_g4_start_occlusion_query(occlusionQuery); }
 HL_PRIM void HL_NAME(hl_g4_end_occlusion_query)(unsigned occlusionQuery) { kinc_g4_end_occlusion_query(occlusionQuery); }
 HL_PRIM bool HL_NAME(hl_g4_are_query_results_available)(unsigned occlusionQuery) { return kinc_g4_are_query_results_available(occlusionQuery); }
 HL_PRIM void HL_NAME(hl_g4_get_query_results)(unsigned occlusionQuery, unsigned* pixelCount) { kinc_g4_get_query_results(occlusionQuery, pixelCount); }
-HL_PRIM void HL_NAME(hl_g4_set_texture_array)(kinc_g4_texture_unit_t* unit, kinc_g4_texture_array_t* array) { kinc_g4_set_texture_array(*unit, array); }
+HL_PRIM void HL_NAME(hl_g4_set_texture_array)(hl_tex_unit* unit, kinc_g4_texture_array_t* array) { kinc_g4_set_texture_array(unit->loc, array); }
 HL_PRIM int HL_NAME(hl_g4_antialiasing_samples)() { return kinc_g4_antialiasing_samples(); }
 HL_PRIM void HL_NAME(hl_g4_set_antialiasing_samples)(int samples) { kinc_g4_set_antialiasing_samples(samples); }
 

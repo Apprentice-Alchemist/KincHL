@@ -1,6 +1,4 @@
 -lib kinc
--lib echo
--lib haxeparser
 -cp samples
 -m Texture
 --debug

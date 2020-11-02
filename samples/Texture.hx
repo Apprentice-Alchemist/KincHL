@@ -75,8 +75,8 @@ class Texture {
 		Graphics4.clear(1, 0, 0, 0);
         Graphics4.setPipeline(pipeline);
         Graphics4.setMatrix3(offset,kinc.math.Matrix3.alloc());
-		Graphics4.setVertexBuffers([vertex_buffer]);
-        Graphics4.setIndexBuffer(index_buffer);
+		Graphics4.setVertexBuffer(vertex_buffer);
+		Graphics4.setIndexBuffer(index_buffer);
         Graphics4.setTexture(texunit,texture);
 		Graphics4.drawIndexedVertices();
 		Graphics4.end(0);
