@@ -48,3 +48,5 @@ void EMPTY_INIT(void*o){}
 void EMPTY_DESTROY(void*o){}
 MAKE_OBJ_ARRAY(float, single, _F32)
 MAKE_OBJ_ARRAY(int, int, _I32)
+MAKE_OBJ_ARRAY(bool,bool,_BOOL)
+MAKE_OBJ_ARRAY(int,rtf,_I32)

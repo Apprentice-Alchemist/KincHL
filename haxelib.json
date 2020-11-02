@@ -1,0 +1,11 @@
+{
+    "name": "KincHL",
+    "url": "https://github.com/Apprentice-Alchemist/KincHL",
+    "classPath": "haxe",
+    "license": "None",
+    "description": "hashlink bindings for kinc",
+    "version": "0.0.0",
+    "contributors": [
+        "Simn"
+    ]
+}

@@ -57,7 +57,7 @@ class Macros {
 										}
 									}
 									if (expr == null)
-										macro return null;
+										macro return cast null;
 									else
 										macro return $e{expr};
 								},
@@ -66,7 +66,7 @@ class Macros {
 							pos: x.pos,
 							meta: [{name: ":hlNative", pos: x.pos, params: [macro "kinc", macro $v{s + "_hl_get_" + x.name}]}]
 						});
-					if (!has(x.meta, ":no_set"))
+					if (!has(x.meta, ":no_set") && set != "never" && set != "null")
 						ret.push({
 							name: set + "_" + x.name,
 							doc: "",
@@ -83,7 +83,7 @@ class Macros {
 										}
 									}
 									if (expr == null)
-										macro return null;
+										macro return cast null;
 									else
 										macro return $e{expr};
 								},
@@ -146,6 +146,7 @@ class Macros {
 
 	public static function build_native_array() {
 		function get_return(t:ComplexType):Expr {
+			t = t.toType().followWithAbstracts(true).toComplexType();
 			switch t {
 				case TPath({
 					name: "F32",
@@ -163,9 +164,9 @@ class Macros {
 						params: [],
 						pack: []
 					}):
-					return macro return 0;
+					return macro return cast 0;
 				default:
-					return macro return null;
+					return macro return cast null;
 			}
 		}
 		var type = haxe.macro.Context.getLocalType().followWithAbstracts(true);
@@ -189,10 +190,9 @@ class Macros {
 						} else params;
 					default: params;
 				}
-			case TAbstract(t, params): params;
-			case TType(t, params): params;
 			default: [];
 		}
+		// trace(paramst);
 		var tname2 = hl_name;
 		var tname = "NativeArray_" + tname2;
 		var tpath:TypePath = {pack: ["kinc", "util"], name: tname}
@@ -218,7 +218,7 @@ class Macros {
 					}),
 					meta: [{
 						name: ":hlNative",
-						params: [macro "kinc", macro $v{tname2 + "_hl_array_alloc"}],
+						params: [macro "kinc", macro $v{"hl_" + tname2 + "_array_alloc"}],
 						pos: haxe.macro.Context.currentPos()
 					}],
 					access: [AStatic, APublic]
@@ -242,7 +242,7 @@ class Macros {
 						pos: haxe.macro.Context.currentPos()
 					}, {
 						name: ":hlNative",
-						params: [macro "kinc", macro $v{tname2 + "_hl_array_get"}],
+						params: [macro "kinc", macro $v{"hl_" + tname2 + "_array_get"}],
 						pos: haxe.macro.Context.currentPos()
 					}]
 				}, {
@@ -268,7 +268,7 @@ class Macros {
 						pos: haxe.macro.Context.currentPos()
 					}, {
 						name: ":hlNative",
-						params: [macro "kinc", macro $v{tname2 + "_hl_array_set"}],
+						params: [macro "kinc", macro $v{"hl_" + tname2 + "_array_set"}],
 						pos: haxe.macro.Context.currentPos()
 					}]
 				}, {

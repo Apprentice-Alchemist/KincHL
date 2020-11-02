@@ -6,8 +6,8 @@ ALLOC_OBJ(kinc_g4_shader_t, shader,_ABSTRACT(kinc_g4_shader_t), EMPTY_INIT,kinc_
 HL_PRIM void HL_NAME(hl_g4_shader_init_from_source)(kinc_g4_shader_t* s, vbyte* source, int type) {
     kinc_g4_shader_init_from_source(s, (char*)source, (kinc_g4_shader_type_t)type);
 }
-HL_PRIM void HL_NAME(hl_g4_shader_init)(kinc_g4_shader_t* s, vbyte* source, int type) {
-    kinc_g4_shader_init(s, (void*)source, hl_utf8_length(source, 0), (kinc_g4_shader_type_t)type);
+HL_PRIM void HL_NAME(hl_g4_shader_init)(kinc_g4_shader_t* s, vbyte* source, int length, int type) {
+    kinc_g4_shader_init(s, (void*)source, length, (kinc_g4_shader_type_t)type);
 }
 HL_PRIM void HL_NAME(hl_g4_shader_init_from_file)(kinc_g4_shader_t* s, vstring* file, int type) {
     kinc_file_reader_t reader;
@@ -21,5 +21,5 @@ HL_PRIM void HL_NAME(hl_g4_shader_init_from_file)(kinc_g4_shader_t* s, vstring* 
 }
 
 DEFINE_PRIM(_VOID, hl_g4_shader_init_from_source, _ABSTRACT(kinc_g4_shader_t) _BYTES _I32)
-DEFINE_PRIM(_VOID, hl_g4_shader_init, _ABSTRACT(kinc_g4_shader_t) _BYTES _I32)
+DEFINE_PRIM(_VOID, hl_g4_shader_init, _ABSTRACT(kinc_g4_shader_t) _BYTES _I32 _I32)
 DEFINE_PRIM(_VOID, hl_g4_shader_init_from_file, _ABSTRACT(kinc_g4_shader_t) _STRING _I32)

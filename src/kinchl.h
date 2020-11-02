@@ -33,8 +33,14 @@ void EMPTY_DESTROY(void* obj);
   DEFINE_PRIM(hl_ret, ##name##_hl_get_##field_name, hl_obj)                       \
   DEFINE_PRIM(hl_ret, ##name##_hl_set_##field_name, hl_obj hl_ret)
 
+#define MAKE_GET(obj_type,name,field_name,type,hl_obj,hl_ret)\
+HL_PRIM type HL_NAME(name##_hl_get_##field_name)(obj_type * o) {\
+    return o->##field_name;\
+  }\
+  DEFINE_PRIM(hl_ret, ##name##_hl_get_##field_name, hl_obj)
+
 #define MAKE_OBJ_ARRAY(obj,name,hl_obj) \
-  HL_PRIM obj* HL_NAME(##name##_hl_array_alloc)(int length){\
+  HL_PRIM obj* HL_NAME(hl_##name##_array_alloc)(int length){\
     obj ** ret = (obj*)hl_gc_alloc_raw(sizeof(obj) * length);\
     for(int i = 0; i < length; i++){\
       ret[i] = NULL;\
@@ -42,13 +48,13 @@ void EMPTY_DESTROY(void* obj);
     ret[length] = NULL;\
     return ret;\
   }\
-  HL_PRIM obj HL_NAME(##name##_hl_array_get)(obj*o,int i){\
+  HL_PRIM obj HL_NAME(hl_##name##_array_get)(obj*o,int i){\
     return o[i];\
   }\
-  HL_PRIM obj HL_NAME(##name##_hl_array_set)(obj*o,int i,obj v){\
+  HL_PRIM obj HL_NAME(hl_##name##_array_set)(obj*o,int i,obj v){\
     return o[i] = v;\
   }\
-  DEFINE_PRIM(_REF(hl_obj),##name##_hl_array_alloc,_I32)\
-  DEFINE_PRIM(hl_obj,##name##_hl_array_get,_REF(hl_obj) _I32)\
-  DEFINE_PRIM(hl_obj,##name##_hl_array_set,_REF(hl_obj) _I32 hl_obj)
+  DEFINE_PRIM(_REF(hl_obj),hl_##name##_array_alloc,_I32)\
+  DEFINE_PRIM(hl_obj,hl_##name##_array_get,_REF(hl_obj) _I32)\
+  DEFINE_PRIM(hl_obj,hl_##name##_array_set,_REF(hl_obj) _I32 hl_obj)
 #endif

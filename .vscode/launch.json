@@ -8,7 +8,7 @@
             // "program": "${workspaceRoot}/cbin/main.exe",
             "cwd": "${workspaceFolder}",
             "logging": {
-                "moduleLoad": true,
+                "moduleLoad": false,
                 "trace": true
             },
             "args": ["out.hl"]

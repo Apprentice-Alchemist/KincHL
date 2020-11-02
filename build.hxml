@@ -1,5 +1,12 @@
--cp haxe
--cp samples/Shader/src
--m Main
+-lib kinc
+-lib echo
+-lib haxeparser
+-cp samples
+-m Texture
 --debug
+--resource Deployment/shader.frag@shader.frag
+--resource Deployment/shader.vert@shader.vert
+--resource Deployment/texture.frag@texture.frag
+--resource Deployment/texture.vert@texture.vert
+--resource Deployment/parrot.png@parrot.png
 -hl out.hl
