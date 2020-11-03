@@ -1,7 +1,6 @@
 -lib kinc
 -cp tests
 # -m Keyboard
--lib flixel
 --debug
 --resource Deployment/shader.frag@shader.frag
 --resource Deployment/shader.vert@shader.vert

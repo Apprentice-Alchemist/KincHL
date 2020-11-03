@@ -1,12 +1,9 @@
 package kinc;
 
-import haxe.macro.MacroStringTools;
 import haxe.macro.Expr;
 import haxe.macro.Expr.Metadata;
 import haxe.macro.Expr.TypePath;
-import haxe.macro.Type;
 import haxe.macro.Expr.TypeDefinition;
-import haxe.xml.Printer;
 import haxe.macro.Context;
 import haxe.macro.Expr.Field;
 

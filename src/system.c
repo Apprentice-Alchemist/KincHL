@@ -40,9 +40,11 @@ HL_PRIM int HL_NAME(hl_init)(vstring* title, int w, int h, win_opts_hl* win,
 
 HL_PRIM void HL_NAME(hl_start)() { kinc_start(); }
 HL_PRIM void HL_NAME(hl_stop)(){ kinc_stop();}
+HL_PRIM void HL_NAME(hl_log)(int level,vstring *msg){ kinc_log(level,hl_to_utf8(msg->bytes));}
 DEFINE_PRIM(_VOID, hl_start, _NO_ARG);
 DEFINE_PRIM(_I32, hl_init, _STRING _I32 _I32 HL_WINDOW_OPTS HL_FRAMEBUFFER_OPTS)
 DEFINE_PRIM(_VOID,hl_stop,_NO_ARG)
+DEFINE_PRIM(_VOID,hl_log,_I32 _STRING)
 
 void EMPTY_INIT(void*o){}
 void EMPTY_DESTROY(void*o){}

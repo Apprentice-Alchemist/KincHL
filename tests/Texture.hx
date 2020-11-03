@@ -3,7 +3,6 @@ import kinc.g4.TextureUnit;
 import kinc.g4.IndexBuffer;
 import kinc.g4.VertexBuffer;
 import kinc.g4.Graphics4;
-import kinc.Callbacks;
 
 class Texture {
 	static var fragment_shader:kinc.g4.Shader;
@@ -17,7 +16,7 @@ class Texture {
     static var texture:kinc.g4.Texture;
 	public static function main() {
 		Kinc.init("Texture", 500, 500, null, null);
-		Callbacks.set_update_callback(update);
+		Kinc.setUpdateCallback(update);
         var img = kinc.Image.fromFile("Deployment/parrot.png");
         texture = new kinc.g4.Texture();
         texture.initFromImage(img);
@@ -33,11 +32,11 @@ class Texture {
 		pipeline.vertex_shader = vertex_shader;
 		pipeline.fragment_shader = fragment_shader;
         pipeline.input_layout = [structure];
-		pipeline.color_attachment_count = 1;
-		pipeline.color_attachment[0] = kinc.g4.RenderTarget.RenderTargetFormat.FORMAT_32BIT;
 		pipeline.compile();
+
         texunit = pipeline.getTextureUnit("texsampler");
-        offset = pipeline.getConstantLocation("mvp");
+		offset = pipeline.getConstantLocation("mvp");
+		
 		vertex_buffer = new VertexBuffer(3, structure, STATIC, 0);
 		{
 			var v = vertex_buffer.lockAll();

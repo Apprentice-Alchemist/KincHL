@@ -1,7 +1,6 @@
 import kinc.g4.IndexBuffer;
 import kinc.g4.VertexBuffer;
 import kinc.g4.Graphics4;
-import kinc.Callbacks;
 
 class Shader {
     static var fragment_shader:kinc.g4.Shader;
@@ -13,7 +12,7 @@ class Shader {
 
     public static function main(){
         Kinc.init("Shader",500,500,null,null);
-        Callbacks.set_update_callback(update);
+        Kinc.setUpdateCallback(update);
 
         fragment_shader = kinc.g4.Shader.create(haxe.Resource.getBytes("shader.frag"),FragmentShader);
         vertex_shader = kinc.g4.Shader.create(haxe.Resource.getBytes("shader.vert"),VertexShader);
