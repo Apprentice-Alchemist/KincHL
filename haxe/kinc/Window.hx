@@ -2,9 +2,29 @@ package kinc;
 
 @:hlNative("kinc", "hl_window_")
 extern class Window {
-	// Create crashes for some reason. And anyway it doesn't seem to be implemented on anything other than windows
+	/**
+	 * Warning : Only implemented on Windows OpenGL
+	 */
 	static function create(win:WindowOptions, fb:FramebufferOptions):Int;
 	static function destroy(index:Int):Void;
+	@:hlNative("kinc","hl_count_windows") static function countWindows():Int;
+	static function resize(index:Int,width:Int,height:Int):Void;
+	static function move(index:Int,x:Int,y:Int):Void;
+	static function changeMode(index:Int,mode:WindowMode):Void;
+	static function changeFeatures(index:Int,features:Int):Void;
+	static function changeFramebuffer(index:Int,opts:FramebufferOptions):Void;
+	static function x(index:Int):Int;
+	static function y(index:Int):Int;
+	static function width(index:Int):Int;
+	static function height(index:Int):Int;
+	static function display(index:Int):Int;
+	static function getMode(index:Int):Int;
+	static function show(index:Int):Void;
+	static function hide(index:Int):Void;
+	static function setTitle(index:Int,name:String):Void;
+	static function setResizeCallback(index:Int,cb:Int->Int->Void):Void;
+	static function setPpiChangedCallback(index:Int,cb:Int->Void):Void;
+	static function vsynced(index:Int):Bool;
 }
 
 enum abstract WindowMode(Int) from Int to Int {

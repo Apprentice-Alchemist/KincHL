@@ -11,6 +11,7 @@ class Shader {
     static var index_buffer:kinc.g4.IndexBuffer;
 
     public static function main(){
+        kinc.Display.init();
         Kinc.init("Shader",500,500,null,null);
         Kinc.setUpdateCallback(update);
 

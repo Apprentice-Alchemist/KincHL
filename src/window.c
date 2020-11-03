@@ -37,6 +37,59 @@ HL_PRIM int HL_NAME(hl_window_create)(win_opts_hl* win, fb_opts_hl* fb) {
 HL_PRIM void HL_NAME(hl_window_destroy)(int index) {
   kinc_window_destroy(index);
 }
+HL_PRIM int HL_NAME(hl_count_windows)(){ return kinc_count_windows();}
+HL_PRIM void HL_NAME(hl_window_resize)(int window_index, int width, int height){kinc_window_resize(window_index,width,height);}
+HL_PRIM void HL_NAME(hl_window_move)(int window_index, int x, int y){kinc_window_move(window_index,x,y);}
+HL_PRIM void HL_NAME(hl_window_change_mode)(int window_index, kinc_window_mode_t mode){kinc_window_change_mode(window_index,mode);}
+HL_PRIM void HL_NAME(hl_window_change_features)(int window_index, int features){kinc_window_change_features(window_index,features);}
+HL_PRIM void HL_NAME(hl_window_change_framebuffer)(int window_index, fb_opts_hl* frame){kinc_window_change_framebuffer(window_index,convert_fb_opts_hl(frame));}
+HL_PRIM int HL_NAME(hl_window_x)(int window_index){return kinc_window_x(window_index);}
+HL_PRIM int HL_NAME(hl_window_y)(int window_index) { return kinc_window_y(window_index); }
+HL_PRIM int HL_NAME(hl_window_width)(int window_index) { return kinc_window_width(window_index); }
+HL_PRIM int HL_NAME(hl_window_height)(int window_index) { return kinc_window_height(window_index); }
+HL_PRIM int HL_NAME(hl_window_display)(int window_index) { return kinc_window_display(window_index); }
+HL_PRIM kinc_window_mode_t HL_NAME(hl_window_get_mode)(int window_index) { return kinc_window_get_mode(window_index); }
+HL_PRIM void HL_NAME(hl_window_show)(int window_index){kinc_window_show(window_index);}
+HL_PRIM void HL_NAME(hl_window_hide)(int window_index){kinc_window_hide(window_index);}
+HL_PRIM void HL_NAME(hl_window_set_title)(int window_index, vstring* title){kinc_window_set_title(window_index,hl_to_utf8(title->bytes));}
+
+void internal_resize_callback(int x,int y,vclosure *data){
+  if(data != NULL){
+    void (*fun)(int,int) = data->hasValue ? data->value : data->fun;
+    fun(x,y);
+  }
+}
+HL_PRIM void HL_NAME(hl_window_set_resize_callback)(int window_index, vclosure *cb){
+  kinc_window_set_resize_callback(window_index,internal_resize_callback,cb);
+}
+void internal_ppi_changed_callback(int ppi, vclosure* data) {
+  if (data != NULL) {
+    void (*fun)(int) = data->hasValue ? data->value : data->fun;
+    fun(ppi);
+  }
+}
+HL_PRIM void HL_NAME(hl_window_set_ppi_changed_callback)(int window_index, vclosure *cb){
+  kinc_window_set_ppi_changed_callback(window_index,internal_ppi_changed_callback,cb);
+}
+HL_PRIM bool HL_NAME(hl_window_vsynced)(int window_index){ return kinc_window_vsynced(window_index);}
 
 DEFINE_PRIM(_I32, hl_window_create, HL_WINDOW_OPTS HL_FRAMEBUFFER_OPTS)
 DEFINE_PRIM(_VOID, hl_window_destroy, _I32)
+DEFINE_PRIM(_I32, hl_count_windows, _NO_ARG)
+DEFINE_PRIM(_VOID, hl_window_resize, _I32 _I32 _I32)
+DEFINE_PRIM(_VOID, hl_window_move, _I32 _I32 _I32)
+DEFINE_PRIM(_VOID, hl_window_change_mode, _I32 _I32)
+DEFINE_PRIM(_VOID, hl_window_change_features, _I32 _I32)
+DEFINE_PRIM(_VOID, hl_window_change_framebuffer, _I32 HL_FRAMEBUFFER_OPTS)
+DEFINE_PRIM(_I32, hl_window_x, _I32)
+DEFINE_PRIM(_I32, hl_window_y, _I32)
+DEFINE_PRIM(_I32, hl_window_width, _I32)
+DEFINE_PRIM(_I32, hl_window_height, _I32)
+DEFINE_PRIM(_I32, hl_window_display, _I32)
+DEFINE_PRIM(_I32, hl_window_get_mode, _I32)
+DEFINE_PRIM(_VOID, hl_window_show, _I32)
+DEFINE_PRIM(_VOID, hl_window_hide, _I32)
+DEFINE_PRIM(_VOID, hl_window_set_title, _I32 _STRING)
+DEFINE_PRIM(_VOID,hl_window_set_resize_callback,_I32 _FUN(_VOID,_I32 _I32))
+DEFINE_PRIM(_VOID,hl_window_set_ppi_changed_callback,_I32 _FUN(_VOID,_I32))
+DEFINE_PRIM(_BOOL,hl_window_vsynced,_I32)
