@@ -22,8 +22,8 @@ HL_PRIM void HL_NAME(hl_g4_draw_indexed_vertices_from_to)(int start, int count) 
 HL_PRIM void HL_NAME(hl_g4_draw_indexed_vertices_from_to_from)(int start, int count, int vertex_offset) { kinc_g4_draw_indexed_vertices_from_to_from(start, count, vertex_offset); }
 HL_PRIM void HL_NAME(hl_g4_draw_indexed_vertices_instanced)(int instanceCount) { kinc_g4_draw_indexed_vertices_instanced(instanceCount); }
 HL_PRIM void HL_NAME(hl_g4_draw_indexed_vertices_instanced_from_to)(int instanceCount, int start, int count) { kinc_g4_draw_indexed_vertices_instanced_from_to(instanceCount, start, count); }
-HL_PRIM void HL_NAME(hl_g4_set_texture_addressing)(kinc_g4_texture_unit_t* unit, kinc_g4_texture_direction_t dir, kinc_g4_texture_addressing_t addressing) { kinc_g4_set_texture_addressing(*unit, dir, addressing); }
-HL_PRIM void HL_NAME(hl_g4_set_texture3d_addressing)(kinc_g4_texture_unit_t* unit, kinc_g4_texture_direction_t dir, kinc_g4_texture_addressing_t addressing) { kinc_g4_set_texture3d_addressing(*unit, dir, addressing); }
+HL_PRIM void HL_NAME(hl_g4_set_texture_addressing)(hl_tex_unit* unit, kinc_g4_texture_direction_t dir, kinc_g4_texture_addressing_t addressing) { kinc_g4_set_texture_addressing(unit->loc, dir, addressing); }
+HL_PRIM void HL_NAME(hl_g4_set_texture3d_addressing)(hl_tex_unit* unit, kinc_g4_texture_direction_t dir, kinc_g4_texture_addressing_t addressing) { kinc_g4_set_texture3d_addressing(unit->loc, dir, addressing); }
 HL_PRIM int HL_NAME(hl_g4_max_bound_textures)() { return kinc_g4_max_bound_textures(); }
 HL_PRIM bool HL_NAME(hl_g4_render_targets_inverted_y)() { return kinc_g4_render_targets_inverted_y(); }
 HL_PRIM bool HL_NAME(hl_g4_non_pow2_textures_supported)() { return kinc_g4_non_pow2_textures_supported(); }

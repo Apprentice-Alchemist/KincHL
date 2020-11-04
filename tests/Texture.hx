@@ -1,3 +1,4 @@
+import kinc.math.Matrix3;
 import kinc.g4.ConstantLocation;
 import kinc.g4.TextureUnit;
 import kinc.g4.IndexBuffer;
@@ -12,14 +13,19 @@ class Texture {
 	static var vertex_buffer:kinc.g4.VertexBuffer;
 	static var index_buffer:kinc.g4.IndexBuffer;
     static var texunit:TextureUnit;
-    static var offset:ConstantLocation;
-    static var texture:kinc.g4.Texture;
+	static var offset:ConstantLocation;
+	static var texture:kinc.g4.Texture;
+	static var matrix = Matrix3.alloc();
 	public static function main() {
+		for (x in 0...3) {
+			matrix.set(x, x, 1);
+		}
 		Kinc.init("Texture", 500, 500, null, null);
 		Kinc.setUpdateCallback(update);
         var img = kinc.Image.fromFile("Deployment/parrot.png");
         texture = new kinc.g4.Texture();
         texture.initFromImage(img);
+		img.destroy();
 		fragment_shader = kinc.g4.Shader.create(haxe.Resource.getBytes("texture.frag"), FragmentShader);
 		vertex_shader = kinc.g4.Shader.create(haxe.Resource.getBytes("texture.vert"), VertexShader);
 
@@ -37,10 +43,9 @@ class Texture {
         texunit = pipeline.getTextureUnit("texsampler");
 		offset = pipeline.getConstantLocation("mvp");
 		
-		vertex_buffer = new VertexBuffer(3, structure, STATIC, 0);
+		vertex_buffer = new VertexBuffer(4, structure, STATIC, 0);
 		{
 			var v = vertex_buffer.lockAll();
-			var i:Int = 0;
 			v[0] = -1.0 /*f*/;
 			v[1] = -1.0 /*f*/;
 			v[2] = 0.5 /*f*/;
@@ -58,12 +63,13 @@ class Texture {
 			v[14] = 0.0 /*f*/;
 			vertex_buffer.unlockAll();
 		}
-		index_buffer = new IndexBuffer(3, IbFormat32BIT);
+		index_buffer = new IndexBuffer(4, IbFormat32BIT);
 		{
 			var i = index_buffer.lock();
 			i[0] = 0;
 			i[1] = 1;
 			i[2] = 2;
+			i[3] = 3;
 			index_buffer.unlock();
 		}
 		Kinc.start();
@@ -72,8 +78,16 @@ class Texture {
 	public static function update() {
 		Graphics4.begin(0);
 		Graphics4.clear(1, 0, 0, 0);
-        Graphics4.setPipeline(pipeline);
-        Graphics4.setMatrix3(offset,kinc.math.Matrix3.alloc());
+		Graphics4.setPipeline(pipeline);
+		
+		var alpha = Kinc.time();
+		var ca = Math.cos(alpha);
+		var sa = Math.sin(alpha);
+		matrix.set(0, 0, ca);
+		matrix.set(0, 1, -sa);
+		matrix.set(1, 0, sa);
+		matrix.set(1, 1, ca);
+        Graphics4.setMatrix3(offset,matrix);
 		Graphics4.setVertexBuffer(vertex_buffer);
 		Graphics4.setIndexBuffer(index_buffer);
         Graphics4.setTexture(texunit,texture);
