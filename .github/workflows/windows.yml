@@ -9,6 +9,12 @@ jobs:
       HASHLINK_INCLUDE: $GITHUB_WORKSPACE/hashlink/src
       HASHLINK_BIN: $GITHUB_WORKSPACE/hashlink/bin
     steps:
+    - name: Install Haxe
+      uses: krdlab/setup-haxe@master
+      with:
+          haxe-version: 4.1.3
+    - name: Set up MSVC
+      uses: ilammy/msvc-dev-cmd@v1
     - name: Checkout hashlink
       uses: actions/checkout@v2
       with:
@@ -24,12 +30,11 @@ jobs:
         repository: "Kode/Kinc"
         path: "Kinc"
         submodules: "recursive"
-    - name: Set up MSVC
-      uses: ilammy/msvc-dev-cmd@v1
     - name: Build Hashlink
       run: |
         cd hashlink
-        MSBuild /nologo libhl.vcxproj /clp:ErrorsOnly /m /p:OutDir=bin\,ForceImportBeforeCppTargets="$GITHUB_WORKSPACE\KincHL\extra\hl.props"
+        haxe -cp ../KincHL/extra/ --run Replacer libhl.vcxproj 8.1 10.0
+        MSBuild /nologo libhl.vcxproj -m -p:OutDir=bin\,ForceImportBeforeCppTargets="$GITHUB_WORKSPACE\KincHL\extra\hl.props"
     - name: Build KincHL
       run: |
         cd KincHL
