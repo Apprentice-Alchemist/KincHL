@@ -8,6 +8,10 @@
     "files.associations": {
         "system_error": "cpp",
         "xlocale": "cpp",
-        "image.h": "c"
+        "image.h": "c",
+        "array": "c",
+        "vector": "c",
+        "xstring": "c",
+        "xutility": "c"
     }
 }

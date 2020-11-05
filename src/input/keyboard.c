@@ -11,28 +11,19 @@ vclosure *key_press_cb = NULL;
 
 void internal_key_down_cb(int key){
     if(key_down_cb != NULL){
-        vdynamic* x = hl_alloc_dynamic(&hlt_i32);;
-        x->v.i = key;
-        vdynamic* args[1] = { x };
-        hl_dyn_call(key_down_cb, args, 1);
+        hl_call1(void,key_down_cb,int,key);
     }
 }
 
 void internal_key_up_cb(int key){
     if (key_up_cb != NULL) {
-        vdynamic* x = hl_alloc_dynamic(&hlt_i32);;
-        x->v.i = key;
-        vdynamic* args[1] = { x };
-        hl_dyn_call(key_up_cb, args, 1);
+        hl_call1(void, key_up_cb, int, key);
     }
 }
 
 void internal_key_press_cb(unsigned c){
     if (key_up_cb != NULL) {
-        vdynamic* x = hl_alloc_dynamic(&hlt_i32);;
-        x->v.i = c;
-        vdynamic* args[1] = { x };
-        hl_dyn_call(key_up_cb, args, 1);
+        hl_call1(void, key_press_cb, int, c);
     }
 }
 

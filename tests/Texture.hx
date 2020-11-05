@@ -1,3 +1,6 @@
+import kinc.Image;
+import haxe.io.BytesInput;
+import haxe.Resource;
 import kinc.math.Matrix3;
 import kinc.g4.ConstantLocation;
 import kinc.g4.TextureUnit;
@@ -6,43 +9,53 @@ import kinc.g4.VertexBuffer;
 import kinc.g4.Graphics4;
 
 class Texture {
-	static var fragment_shader:kinc.g4.Shader;
-	static var vertex_shader:kinc.g4.Shader;
+	// static var fragment_shader:kinc.g4.Shader;
+	// static var vertex_shader:kinc.g4.Shader;
 	static var pipeline:kinc.g4.Pipeline;
 	static var structure:kinc.g4.VertexStructure;
 	static var vertex_buffer:kinc.g4.VertexBuffer;
 	static var index_buffer:kinc.g4.IndexBuffer;
-    static var texunit:TextureUnit;
+	static var texunit:TextureUnit;
 	static var offset:ConstantLocation;
 	static var texture:kinc.g4.Texture;
-	static var matrix = Matrix3.alloc();
+	static var matrix = new Matrix3();
+
 	public static function main() {
 		for (x in 0...3) {
 			matrix.set(x, x, 1);
 		}
 		Kinc.init("Texture", 500, 500, null, null);
 		Kinc.setUpdateCallback(update);
-        var img = kinc.Image.fromFile("Deployment/parrot.png");
-        texture = new kinc.g4.Texture();
-        texture.initFromImage(img);
-		img.destroy();
-		fragment_shader = kinc.g4.Shader.create(haxe.Resource.getBytes("texture.frag"), FragmentShader);
-		vertex_shader = kinc.g4.Shader.create(haxe.Resource.getBytes("texture.vert"), VertexShader);
 
-        structure = new kinc.g4.VertexStructure();
-        structure.size = 0;
+		#if (format && test_format)
+		var img = new kinc.Image();
+		var data = new format.png.Reader(new BytesInput(Resource.getBytes("parrot.png"))).read();
+		var bytes = format.png.Tools.extract32(data);
+		@:privateAccess img.init(bytes.getData(), 250, 250, FORMAT_BGRA32);
+		#else
+		var img = Image.fromFile("Deployment/parrot.png");
+		#end
+		texture = new kinc.g4.Texture();
+
+		texture.initFromImage(img);
+		img.destroy();
+		var fragment_shader = kinc.g4.Shader.create(haxe.Resource.getBytes("texture.frag"), FragmentShader);
+		var vertex_shader = kinc.g4.Shader.create(haxe.Resource.getBytes("texture.vert"), VertexShader);
+
+		structure = new kinc.g4.VertexStructure();
+		structure.size = 0;
 		structure.add("pos", FLOAT3);
-        structure.add("tex",FLOAT2);
+		structure.add("tex", FLOAT2);
 
 		pipeline = new kinc.g4.Pipeline();
 		pipeline.vertex_shader = vertex_shader;
 		pipeline.fragment_shader = fragment_shader;
-        pipeline.input_layout = [structure];
+		pipeline.input_layout = [structure];
 		pipeline.compile();
 
-        texunit = pipeline.getTextureUnit("texsampler");
+		texunit = pipeline.getTextureUnit("texsampler");
 		offset = pipeline.getConstantLocation("mvp");
-		
+
 		vertex_buffer = new VertexBuffer(4, structure, STATIC, 0);
 		{
 			var v = vertex_buffer.lockAll();
@@ -79,7 +92,6 @@ class Texture {
 		Graphics4.begin(0);
 		Graphics4.clear(1, 0, 0, 0);
 		Graphics4.setPipeline(pipeline);
-		
 		var alpha = Kinc.time();
 		var ca = Math.cos(alpha);
 		var sa = Math.sin(alpha);
@@ -87,10 +99,10 @@ class Texture {
 		matrix.set(0, 1, -sa);
 		matrix.set(1, 0, sa);
 		matrix.set(1, 1, ca);
-        Graphics4.setMatrix3(offset,matrix);
+		Graphics4.setMatrix3(offset, matrix);
 		Graphics4.setVertexBuffer(vertex_buffer);
 		Graphics4.setIndexBuffer(index_buffer);
-        Graphics4.setTexture(texunit,texture);
+		Graphics4.setTexture(texunit, texture);
 		Graphics4.drawIndexedVertices();
 		Graphics4.end(0);
 		Graphics4.swapBuffers();

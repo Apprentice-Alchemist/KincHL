@@ -19,6 +19,7 @@ void internal_mouse_press_cb(int window, int button, int x, int y) {
     if (mouse_press_cb != NULL) {
         void (*fun)(int, int, int, int) = mouse_press_cb->hasValue ? mouse_press_cb->value : mouse_press_cb->fun;
         fun(window, button, x, y);
+        // hl_call4(void,mouse_press_cb)
     }
 }
 void internal_mouse_release_cb(int window, int button, int x, int y) {

@@ -1,0 +1,28 @@
+name: Build Windows
+
+on: [push, pull_request]
+
+jobs:
+  build-d3d11:
+    runs-on: windows-latest
+    steps:
+    - name: Install Haxe
+      uses: krdlab/setup-haxe@master
+      with:
+          haxe-version: 4.1.3
+    - name: Checkout KincHL
+      uses: actions/checkout@v2
+      with:
+        path: "KincHL"
+    - name: Checkout Kinc
+      uses: actions/checkout@v2
+      with:
+        repository: "Kode/Kinc"
+        path: "Kinc"
+    - name: Set up haxelib
+      run: |
+        haxelib dev KincHL KincHL
+    - name: Build KincHL
+      run: |
+        cd KincHL
+        node ..\Kinc\make.js --dynlib --compile 

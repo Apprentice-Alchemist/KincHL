@@ -21,8 +21,7 @@ void internal_background_callback() {
 
 char* internal_cut_callback() {
   if (cut_cb != NULL) {
-    vstring* (*fun)() = cut_cb->hasValue ? cut_cb->value : cut_cb->fun;
-    return hl_to_utf8(fun()->bytes);
+    return hl_call0(vstring*, cut_cb)->bytes;
   }
   else {
     return NULL;
@@ -31,17 +30,13 @@ char* internal_cut_callback() {
 
 void internal_drop_files_callback(wchar_t* s) {
   if (drop_file_cb != NULL) {
-    void (*fun)(vbyte*) = drop_file_cb->hasValue ? drop_file_cb->value : drop_file_cb->fun;
-    vstring* str = hl_alloc_strbytes(s);
-    fun(str);
+    hl_call1(void,drop_file_cb,vstring*,hl_alloc_strbytes(s));
   }
 }
 
 void internal_paste_callback(char* s) {
   if (paste_cb != NULL) {
-    void (*fun)(vbyte*) = paste_cb->hasValue ? paste_cb->value : paste_cb->fun;
-    vstring* str = hl_alloc_strbytes(hl_to_utf16(s));
-    fun(str);
+    hl_call1(void, paste_cb, vstring*, hl_alloc_strbytes(hl_to_utf16(s)));
   }
 }
 

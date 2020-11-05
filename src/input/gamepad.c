@@ -6,14 +6,12 @@ vclosure * gamepad_button_cb = NULL;
 
 void internal_gamepad_axis_cb(int gamepad,int axis,float value){
     if(gamepad_axis_cb != NULL){
-        void (*fun)(int,int,float) = gamepad_axis_cb->hasValue ? gamepad_axis_cb->value : gamepad_axis_cb->fun;
-        fun(gamepad,axis,value);
+        hl_call3(void,gamepad_axis_cb,int,gamepad,int,axis,int,value);
     }
 }
 void internal_gamepad_button_cb(int gamepad,int button,float value){
     if (gamepad_button_cb != NULL) {
-        void (*fun)(int, int, float) = gamepad_button_cb->hasValue ? gamepad_button_cb->value : gamepad_button_cb->fun;
-        fun(gamepad, button, value);
+        hl_call3(void, gamepad_button_cb, int, gamepad, int, button, int, value);
     }
 }
 HL_PRIM void HL_NAME(hl_gamepad_set_axis_callback)(vclosure *cb){

@@ -1,6 +1,5 @@
 -lib kinc
 -cp tests
-# -m Keyboard
 --debug
 --resource Deployment/shader.frag@shader.frag
 --resource Deployment/shader.vert@shader.vert
