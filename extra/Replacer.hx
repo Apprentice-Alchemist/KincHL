@@ -5,6 +5,6 @@ class Replacer {
         var file = args.shift();
         var what = args.shift();
         var with = args.shift();
-        sys.io.File.saveContent(sys.io.File.getContent(file).replace(what,with));
+        sys.io.File.saveContent(file,sys.io.File.getContent(file).replace(what,with));
     }
 }
