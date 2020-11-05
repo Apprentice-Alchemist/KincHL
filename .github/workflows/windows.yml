@@ -18,6 +18,7 @@ jobs:
         path: "hashlink"
     - name: Build Hashlink
       run: |
+        cd hashlink
         MSBuild /nologo hl.sln
     - name: Checkout KincHL
       uses: actions/checkout@v2
