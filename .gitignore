@@ -1,7 +1,9 @@
 src/*.glsl
 src/*.glsl
 build/*
-Deployment/*
+Deployment/*.vert
+Deployment/*.frag
 *.hdll
 *.hl
 build.bat
+kinc.hdll
