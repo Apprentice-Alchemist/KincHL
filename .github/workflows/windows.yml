@@ -34,7 +34,7 @@ jobs:
       run: |
         cd hashlink
         haxe -cp ../KincHL/extra/ --run Replacer libhl.vcxproj 8.1 10.0
-        MSBuild /nologo libhl.vcxproj -m -p:OutDir=bin\,ForceImportBeforeCppTargets="$GITHUB_WORKSPACE\KincHL\extra\hl.props"
+        MSBuild /nologo libhl.vcxproj -m -p:OutDir=bin\
     - name: Build KincHL
       run: |
         cd KincHL
