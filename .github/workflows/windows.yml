@@ -19,10 +19,8 @@ jobs:
       with:
         repository: "Kode/Kinc"
         path: "Kinc"
-    - name: Set up haxelib
-      run: |
-        haxelib dev KincHL KincHL
+        submodules: "recursive"
     - name: Build KincHL
       run: |
         cd KincHL
-        node ..\Kinc\make.js --dynlib --compile 
+        node ..\Kinc\make.js --dynlib --compile

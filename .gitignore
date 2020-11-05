@@ -1,5 +1,7 @@
 src/*.glsl
 src/*.glsl
 build/*
+Deployment/*
+*.hdll
 *.hl
 build.bat
