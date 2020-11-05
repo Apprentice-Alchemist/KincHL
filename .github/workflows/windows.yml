@@ -7,7 +7,7 @@ jobs:
     runs-on: windows-latest
     env:
       HASHLINK_INCLUDE: $GITHUB_WORKSPACE/hashlink/src
-      HASHLINK_BIN: $GITHUB_WORKSPACE/hashlink/x64/Release
+      HASHLINK_BIN: $GITHUB_WORKSPACE/hashlink/bin
     steps:
     - name: Set up MSVC
       uses: ilammy/msvc-dev-cmd@v1
@@ -19,7 +19,7 @@ jobs:
     - name: Build Hashlink
       run: |
         cd hashlink
-        MSBuild /nologo hl.sln
+        MSBuild /nologo libhl.vcxproj -p:OutDir=bin\;WindowsTargetPlatformVersion=10.0
     - name: Checkout KincHL
       uses: actions/checkout@v2
       with:
