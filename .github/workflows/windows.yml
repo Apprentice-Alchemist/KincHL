@@ -29,7 +29,7 @@ jobs:
     - name: Build Hashlink
       run: |
         cd hashlink
-        MSBuild /nologo libhl.vcxproj /clp:ErrorsOnly /m /p:OutDir=bin\,ForceImportBeforeCppTargets="$GITHUB_WORKSPACE\KincHL\extra\hl.props"
+        MSBuild /nologo libhl.vcxproj /clp:ErrorsOnly /m /p:OutDir=bin\,ForceImportBeforeCppTargets="..\KincHL\extra\hl.props"
     - name: Build KincHL
       run: |
         cd KincHL
