@@ -1,92 +1,79 @@
 #include "kinchl.h"
 #include <kinc/system.h>
 
-vclosure* update_cb = NULL;
-vclosure* background_cb = NULL;
-vclosure* cut_cb = NULL;
-vclosure* drop_file_cb = NULL;
-vclosure* paste_cb = NULL;
 
-void internal_update_callback() {
-  if (update_cb != NULL) {
+
+#define MAKE_CALLBACK(name,expr,hl_type)\
+  static vclosure* ##name##_cb = NULL;\
+  static expr\
+  HL_PRIM void HL_NAME(hl_set_##name##_callback)(vclosure *cb){\
+    if(##name##_cb != NULL){\
+      hl_remove_root(##name##_cb);\
+    }\
+    ##name##_cb = cb;\
+    if(cb != NULL){\
+      hl_add_root(##name##_cb);\
+      kinc_set_##name##_callback(internal_##name##_callback);\
+    }\
+  }\
+  DEFINE_PRIM(_VOID,hl_set_##name##_callback,hl_type)
+// static vclosure* update_cb = NULL;
+// static vclosure* foreground_cb = NULL;
+// static vclosure* resume_cb = NULL;
+// static vclosure* pause_cb = NULL;
+// static vclosure* background_cb = NULL;
+// static vclosure* shutdown_cb = NULL;
+// static vclosure* drop_file_cb = NULL;
+// static vclosure* cut_cb = NULL;
+// static vclosure* copy_cb = NULL;
+// static vclosure* paste_cb = NULL;
+// static vclosure* login_cb = NULL;
+// static vclosure* logout_cb = NULL;
+
+MAKE_CALLBACK(update,void internal_update_callback() {
     hl_dyn_call(update_cb, NULL, 0);
-  }
-}
+},_FUN(_VOID,_NO_ARG))
 
-void internal_background_callback() {
-  if (background_cb != NULL) {
-    hl_dyn_call(background_cb, NULL, 0);
-  }
-}
+MAKE_CALLBACK(foreground,void internal_foreground_callback(){
+  hl_dyn_call(foreground_cb,NULL,0);
+},_FUN(_VOID,_NO_ARG))
 
-char* internal_cut_callback() {
-  if (cut_cb != NULL) {
-    return hl_call0(vstring*, cut_cb)->bytes;
-  }
-  else {
-    return NULL;
-  }
-}
+MAKE_CALLBACK(resume, void internal_resume_callback() {
+  hl_dyn_call(resume_cb, NULL, 0);
+}, _FUN(_VOID, _NO_ARG))
 
-void internal_drop_files_callback(wchar_t* s) {
-  if (drop_file_cb != NULL) {
-    hl_call1(void,drop_file_cb,vstring*,hl_alloc_strbytes(s));
-  }
-}
+MAKE_CALLBACK(pause, void internal_pause_callback() {
+  hl_dyn_call(pause_cb, NULL, 0);
+}, _FUN(_VOID, _NO_ARG))
 
-void internal_paste_callback(char* s) {
-  if (paste_cb != NULL) {
-    hl_call1(void, paste_cb, vstring*, hl_alloc_strbytes(hl_to_utf16(s)));
-  }
-}
+MAKE_CALLBACK(background, void internal_background_callback() {
+  hl_dyn_call(background_cb, NULL, 0);
+}, _FUN(_VOID, _NO_ARG))
 
-HL_PRIM void HL_NAME(hl_set_update_callback)(vclosure* cb) {
-  if (update_cb != NULL) {
-    hl_remove_root(update_cb);
-  }
-  hl_add_root(cb);
-  update_cb = cb;
-  kinc_set_update_callback(internal_update_callback);
-}
+MAKE_CALLBACK(shutdown, void internal_shutdown_callback() {
+  hl_dyn_call(shutdown_cb, NULL, 0);
+}, _FUN(_VOID, _NO_ARG))
 
-HL_PRIM void HL_NAME(hl_set_background_callback)(vclosure* cb) {
-  if (background_cb != NULL) {
-    hl_remove_root(background_cb);
-  }
-  hl_add_root(cb);
-  background_cb = cb;
-  kinc_set_background_callback(internal_background_callback);
-}
+MAKE_CALLBACK(drop_files, void internal_drop_files_callback(wchar_t* s) {
+  hl_call1(void,drop_files_cb,vstring*,hl_alloc_strbytes(s));
+},_FUN(_VOID,_STRING))
 
-HL_PRIM void HL_NAME(hl_set_cut_callback)(vclosure* cb) {
-  if (cut_cb != NULL) {
-    hl_remove_root(cut_cb);
-  }
-  hl_add_root(cb);
-  cut_cb = cb;
-  kinc_set_cut_callback(internal_cut_callback);
-}
+MAKE_CALLBACK(cut, char* internal_cut_callback() {
+  return hl_to_utf8(hl_call0(vstring*, cut_cb)->bytes);
+}, _FUN(_STRING, _NO_ARG))
 
-HL_PRIM void HL_NAME(hl_set_paste_callback)(vclosure* cb) {
-  if (paste_cb != NULL) {
-    hl_remove_root(paste_cb);
-  }
-  hl_add_root(cb);
-  paste_cb = cb;
-  kinc_set_paste_callback(internal_paste_callback);
-}
+MAKE_CALLBACK(copy, char* internal_copy_callback() {
+  return hl_to_utf8(hl_call0(vstring*, copy_cb)->bytes);
+}, _FUN(_STRING, _NO_ARG))
 
-HL_PRIM void HL_NAME(hl_set_drop_file_callback)(vclosure* cb) {
-  if (drop_file_cb != NULL) {
-    hl_remove_root(drop_file_cb);
-  }
-  hl_add_root(cb);
-  drop_file_cb = cb;
-  kinc_set_drop_files_callback(internal_drop_files_callback);
-}
+MAKE_CALLBACK(paste, void internal_paste_callback(char* s) {
+  hl_call1(void, paste_cb,vstring*,hl_alloc_strbytes(hl_to_utf8(s)));
+}, _FUN(_VOID, _STRING))
 
-DEFINE_PRIM(_VOID, hl_set_update_callback, _FUN(_VOID, _NO_ARG))
-DEFINE_PRIM(_VOID, hl_set_background_callback, _FUN(_VOID, _NO_ARG))
-DEFINE_PRIM(_VOID, hl_set_cut_callback, _FUN(_STRING, _NO_ARG))
-DEFINE_PRIM(_VOID, hl_set_paste_callback, _FUN(_VOID, _STRING))
-DEFINE_PRIM(_VOID, hl_set_drop_file_callback, _FUN(_VOID, _STRING))
+MAKE_CALLBACK(login, void internal_login_callback() {
+  hl_call0(void, login_cb);
+}, _FUN(_VOID, _NO_ARG))
+
+MAKE_CALLBACK(logout, void internal_logout_callback() {
+  hl_call0(void, logout_cb);
+}, _FUN(_VOID, _NO_ARG))

@@ -4,8 +4,8 @@ class Mouse {
 	static var delta:Int = 0;
 
 	public static function main() {
-		Kinc.init("Shader", 500, 500, null, null);
-		Kinc.setUpdateCallback(update);
+		kinc.System.init("Shader", 500, 500, null, null);
+		kinc.System.setUpdateCallback(update);
 		kinc.input.Mouse.setScrollCallback((window, d) -> {
 			delta += (d * 10);
 			trace(delta);
@@ -13,7 +13,7 @@ class Mouse {
 		kinc.input.Mouse.setPressCallback((window, button, x, y) -> {
 			trace(button);
 		});
-		Kinc.start();
+		kinc.System.start();
 	}
 
 	public static function update() {

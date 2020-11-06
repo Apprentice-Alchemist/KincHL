@@ -11,12 +11,11 @@ class Shader {
 	static var index_buffer:kinc.g4.IndexBuffer;
 
 	public static function main() {
-		kinc.Display.init();
-		Kinc.init("Shader", 500, 500, null, null);
-		Kinc.setUpdateCallback(update);
+		kinc.System.init("Shader", 500, 500, null, null);
+		kinc.System.setUpdateCallback(update);
 
-		fragment_shader = kinc.g4.Shader.create(haxe.Resource.getBytes("shader.frag"), FragmentShader);
-		vertex_shader = kinc.g4.Shader.create(haxe.Resource.getBytes("shader.vert"), VertexShader);
+		fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/shader.frag"), FragmentShader);
+		vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/shader.vert"), VertexShader);
 
 		structure = new kinc.g4.VertexStructure();
 		structure.add("pos", FLOAT3);
@@ -52,7 +51,7 @@ class Shader {
 			i[2] = 2;
 			index_buffer.unlock();
 		}
-		Kinc.start();
+		kinc.System.start();
 	}
 
 	public static function update() {

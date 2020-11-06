@@ -9,8 +9,6 @@ import kinc.g4.VertexBuffer;
 import kinc.g4.Graphics4;
 
 class Texture {
-	// static var fragment_shader:kinc.g4.Shader;
-	// static var vertex_shader:kinc.g4.Shader;
 	static var pipeline:kinc.g4.Pipeline;
 	static var structure:kinc.g4.VertexStructure;
 	static var vertex_buffer:kinc.g4.VertexBuffer;
@@ -18,14 +16,10 @@ class Texture {
 	static var texunit:TextureUnit;
 	static var offset:ConstantLocation;
 	static var texture:kinc.g4.Texture;
-	static var matrix = new Matrix3();
 
 	public static function main() {
-		for (x in 0...3) {
-			matrix.set(x, x, 1);
-		}
-		Kinc.init("Texture", 500, 500, null, null);
-		Kinc.setUpdateCallback(update);
+		kinc.System.init("Texture", 500, 500, null, null);
+		kinc.System.setUpdateCallback(update);
 
 		#if (format && test_format)
 		var img = new kinc.Image();
@@ -36,11 +30,10 @@ class Texture {
 		var img = Image.fromFile("Deployment/parrot.png");
 		#end
 		texture = new kinc.g4.Texture();
-
 		texture.initFromImage(img);
 		img.destroy();
-		var fragment_shader = kinc.g4.Shader.create(haxe.Resource.getBytes("texture.frag"), FragmentShader);
-		var vertex_shader = kinc.g4.Shader.create(haxe.Resource.getBytes("texture.vert"), VertexShader);
+		var fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/texture.frag"), FragmentShader);
+		var vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/texture.vert"), VertexShader);
 
 		structure = new kinc.g4.VertexStructure();
 		structure.size = 0;
@@ -59,21 +52,21 @@ class Texture {
 		vertex_buffer = new VertexBuffer(4, structure, STATIC, 0);
 		{
 			var v = vertex_buffer.lockAll();
-			v[0] = -1.0 /*f*/;
-			v[1] = -1.0 /*f*/;
-			v[2] = 0.5 /*f*/;
-			v[3] = 0.0 /*f*/;
-			v[4] = 1.0 /*f*/;
-			v[5] = 1.0 /*f*/;
-			v[6] = -1.0 /*f*/;
-			v[7] = 0.5 /*f*/;
-			v[8] = 1.0 /*f*/;
-			v[9] = 1.0 /*f*/;
-			v[10] = -1.0 /*f*/;
-			v[11] = 1.0 /*f*/;
-			v[12] = 0.5 /*f*/;
-			v[13] = 0.0 /*f*/;
-			v[14] = 0.0 /*f*/;
+			v[0] = -1.0;
+			v[1] = -1.0;
+			v[2] = 0.5;
+			v[3] = 0.0;
+			v[4] = 1.0;
+			v[5] = 1.0;
+			v[6] = -1.0;
+			v[7] = 0.5;
+			v[8] = 1.0;
+			v[9] = 1.0;
+			v[10] = -1.0;
+			v[11] = 1.0;
+			v[12] = 0.5;
+			v[13] = 0.0;
+			v[14] = 0.0;
 			vertex_buffer.unlockAll();
 		}
 		index_buffer = new IndexBuffer(4, IbFormat32BIT);
@@ -85,20 +78,14 @@ class Texture {
 			i[3] = 3;
 			index_buffer.unlock();
 		}
-		Kinc.start();
+		kinc.System.start();
 	}
 
 	public static function update() {
 		Graphics4.begin(0);
 		Graphics4.clear(1, 0, 0, 0);
 		Graphics4.setPipeline(pipeline);
-		var alpha = Kinc.time();
-		var ca = Math.cos(alpha);
-		var sa = Math.sin(alpha);
-		matrix.set(0, 0, ca);
-		matrix.set(0, 1, -sa);
-		matrix.set(1, 0, sa);
-		matrix.set(1, 1, ca);
+		var matrix = Matrix3.rotationZ(kinc.System.time());
 		Graphics4.setMatrix3(offset, matrix);
 		Graphics4.setVertexBuffer(vertex_buffer);
 		Graphics4.setIndexBuffer(index_buffer);

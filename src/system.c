@@ -4,7 +4,7 @@
 #include <kinc/log.h>
 #include <kinc/system.h>
 #include <kinc/window.h>
-
+#include <kinc/vr/vrinterface.h>
 HL_PRIM int HL_NAME(hl_init)(vstring* title, int w, int h, win_opts_hl* win, fb_opts_hl* fb) {
   return kinc_init(hl_to_utf8(title->bytes), w, h, convert_win_opts_hl(win), convert_fb_opts_hl(fb));
 }
@@ -41,6 +41,12 @@ HL_PRIM void HL_NAME(hl_set_safe_zone)(float value) { kinc_set_safe_zone(value);
 HL_PRIM double HL_NAME(hl_frequency)() { return kinc_frequency(); }
 HL_PRIM kinc_ticks_t HL_NAME(hl_timestamp)() { return kinc_timestamp(); }
 HL_PRIM double HL_NAME(hl_time)() { return kinc_time(); }
+HL_PRIM void HL_NAME(hl_login)(){ kinc_login();}
+HL_PRIM bool HL_NAME(hl_waiting_for_login)(){return kinc_waiting_for_login();}
+HL_PRIM void HL_NAME(hl_unlock_achievement)(int id){kinc_unlock_achievement(id);}
+HL_PRIM void HL_NAME(hl_disallow_user_change)(){kinc_disallow_user_change();}
+HL_PRIM void HL_NAME(hl_allow_user_change)(){kinc_allow_user_change();}
+HL_PRIM void HL_NAME(hl_set_keep_screen_on)(bool on){kinc_set_keep_screen_on(on);}
 
 DEFINE_PRIM(_VOID, hl_start, _NO_ARG)
 DEFINE_PRIM(_I32, hl_init, _STRING _I32 _I32 HL_WINDOW_OPTS HL_FRAMEBUFFER_OPTS)
@@ -61,6 +67,13 @@ DEFINE_PRIM(_VOID, hl_set_safe_zone, _F32)
 DEFINE_PRIM(_F64, hl_frequency, _NO_ARG)
 DEFINE_PRIM(_I64, hl_timestamp, _NO_ARG)
 DEFINE_PRIM(_F64, hl_time, _NO_ARG)
+
+DEFINE_PRIM(_VOID, hl_login, _NO_ARG)
+DEFINE_PRIM(_BOOL, hl_waiting_for_login, _NO_ARG)
+DEFINE_PRIM(_VOID, hl_unlock_achievement, _I32)
+DEFINE_PRIM(_VOID, hl_disallow_user_change, _NO_ARG)
+DEFINE_PRIM(_VOID, hl_allow_user_change, _NO_ARG)
+DEFINE_PRIM(_VOID, hl_set_keep_screen_on, _BOOL)
 
 void EMPTY_INIT(void* o) {}
 void EMPTY_DESTROY(void* o) {}

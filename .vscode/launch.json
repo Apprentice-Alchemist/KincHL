@@ -4,8 +4,7 @@
             "name": "Kinc: Launch",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "C:/LanguageToolkits/HaxeToolkit/hashlink/hl.exe",
-            // "program": "${workspaceRoot}/cbin/main.exe",
+            "program": "hl",
             "cwd": "${workspaceFolder}",
             "logging": {
                 "moduleLoad": false,

@@ -1,10 +1,10 @@
-package;
+package kinc;
 
 import hl.I64;
 import kinc.Window;
 
 @:hlNative("kinc", "hl_")
-extern class Kinc {
+extern class System {
 	static function init(name:String, width:Int, height:Int, win:WindowOptions, fb:FramebufferOptions):Int;
 	static function start():Void;
 	static function stop():Void;
@@ -23,10 +23,25 @@ extern class Kinc {
 	static function frequency():Float;
 	static function timestamp():hl.I64;
 	static function time():Float;
+	static function login():Void;
+	static function waitingForLogin():Bool;
+	static function unlockAchievement(id:Int):Void;
+	static function allowUserChange():Void;
+	static function disallowUserChange():Void;
+	static function setKeepScreenOn(on:Bool):Void;
+	
 	static function setUpdateCallback(cb:Void->Void):Void;
-	static function setDropFileCallback(cb:String->Void):Void;
+	static function setForegroundCallback(cb:Void->Void):Void;
+	static function setResumeCallback(cb:Void->Void):Void;
+	static function setPauseCallback(cb:Void->Void):Void;
+	static function setBackgroundCallback(cb:Void->Void):Void;
+	static function setShutdownCallback(cb:Void->Void):Void;
+	static function setDropFilesCallback(cb:String->Void):Void;
 	static function setCutCallback(cb:Void->String):Void;
+	static function setCopyCallback(cb:Void->String):Void;
 	static function setPasteCallback(cb:String->Void):Void;
+	static function setLoginCallback(cb:Void->Void):Void;
+	static function setLogoutCallback(cb:Void->Void):Void;
 }
 enum abstract LogLevel(Int) from Int {
 	var LOG_LEVEL_INFO;

@@ -1,11 +1,11 @@
 import kinc.g4.Graphics4;
-
+import kinc.System;
 class Keyboard {
 	static var space_pressed:Bool = false;
 
 	public static function main() {
-		Kinc.init("Shader", 500, 500, null, null);
-		Kinc.setUpdateCallback(update);
+		System.init("Shader", 500, 500, null, null);
+		System.setUpdateCallback(update);
 		kinc.input.Keyboard.setKeyDownCallback(function(k) {
 			if (k == KEY_SPACE)
 				space_pressed = true;
@@ -14,7 +14,7 @@ class Keyboard {
 			if (k == KEY_SPACE)
 				space_pressed = false;
 		});
-		Kinc.start();
+		System.start();
 	}
 
 	public static function update() {
