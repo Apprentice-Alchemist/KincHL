@@ -1,13 +1,10 @@
 name: Build Windows
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build-d3d11:
     runs-on: windows-latest
-    env:
-      HASHLINK_INCLUDE: $GITHUB_WORKSPACE/hashlink/src
-      HASHLINK_BIN: $GITHUB_WORKSPACE/hashlink/bin
     steps:
     - name: Install Haxe
       uses: krdlab/setup-haxe@master
@@ -33,9 +30,9 @@ jobs:
     - name: Build Hashlink
       run: |
         cd hashlink
-        haxe -cp ../KincHL/extra/ --run Replacer libhl.vcxproj 8.1 10.0.19041.0
+        haxe -cp ${env:GITHUB_WORKSPACE}/KincHL/extra/ --run Replacer libhl.vcxproj 8.1 10.0.19041.0
         MSBuild /nologo libhl.vcxproj -m -p:OutDir=bin\
     - name: Build KincHL
       run: |
         cd KincHL
-        node ..\Kinc\make.js --dynlib --compile
+        node ${env:GITHUB_WORKSPACE}\Kinc\make.js --dynlib --compile --noshaders

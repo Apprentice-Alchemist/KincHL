@@ -1,9 +1,10 @@
 -lib kinc
 -cp tests
 --debug
---resource Deployment/shader.frag@shader.frag
---resource Deployment/shader.vert@shader.vert
---resource Deployment/texture.frag@texture.frag
---resource Deployment/texture.vert@texture.vert
---resource Deployment/parrot.png@parrot.png
+# --resource Deployment/shader.frag@shader.frag
+# --resource Deployment/shader.vert@shader.vert
+# --resource Deployment/texture.frag@texture.frag
+# --resource Deployment/texture.vert@texture.vert
+# --resource Deployment/parrot.png@parrot.png
+-lib hlopenal
 -hl out.hl

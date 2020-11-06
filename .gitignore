@@ -3,6 +3,7 @@ src/*.glsl
 build/*
 Deployment/*.vert
 Deployment/*.frag
+Deployment/*.dll
 *.hdll
 *.hl
 build.bat
