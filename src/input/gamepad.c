@@ -65,10 +65,10 @@ HL_PRIM void HL_NAME(hl_gamepad_set_button_callback)(vclosure* cb) {
 }
 
 HL_PRIM vstring* HL_NAME(hl_gamepad_vendor)(int gamepad) {
-    return hl_alloc_strbytes(hl_to_utf16(kinc_gamepad_vendor(gamepad)));
+    return (vstring*)hl_alloc_strbytes(hl_to_utf16(kinc_gamepad_vendor(gamepad)));
 }
 HL_PRIM vstring* HL_NAME(hl_gamepad_product_name)(int gamepad) {
-    return hl_alloc_strbytes(hl_to_utf16(kinc_gamepad_product_name(gamepad)));
+    return (vstring*)hl_alloc_strbytes(hl_to_utf16(kinc_gamepad_product_name(gamepad)));
 }
 HL_PRIM bool HL_NAME(hl_gamepad_connected)(int gamepad) {
     return kinc_gamepad_connected(gamepad);

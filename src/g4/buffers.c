@@ -7,7 +7,7 @@ HL_PRIM void HL_NAME(hl_g4_vertex_buffer_init)(kinc_g4_vertex_buffer_t* buf, int
 HL_PRIM float* HL_NAME(hl_g4_vertex_buffer_lock_all)(kinc_g4_vertex_buffer_t* buf) { return kinc_g4_vertex_buffer_lock_all(buf); }
 HL_PRIM void HL_NAME(hl_g4_vertex_buffer_unlock_all)(kinc_g4_vertex_buffer_t* buf) { kinc_g4_vertex_buffer_unlock_all(buf); }
 HL_PRIM float* HL_NAME(hl_g4_vertex_buffer_lock)(kinc_g4_vertex_buffer_t* buf, int start, int count) { return kinc_g4_vertex_buffer_lock(buf, start, count); }
-HL_PRIM void HL_NAME(hl_g4_vertex_buffer_unlock)(kinc_g4_vertex_buffer_t* buf, int start, int count) { kinc_g4_vertex_buffer_unlock(buf, start, count); }
+HL_PRIM void HL_NAME(hl_g4_vertex_buffer_unlock)(kinc_g4_vertex_buffer_t* buf, int count) { kinc_g4_vertex_buffer_unlock(buf, count); }
 HL_PRIM int HL_NAME(hl_g4_vertex_buffer_count)(kinc_g4_vertex_buffer_t* buf) { return kinc_g4_vertex_buffer_count(buf); }
 HL_PRIM int HL_NAME(hl_g4_vertex_buffer_stride)(kinc_g4_vertex_buffer_t* buf) { return kinc_g4_vertex_buffer_stride(buf); }
 HL_PRIM void HL_NAME(hl_g4_index_buffer_init)(kinc_g4_index_buffer_t* buf, int count, int format) { kinc_g4_index_buffer_init(buf, count, format); }

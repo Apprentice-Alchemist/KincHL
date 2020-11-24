@@ -6,7 +6,7 @@ MAKE_OBJ_ARRAY(kinc_g4_vertex_structure_t*, vertex_structure, _ABSTRACT(kinc_g4_
 MAKE_OBJ_ARRAY(kinc_g4_render_target_t*, render_target, _ABSTRACT(kinc_g4_render_target_t))
 
 HL_PRIM void HL_NAME(hl_g4_begin)(int index) { kinc_g4_begin(index); }
-HL_PRIM void HL_NAME(hl_g4_clear)(unsigned int flags, unsigned int color, float depth, float stencil) { kinc_g4_clear(flags, color, depth, stencil); }
+HL_PRIM void HL_NAME(hl_g4_clear)(unsigned int flags, unsigned int color, float depth, int stencil) { kinc_g4_clear(flags, color, depth, stencil); }
 HL_PRIM void HL_NAME(hl_g4_end)(int index) { kinc_g4_end(index); }
 HL_PRIM bool HL_NAME(hl_g4_swap_buffers)() { return kinc_g4_swap_buffers(); }
 HL_PRIM void HL_NAME(hl_g4_flush)() { kinc_g4_flush(); }

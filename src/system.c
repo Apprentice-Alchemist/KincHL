@@ -12,28 +12,28 @@ HL_PRIM void HL_NAME(hl_start)() { kinc_start(); }
 HL_PRIM void HL_NAME(hl_stop)() { kinc_stop(); }
 HL_PRIM void HL_NAME(hl_log)(int level, vstring* msg) { kinc_log(level, hl_to_utf8(msg->bytes)); }
 
-HL_PRIM vstring* HL_NAME(hl_application_name)() { return hl_alloc_strbytes(kinc_application_name()); }
+HL_PRIM vstring* HL_NAME(hl_application_name)() { return (vstring*)hl_alloc_strbytes(hl_to_utf16(kinc_application_name())); }
 HL_PRIM void HL_NAME(hl_set_application_name)(vstring* name) { kinc_set_application_name(hl_to_utf8(name->bytes)); }
 HL_PRIM int HL_NAME(hl_width)() { return kinc_width(); }
 HL_PRIM int HL_NAME(hl_height)() { return kinc_height(); }
 // Not sure wether this is mean to be exposed
 // HL_PRIM bool HL_NAME(hl_internal_handle_messages)(void);
 HL_PRIM void HL_NAME(hl_load_url)(vstring* url) { kinc_load_url(hl_to_utf8(url->bytes)); }
-HL_PRIM vstring* HL_NAME(hl_system_id)() { return hl_alloc_strbytes(hl_to_utf16(kinc_system_id())); }
+HL_PRIM vstring* HL_NAME(hl_system_id)() { return (vstring*)hl_alloc_strbytes(hl_to_utf16(kinc_system_id())); }
 // Not sure wether this is mean to be exposed
 // HL_PRIM vstring* HL_NAME(hl_internal_save_path)() { return hl_alloc_strbytes(hl_to_utf16(kinc_internal_save_path())); }
 
-HL_PRIM const char** HL_NAME(hl_video_formats)() {
+HL_PRIM varray* HL_NAME(hl_video_formats)() {
   const char** formats = kinc_video_formats();
   int format_count = 0;
   for (; formats[format_count] != NULL; format_count++) {}
   varray* ret = hl_alloc_array(&hlt_dyn, format_count);
   for (int x = 0; x < format_count; x++) {
-    hl_aptr(ret, vstring*)[x] = hl_alloc_strbytes(hl_to_utf16(formats[x]));
+    hl_aptr(ret, vstring*)[x] = (vstring*)hl_alloc_strbytes(hl_to_utf16(formats[x]));
   }
   return ret;
 }
-HL_PRIM vstring* HL_NAME(hl_language)() { return hl_alloc_strbytes(hl_to_utf16(kinc_language())); }
+HL_PRIM vstring* HL_NAME(hl_language)() { return (vstring*)hl_alloc_strbytes(hl_to_utf16(kinc_language())); }
 HL_PRIM void HL_NAME(hl_vibrate)(int milliseconds) { kinc_vibrate(milliseconds); }
 HL_PRIM float HL_NAME(hl_safe_zone)() { return kinc_safe_zone(); }
 HL_PRIM bool HL_NAME(hl_automatic_safe_zone)() { return kinc_automatic_safe_zone(); }

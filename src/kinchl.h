@@ -46,7 +46,7 @@ HL_PRIM type HL_NAME(name##_hl_get_##field_name)(obj_type * o) {\
 
 #define MAKE_OBJ_ARRAY(obj,name,hl_obj) \
   HL_PRIM obj* HL_NAME(hl_##name##_array_alloc)(int length){\
-    obj ** ret = (obj**)hl_gc_alloc_raw(sizeof(obj) * length);\
+    obj * ret = (obj*)hl_gc_alloc_raw(sizeof(obj) * length);\
     for(int i = 0; i < length; i++){\
       ret[i] = NULL;\
     }\

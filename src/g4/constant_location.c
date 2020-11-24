@@ -10,7 +10,7 @@ HL_PRIM void kinc_hl_g4_set_float(kinc_g4_constant_location_t* location, float v
 HL_PRIM void kinc_hl_g4_set_float2(kinc_g4_constant_location_t* location, float value1, float value2) { kinc_g4_set_float2(*location, value1, value2); }
 HL_PRIM void kinc_hl_g4_set_float3(kinc_g4_constant_location_t* location, float value1, float value2, float value3) { kinc_g4_set_float3(*location, value1, value2, value3); }
 HL_PRIM void kinc_hl_g4_set_float4(kinc_g4_constant_location_t* location, float value1, float value2, float value3, float value4) { kinc_g4_set_float4(*location, value1, value2, value3, value4); }
-HL_PRIM void kinc_hl_g4_set_floats(kinc_g4_constant_location_t* location, float* values, float count) { kinc_g4_set_floats(*location, values, count); }
+HL_PRIM void kinc_hl_g4_set_floats(kinc_g4_constant_location_t* location, float* values, int count) { kinc_g4_set_floats(*location, values, count); }
 HL_PRIM void kinc_hl_g4_set_bool(kinc_g4_constant_location_t* location, bool value) { kinc_g4_set_bool(*location, value); }
 HL_PRIM void kinc_hl_g4_set_matrix3(kinc_g4_constant_location_t* location, kinc_matrix3x3_t* value) {
     kinc_g4_set_matrix3(*location, value);
