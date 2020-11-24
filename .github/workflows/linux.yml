@@ -25,6 +25,10 @@ jobs:
         repository: "Kode/Kinc"
         path: "Kinc"
         submodules: "recursive"
+    - name: Apt Update
+      run: sudo apt-get update
+    - name: Apt Install
+      run: sudo apt-get install libasound2-dev libxinerama-dev libxrandr-dev libgl1-mesa-dev libxi-dev libxcursor-dev --yes --quiet
     - name: Build Hashlink
       run: |
         cd hashlink

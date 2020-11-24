@@ -6,8 +6,8 @@
 #include <hl.h>
 
 typedef struct {
-  void *finalizer;
-  void *ptr;
+  void* finalizer;
+  void* ptr;
 } cffi_ptr;
 
 void EMPTY_INIT(void* obj);
