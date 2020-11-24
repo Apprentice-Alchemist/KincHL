@@ -29,8 +29,8 @@ jobs:
       run: |
         cd hashlink
         make libhl
-        mkdir -p ../KincHL/build
-        cp libhl.dylib ../KincHL/build
+        mkdir -p ../KincHL/build/Release
+        cp libhl.dylib ../KincHL/build/Release
     - name: Build KincHL
       run: |
         cd KincHL
