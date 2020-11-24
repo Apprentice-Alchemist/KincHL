@@ -34,4 +34,4 @@ jobs:
     - name: Build KincHL
       run: |
         cd KincHL
-        node ${env:GITHUB_WORKSPACE}/Kinc/make.js --dynlib --compile --noshaders
+        node ../Kinc/make.js --dynlib --compile --noshaders
