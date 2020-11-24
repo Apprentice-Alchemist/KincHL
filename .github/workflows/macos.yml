@@ -27,10 +27,13 @@ jobs:
         submodules: "recursive"
     - name: Build Hashlink
       run: |
-        brew install hashlink
-  #      cd hashlink
- #       make libhl
- #       cp libhl.dylib /usr/local/lib
+
+        cd hashlink
+        make libhl
+        mkdir -p ../KincHL/build
+        mkdir -p ../KincHL/build/build
+        mkdir -p ../KincHL/build/build/Release
+        cp libhl.dylib. ./KincHL/build/build/Release
     - name: Build KincHL
       run: |
         cd KincHL
