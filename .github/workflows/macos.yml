@@ -33,7 +33,7 @@ jobs:
         mkdir -p ../KincHL/build
         mkdir -p ../KincHL/build/build
         mkdir -p ../KincHL/build/build/Release
-        cp libhl.dylib. ./KincHL/build/build/Release
+        cp libhl.dylib ../KincHL/build/build/Release
     - name: Build KincHL
       run: |
         cd KincHL
