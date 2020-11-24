@@ -33,9 +33,8 @@ jobs:
       run: |
         cd hashlink
         make libhl
+        make install
     - name: Build KincHL
-      env:
-        LD_LIBRARY_PATH: $GITHUB_WORKSPACE/hashlink:$LD_LIBRARY_PATH
       run: |
         cd KincHL
         node ../Kinc/make.js --dynlib --compile --noshaders
