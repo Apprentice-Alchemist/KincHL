@@ -6,12 +6,11 @@ project.addIncludeDir("src/");
 if(require("process").env["GITHUB_WORKSPACE"]){
     project.addIncludeDir(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/src");
     const platform = require("process").platform;
-    const lib = switch(platform){
-        case "linux":"hl";
-        case "darwin":require("process").env["GITHUB_WORKSPACE"] + "/hashlink/libhl.dylib";
-        case "win32":require("process").env["GITHUB_WORKSPACE"] + "/hashlink/bin/libhl";
+    switch(platform){
+        case "linux": project.addLib("hl");
+        case "darwin": project.addLib(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/libhl.dylib");
+        case "win32": project.addLib(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/bin/libhl");
     }
-    project.addLib(lib);
 }else if(require("process").env["HASHLINK"]){
     const hashlink = require("process").env["HASHLINK"];
     project.addIncludeDir(hashlink + "/include");
