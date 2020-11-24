@@ -44,7 +44,7 @@ HL_PRIM kinc_a2_buffer_format_t* HL_NAME(a2_buffer_hl_get_format)(kinc_a2_buffer
 DEFINE_PRIM(_ABSTRACT(kinc_a2_buffer_format_t), a2_buffer_hl_get_format, _ABSTRACT(kinc_a2_buffer_t))
 
 static bool audio_thread_registered = false;
-vclosure* a2_cb = NULL;
+static vclosure* a2_cb = NULL;
 void internal_a2_callback(kinc_a2_buffer_t* buffer, int samples) {
     if (!audio_thread_registered) {
         vdynamic* ret;

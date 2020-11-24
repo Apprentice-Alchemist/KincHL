@@ -1,9 +1,9 @@
 #ifndef HL_NAME
 #define HL_NAME(n) kinc_##n
-#include <hl.h>
+#include <kinc/pch.h>
 #undef min
 #undef max
-#include <kinc/pch.h>
+#include <hl.h>
 
 typedef struct {
   void *finalizer;

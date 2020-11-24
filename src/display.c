@@ -7,7 +7,7 @@ DEFINE_PRIM(_VOID,display_init,_NO_ARG)
 DEFINE_PRIM(_I32,primary_display,_NO_ARG)
 DEFINE_PRIM(_I32,count_displays,_NO_ARG)
 DEFINE_PRIM(_BOOL,display_available,_I32)
-HL_PRIM vstring* HL_NAME(hl_display_name)(int index){return hl_alloc_strbytes(hl_to_utf16(kinc_display_name(index)));}
+HL_PRIM vstring* HL_NAME(hl_display_name)(int index){return (vstring*)hl_alloc_strbytes(hl_to_utf16(kinc_display_name(index)));}
 DEFINE_PRIM(_STRING,hl_display_name,_I32)
 HL_PRIM hl_display_mode* HL_NAME(hl_display_current_mode)(int index){
     hl_display_mode *ret = hl_gc_alloc_raw(sizeof(hl_display_mode));
@@ -24,10 +24,10 @@ HL_PRIM hl_display_mode* HL_NAME(hl_display_available_mode)(int index,int mode_i
 DEFINE_PRIM(_ABSTRACT(kinc_display_mode_t), hl_display_available_mode, _I32 _I32)
 
 #define __MAKE_GET(field_name,type,hl_ret)\
-HL_PRIM type HL_NAME(display_mode_hl_get_##field_name)(hl_display_mode * o) {\
-    return o->internal.##field_name;\
+HL_PRIM type HL_NAME(display_mode_hl_get_ ##field_name)(hl_display_mode * o) {\
+    return o->internal. ##field_name;\
   }\
-  DEFINE_PRIM(hl_ret, display_mode_hl_get_##field_name, _ABSTRACT(kinc_display_mode_t))
+  DEFINE_PRIM(hl_ret, display_mode_hl_get_ ##field_name, _ABSTRACT(kinc_display_mode_t))
 __MAKE_GET(x,int,_I32)
 __MAKE_GET(y,int,_I32)
 __MAKE_GET(width, int, _I32)

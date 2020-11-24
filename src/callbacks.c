@@ -7,7 +7,7 @@
   static vclosure* ##name##_cb = NULL;\
   static expr\
   HL_PRIM void HL_NAME(hl_set_##name##_callback)(vclosure *cb){\
-    if(##name##_cb != NULL){\
+    if( ##name##_cb != NULL){\
       hl_remove_root(##name##_cb);\
     }\
     ##name##_cb = cb;\

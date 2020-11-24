@@ -54,26 +54,33 @@ HL_PRIM void HL_NAME(hl_window_show)(int window_index){kinc_window_show(window_i
 HL_PRIM void HL_NAME(hl_window_hide)(int window_index){kinc_window_hide(window_index);}
 HL_PRIM void HL_NAME(hl_window_set_title)(int window_index, vstring* title){kinc_window_set_title(window_index,hl_to_utf8(title->bytes));}
 
-void internal_resize_callback(int x,int y,vclosure *data){
+void internal_resize_callback(int x,int y,void *data){
   if(data != NULL){
     vdynamic* _x = hl_alloc_dynamic(&hlt_i32);
     _x->v.i = x;
     vdynamic* _y = hl_alloc_dynamic(&hlt_i32);
     _y->v.i = y;
     vdynamic* args[2] = { _x, _y };
-    bool isexp;
-    hl_dyn_call_safe(data, args, 2, &isexp);
+    bool isexp = false;
+    hl_dyn_call_safe((vclosure*)data, args, 2, &isexp);
     if(isexp){
       kinc_log(KINC_LOG_LEVEL_WARNING,"Exception in window_resize_callback");
     }
   }
 }
 HL_PRIM void HL_NAME(hl_window_set_resize_callback)(int window_index, vclosure *cb){
-  kinc_window_set_resize_callback(window_index,internal_resize_callback,cb);
+  kinc_window_set_resize_callback(window_index,internal_resize_callback,(void*)cb);
 }
 void internal_ppi_changed_callback(int ppi, vclosure* data) {
   if (data != NULL) {
-    hl_call1(void,data,int,ppi);
+    vdynamic* _ppi = hl_alloc_dynamic(&hlt_i32);
+    _ppi->v.i = ppi;
+    vdynamic* args[1] = { _ppi };
+    bool isexp = false;
+    hl_dyn_call_safe((vclosure*)data, args, 1, &isexp);
+    if (isexp) {
+      kinc_log(KINC_LOG_LEVEL_WARNING, "Exception in window_ppi_changed_callback");
+    }
   }
 }
 HL_PRIM void HL_NAME(hl_window_set_ppi_changed_callback)(int window_index, vclosure *cb){
