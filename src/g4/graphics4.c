@@ -32,12 +32,12 @@ HL_PRIM void HL_NAME(hl_g4_set_render_targets)(varray* targets) { kinc_g4_set_re
 HL_PRIM void HL_NAME(hl_g4_set_render_target_face)(kinc_g4_render_target_t* texture, int face) { kinc_g4_set_render_target_face(texture, face); }
 HL_PRIM void HL_NAME(hl_g4_set_texture)(kinc_g4_texture_unit_t* unit, kinc_g4_texture_t* texture) { kinc_g4_set_texture(*unit, texture); }
 HL_PRIM void HL_NAME(hl_g4_set_image_texture)(kinc_g4_texture_unit_t* unit, kinc_g4_texture_t* texture) { kinc_g4_set_image_texture(*unit, texture); }
-HL_PRIM bool HL_NAME(hl_g4_init_occlusion_query)(unsigned* occlusionQuery) { return kinc_g4_init_occlusion_query(occlusionQuery); }
-HL_PRIM void HL_NAME(hl_g4_delete_occlusion_query)(unsigned occlusionQuery) { kinc_g4_delete_occlusion_query(occlusionQuery); }
-HL_PRIM void HL_NAME(hl_g4_start_occlusion_query)(unsigned occlusionQuery) { kinc_g4_start_occlusion_query(occlusionQuery); }
-HL_PRIM void HL_NAME(hl_g4_end_occlusion_query)(unsigned occlusionQuery) { kinc_g4_end_occlusion_query(occlusionQuery); }
-HL_PRIM bool HL_NAME(hl_g4_are_query_results_available)(unsigned occlusionQuery) { return kinc_g4_are_query_results_available(occlusionQuery); }
-HL_PRIM void HL_NAME(hl_g4_get_query_results)(unsigned occlusionQuery, unsigned* pixelCount) { kinc_g4_get_query_results(occlusionQuery, pixelCount); }
+//HL_PRIM bool HL_NAME(hl_g4_init_occlusion_query)(unsigned* occlusionQuery) { return kinc_g4_init_occlusion_query(occlusionQuery); }
+//HL_PRIM void HL_NAME(hl_g4_delete_occlusion_query)(unsigned occlusionQuery) { kinc_g4_delete_occlusion_query(occlusionQuery); }
+//HL_PRIM void HL_NAME(hl_g4_start_occlusion_query)(unsigned occlusionQuery) { kinc_g4_start_occlusion_query(occlusionQuery); }
+//HL_PRIM void HL_NAME(hl_g4_end_occlusion_query)(unsigned occlusionQuery) { kinc_g4_end_occlusion_query(occlusionQuery); }
+//HL_PRIM bool HL_NAME(hl_g4_are_query_results_available)(unsigned occlusionQuery) { return kinc_g4_are_query_results_available(occlusionQuery); }
+//HL_PRIM void HL_NAME(hl_g4_get_query_results)(unsigned occlusionQuery, unsigned* pixelCount) { kinc_g4_get_query_results(occlusionQuery, pixelCount); }
 HL_PRIM void HL_NAME(hl_g4_set_texture_array)(kinc_g4_texture_unit_t* unit, kinc_g4_texture_array_t* array) { kinc_g4_set_texture_array(*unit, array); }
 HL_PRIM int HL_NAME(hl_g4_antialiasing_samples)() { return kinc_g4_antialiasing_samples(); }
 HL_PRIM void HL_NAME(hl_g4_set_antialiasing_samples)(int samples) { kinc_g4_set_antialiasing_samples(samples); }
@@ -69,12 +69,12 @@ DEFINE_PRIM(_VOID, hl_g4_set_render_targets, _ARR)
 DEFINE_PRIM(_VOID, hl_g4_set_render_target_face, _ABSTRACT(kinc_g4_render_target_t) _I32)
 DEFINE_PRIM(_VOID, hl_g4_set_texture, _TUNIT _ABSTRACT(kinc_g4_texture_t))
 DEFINE_PRIM(_VOID, hl_g4_set_image_texture, _TUNIT _ABSTRACT(kinc_g4_texture_t))
-DEFINE_PRIM(_BOOL, hl_g4_init_occlusion_query, _REF(_I32))
-DEFINE_PRIM(_VOID, hl_g4_delete_occlusion_query, _I32)
-DEFINE_PRIM(_VOID, hl_g4_start_occlusion_query, _I32)
-DEFINE_PRIM(_VOID, hl_g4_end_occlusion_query, _I32)
-DEFINE_PRIM(_BOOL, hl_g4_are_query_results_available, _I32)
-DEFINE_PRIM(_VOID, hl_g4_get_query_results, _I32 _REF(_I32))
+//DEFINE_PRIM(_BOOL, hl_g4_init_occlusion_query, _REF(_I32))
+//DEFINE_PRIM(_VOID, hl_g4_delete_occlusion_query, _I32)
+//DEFINE_PRIM(_VOID, hl_g4_start_occlusion_query, _I32)
+//DEFINE_PRIM(_VOID, hl_g4_end_occlusion_query, _I32)
+//DEFINE_PRIM(_BOOL, hl_g4_are_query_results_available, _I32)
+//DEFINE_PRIM(_VOID, hl_g4_get_query_results, _I32 _REF(_I32))
 DEFINE_PRIM(_VOID, hl_g4_set_texture_array, _TUNIT _ABSTRACT(kinc_g4_texture_array_t))
 DEFINE_PRIM(_I32, hl_g4_antialiasing_samples, _NO_ARG)
 DEFINE_PRIM(_VOID, hl_g4_set_antialiasing_samples, _I32)
