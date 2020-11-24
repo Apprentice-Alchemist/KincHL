@@ -18,7 +18,7 @@ HL_PRIM void HL_NAME(hl_image_init_from_bytes)(kinc_image_t* img, void* mem, int
     kinc_image_init_from_bytes(img, mem, w, h, format);
 }
 HL_PRIM size_t HL_NAME(hl_image_init_from_file)(kinc_image_t* img, vstring* name) {
-    void* mem = hl_gc_alloc_noptr(kinc_image_size_from_file(hl_to_utf8(name->bytes)));
+    void* mem = hl_gc_alloc_noptr((int)kinc_image_size_from_file(hl_to_utf8(name->bytes)));
     return kinc_image_init_from_file(img, mem, hl_to_utf8(name->bytes));
 }
 DEFINE_PRIM(_I64, hl_image_init, _ABSTRACT(kinc_image_t) _BYTES _I32 _I32 _I32)

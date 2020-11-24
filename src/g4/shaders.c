@@ -13,7 +13,7 @@ HL_PRIM void HL_NAME(hl_g4_shader_init_from_file)(kinc_g4_shader_t* s, vstring* 
     kinc_file_reader_t reader;
     char* name = hl_to_utf8(file->bytes);
     kinc_file_reader_open(&reader, name, KINC_FILE_TYPE_ASSET);
-    size_t size = kinc_file_reader_size(&reader);
+    int size = (int)kinc_file_reader_size(&reader);
     void* buf = hl_gc_alloc_noptr(size);
     kinc_file_reader_read(&reader, buf, size);
     kinc_file_reader_close(&reader);

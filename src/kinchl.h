@@ -30,17 +30,17 @@ void EMPTY_DESTROY(void* obj);
 
 #define MAKE_GET_SET(obj_type, name,field_name, type, hl_obj, hl_ret)                        \
   HL_PRIM type HL_NAME(name##_hl_get_##field_name)(obj_type * o) {           \
-    return o->##field_name;                                                         \
+    return o-> field_name;                                                         \
   }                                                                           \
   HL_PRIM type HL_NAME(name##_hl_set_##field_name)(obj_type * o,type v) { \
-    return o->##field_name = v;                                                     \
+    return o-> field_name = v;                                                     \
   }                                                                           \
-  DEFINE_PRIM(hl_ret, ##name##_hl_get_##field_name, hl_obj)                       \
-  DEFINE_PRIM(hl_ret, ##name##_hl_set_##field_name, hl_obj hl_ret)
+  DEFINE_PRIM(hl_ret, name##_hl_get_##field_name, hl_obj)                       \
+  DEFINE_PRIM(hl_ret, name##_hl_set_##field_name, hl_obj hl_ret)
 
 #define MAKE_GET(obj_type,name,field_name,type,hl_obj,hl_ret)\
 HL_PRIM type HL_NAME(name##_hl_get_##field_name)(obj_type * o) {\
-    return o->##field_name;\
+    return o-> field_name;\
   }\
   DEFINE_PRIM(hl_ret, ##name##_hl_get_##field_name, hl_obj)
 
