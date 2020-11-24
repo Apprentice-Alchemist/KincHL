@@ -1,6 +1,6 @@
 #include "kinchl.h"
 #include <kinc/audio1/audio.h>
-
+#include <kinc/log.h>
 // AUDIO 1
 MAKE_GET(kinc_a1_channel_t, a1_channel, sound, kinc_a1_sound_t*, _ABSTRACT(kinc_a1_channel_t), _ABSTRACT(kinc_a1_sound_t))
 MAKE_GET_SET(kinc_a1_channel_t, a1_channel, position, float, _ABSTRACT(kinc_a1_channel_t), _F32)
@@ -11,8 +11,8 @@ HL_PRIM kinc_a2_buffer_format_t* HL_NAME(a1_sound_hl_get_format)(kinc_a1_sound_t
     return &(o->format);
 }
 DEFINE_PRIM(_ABSTRACT(kinc_a2_buffer_format_t), a1_sound_hl_get_format, _ABSTRACT(kinc_a1_sound_t))
-MAKE_GET_SET(kinc_a1_sound_t, a1_sound, left, int16_t*, _ABSTRACT(kinc_a1_sound_t), _REF(_I16))
-MAKE_GET_SET(kinc_a1_sound_t, a1_sound, right, int16_t*, _ABSTRACT(kinc_a1_sound_t), _REF(_I16))
+MAKE_GET_SET(kinc_a1_sound_t, a1_sound, left, int16_t*, _ABSTRACT(kinc_a1_sound_t), _BYTES)
+MAKE_GET_SET(kinc_a1_sound_t, a1_sound, right, int16_t*, _ABSTRACT(kinc_a1_sound_t), _BYTES)
 MAKE_GET_SET(kinc_a1_sound_t, a1_sound, size, int, _ABSTRACT(kinc_a1_sound_t), _I32)
 MAKE_GET_SET(kinc_a1_sound_t, a1_sound, sample_rate_pos, float, _ABSTRACT(kinc_a1_sound_t), _F32)
 
@@ -28,6 +28,7 @@ DEFINE_PRIM(_VOID, hl_a1_sound_destroy, _ABSTRACT(kinc_a1_sound_t))
 DEFINE_PRIM(_VOID, a1_init, _NO_ARG)
 DEFINE_PRIM(_ABSTRACT(kinc_a1_channel_t), a1_play_sound, _ABSTRACT(kinc_a1_sound_t) _BOOL _F32 _BOOL)
 DEFINE_PRIM(_VOID, a1_stop_sound, _ABSTRACT(kinc_a1_sound_t))
+
 // AUDIO 2
 MAKE_GET_SET(kinc_a2_buffer_format_t, a2_buffer_format, channels, int, _ABSTRACT(kinc_a2_buffer_format_t), _I32)
 MAKE_GET_SET(kinc_a2_buffer_format_t, a2_buffer_format, samples_per_second, int, _ABSTRACT(kinc_a2_buffer_format_t), _I32)
@@ -52,7 +53,16 @@ void internal_a2_callback(kinc_a2_buffer_t* buffer, int samples) {
     }
     if (a2_cb != NULL) {
         hl_blocking(true);
-        hl_call2(void, a2_cb, kinc_a2_buffer_t*, buffer, int, samples);
+        vdynamic *buf = hl_alloc_dynamic(&hlt_abstract);
+        buf->v.ptr = buffer;
+        vdynamic *s = hl_alloc_dynamic(&hlt_i32);
+        s->v.i = samples;
+        vdynamic *args[2] = {buf,s};
+        bool isexc = false;
+        hl_dyn_call_safe(a2_cb,args,2,&isexc);
+        if(isexc){
+            kinc_log(KINC_LOG_LEVEL_ERROR,"Exception occured in audio callback");
+        }
         hl_blocking(false);
     }
 }

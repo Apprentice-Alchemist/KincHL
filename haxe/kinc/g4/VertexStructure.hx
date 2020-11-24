@@ -14,13 +14,13 @@ abstract VertexStructure(hl.Abstract<"kinc_g4_vertex_structure_t">) to hl.Abstra
 }
 
 enum abstract VertexData(Int) {
-	var NONE;
-	var FLOAT1;
-	var FLOAT2;
-	var FLOAT3;
-	var FLOAT4;
-	var FLOAT4X4;
-	var SHORT2_NORM;
-	var SHORT4_NORM;
-	var COLOR;
+	var None;
+	var Float1;
+	var Float2;
+	var Float3;
+	var Float4;
+	var Float4X4;
+	var Short2_Norm;
+	var Short4_Norm;
+	var Color;
 }

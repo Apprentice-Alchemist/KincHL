@@ -8,7 +8,7 @@ abstract IndexBuffer(hl.Abstract<"kinc_g4_index_buffer_t">) to hl.Abstract<"kinc
 		init(count, format);
 	}
 	function init(count:Int, format:Int):Void {}
-	public function lock():kinc.util.NativeArray<Int, "int"> return null;
+	public function lock():hl.BytesAccess<Int> return null;
 	public function unlock():Void {}
 	public function count():Int return 0;
 }

@@ -1,5 +1,8 @@
 package kinc.g4;
 
+import kinc.math.Matrix4;
+import kinc.math.Matrix3;
+
 @:hlNative("kinc", "hl_g4_")
 extern class Graphics4 {
 	static function begin(index:Int):Void;
@@ -9,12 +12,7 @@ extern class Graphics4 {
 	static function swapBuffers():Bool;
 	static function setPipeline(state:Pipeline):Void;
 	static function setVertexBuffer(buf:VertexBuffer):Void;
-	static inline function setVertexBuffers(buffers:Array<VertexBuffer>):Void {
-		__set_vertex_buffers(buffers, buffers.length);
-	};
-	@:hlNative("kinc",
-		"hl_g4_set_vertex_buffers") private static function __set_vertex_buffers(buffers:kinc.util.NativeArray<hl.Abstract<"kinc_g4_vertex_buffer_t">,
-		"vertex_buffer">, count:Int):Void;
+	static function setVertexBuffers(buffers:kinc.util.NativeArray<VertexBuffer>):Void;
 	static function setIndexBuffer(buf:IndexBuffer):Void;
 	static function drawIndexedVertices():Void;
 	static function viewport(x:Int, y:Int, w:Int, h:Int):Void;
@@ -29,17 +27,18 @@ extern class Graphics4 {
 	static function renderTargetsInvertedY():Bool;
 	static function nonPow2TexturesSupported():Bool;
 	static function restoreRenderTarget():Void;
-	static function setRenderTargets(arr:kinc.util.NativeArray<RenderTarget, "render_target">, count:Int):Void;
+	static function setRenderTargets(arr:kinc.util.NativeArray<RenderTarget>):Void;
 	static function setRenderTargetFace(target:RenderTarget, face:Int):Void;
 	static function setTexture(unit:TextureUnit, tex:Texture):Void;
 	static function setImageTexture(unit:TextureUnit, tex:Texture):Void;
+	
 	static function initOcclusionQuery(q:hl.Ref<Int>):Bool;
 	static function deleteOcclusionQuery(q:Int):Void;
 	static function startOcclusionQuery(q:Int):Void;
 	static function endOcclusionQuery(q:Int):Void;
 	static function areQueryResultsAvailable(q:Int):Bool;
 	static function getQueryResults(q:Int, pixelCount:hl.Ref<Int>):Void;
-	// static function setTextureArray(unit:TextureUnit, array:TextureArray):Void;
+	static function setTextureArray(unit:TextureUnit, array:TextureArray):Void;
 	static function antialiasingSamples():Int;
 	static function setAntialiasingSamples(samles:Int):Void;
 
@@ -47,15 +46,21 @@ extern class Graphics4 {
 	static function setInt2(location:ConstantLocation, i:Int, i2:Int):Void;
 	static function setInt3(location:ConstantLocation, i:Int, i2:Int, i3:Int):Void;
 	static function setInt4(location:ConstantLocation, i:Int, i2:Int, i3:Int, i4:Int):Void;
-	static function setInts(location:ConstantLocation, i:kinc.util.NativeArray<Int, "int">, count:Int):Void;
+	public static inline function setInts(location:ConstantLocation,arr:Array<Int>):Void {
+		__setInts(location,hl.Bytes.getArray(arr),arr.length);
+	}
+	@:hlNative("kinc","hl_g4_set_ints") private static function __setInts(location:ConstantLocation, i:hl.Bytes, count:Int):Void;
 	static function setFloat(location:ConstantLocation, i:hl.F32):Void;
 	static function setFloat2(location:ConstantLocation, i:hl.F32, i2:hl.F32):Void;
 	static function setFloat3(location:ConstantLocation, i:hl.F32, i2:hl.F32, i3:hl.F32):Void;
 	static function setFloat4(location:ConstantLocation, i:hl.F32, i2:hl.F32, i3:hl.F32, i4:hl.F32):Void;
-	static function setFloats(location:ConstantLocation, i:kinc.util.NativeArray<hl.F32, "single">, count:Int):Void;
+	public static inline function setFloats(location:ConstantLocation, arr:Array<hl.F32>):Void {
+		__setFloats(location, hl.Bytes.getArray(arr), arr.length);
+	}
+	@:hlNative("kinc", "hl_g4_set_ints") private static function __setFloats(location:ConstantLocation, i:hl.Bytes, count:Int):Void;
 	static function setBool(location:ConstantLocation, b:Bool):Void;
-	static function setMatrix3(location:ConstantLocation, m:hl.Abstract<"kinc_matrix3x3_t">):Void;
-	static function setMatrix4(location:ConstantLocation, m:hl.Abstract<"kinc_matrix4x4_t">):Void;
+	static function setMatrix3(location:ConstantLocation, m:Matrix3):Void;
+	static function setMatrix4(location:ConstantLocation, m:Matrix4):Void;
 	static function setTextureMagnificationFilter(unit:TextureUnit, f:TextureFilter):Void;
 	static function setTexture3dMagnificationFilter(unit:TextureUnit, f:TextureFilter):Void;
 	static function setTextureMinificationFilter(unit:TextureUnit, f:TextureFilter):Void;

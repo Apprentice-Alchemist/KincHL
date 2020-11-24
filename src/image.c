@@ -1,6 +1,6 @@
 #include "kinchl.h"
 #include <kinc/image.h>
-
+#include <kinc/graphics5/constantbuffer.h>
 ALLOC_OBJ(kinc_image_t, image, _ABSTRACT(kinc_image_t), EMPTY_INIT, kinc_image_destroy)
 MAKE_GET_SET(kinc_image_t, image, width, int, _ABSTRACT(kinc_image_t), _I32)
 MAKE_GET_SET(kinc_image_t, image, height, int, _ABSTRACT(kinc_image_t), _I32)

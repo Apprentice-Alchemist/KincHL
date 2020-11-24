@@ -1,5 +1,6 @@
 import kinc.g4.Graphics4;
 import kinc.System;
+
 class Keyboard {
 	static var space_pressed:Bool = false;
 
@@ -14,6 +15,14 @@ class Keyboard {
 			if (k == KEY_SPACE)
 				space_pressed = false;
 		});
+		kinc.System.setCopyCallback(() -> "Hello World");
+		kinc.System.setPasteCallback(function(s:String) {
+			// try
+			// 	trace(s)
+			// catch (e)
+			// 	trace(e);
+		});
+		kinc.System.setPasteCallback(null);
 		System.start();
 	}
 

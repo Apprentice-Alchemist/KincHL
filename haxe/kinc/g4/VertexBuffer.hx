@@ -10,8 +10,8 @@ abstract VertexBuffer(hl.Abstract<"kinc_g4_vertex_buffer_t">) to hl.Abstract<"ki
         init(count,structure,usage,data_step_rate);
     }
     private function init(count:Int,structure:hl.Abstract<"kinc_g4_vertex_structure_t">,usage:Int,data_step_rate:Int):Void {}
-    public function lock(start:Int,count:Int):kinc.util.NativeArray<hl.F32,"single"> return null;
-    public function lockAll():kinc.util.NativeArray<hl.F32,"single"> return null;
+    public function lock(start:Int,count:Int):hl.BytesAccess<hl.F32> return null;
+    public function lockAll():hl.BytesAccess<hl.F32> return null;
     public function unlock(start:Int,count:Int):Void {}
     public function unlockAll():Void {}
     public function count():Int return 0;
@@ -19,7 +19,7 @@ abstract VertexBuffer(hl.Abstract<"kinc_g4_vertex_buffer_t">) to hl.Abstract<"ki
 }
 
 enum abstract Usage(Int) to Int{
-	var STATIC;
-	var DYNAMIC;
-	var READABLE;
+	var StaticUsage;
+	var DynamicUsage;
+	var ReadableUsage;
 }

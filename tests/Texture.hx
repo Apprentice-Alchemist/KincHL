@@ -1,6 +1,4 @@
 import kinc.Image;
-import haxe.io.BytesInput;
-import haxe.Resource;
 import kinc.math.Matrix3;
 import kinc.g4.ConstantLocation;
 import kinc.g4.TextureUnit;
@@ -18,7 +16,7 @@ class Texture {
 	static var texture:kinc.g4.Texture;
 
 	public static function main() {
-		kinc.System.init("Texture", 500, 500, null, null);
+		kinc.System.init("Texture", 500, 500);
 		kinc.System.setUpdateCallback(update);
 
 		#if (format && test_format)
@@ -36,9 +34,8 @@ class Texture {
 		var vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/texture.vert"), VertexShader);
 
 		structure = new kinc.g4.VertexStructure();
-		structure.size = 0;
-		structure.add("pos", FLOAT3);
-		structure.add("tex", FLOAT2);
+		structure.add("pos", Float3);
+		structure.add("tex", Float2);
 
 		pipeline = new kinc.g4.Pipeline();
 		pipeline.vertex_shader = vertex_shader;
@@ -49,7 +46,7 @@ class Texture {
 		texunit = pipeline.getTextureUnit("texsampler");
 		offset = pipeline.getConstantLocation("mvp");
 
-		vertex_buffer = new VertexBuffer(4, structure, STATIC, 0);
+		vertex_buffer = new VertexBuffer(4, structure, StaticUsage, 0);
 		{
 			var v = vertex_buffer.lockAll();
 			v[0] = -1.0;

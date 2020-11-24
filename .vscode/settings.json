@@ -12,6 +12,9 @@
         "array": "c",
         "vector": "c",
         "xstring": "c",
-        "xutility": "c"
+        "xutility": "c",
+        "kinchl.h": "c",
+        "audio.h": "c",
+        "matrix.h": "c"
     }
 }

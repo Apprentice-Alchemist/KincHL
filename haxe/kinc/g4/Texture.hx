@@ -16,7 +16,7 @@ abstract Texture(hl.Abstract<"kinc_g4_texture_t">) to hl.Abstract<"kinc_g4_textu
 	public function init3d(width:Int,height:Int,depth:Int,format:ImageFormat):Void {}
 	public function initFromImage(img:kinc.Image):Void {}
 	public function initFromImage3d(img:kinc.Image):Void {}
-	public function lock():hl.Bytes {return null;};
+	public function lock():hl.BytesAccess<hl.UI8> {return null;};
 	public function unlock():Void {}
 	public function clear(x:Int,y:Int,z:Int,width:Int,height:Int,depth:Int,color:Int):Void {}
 	public function generateMipmaps(levels:Int):Void {}

@@ -7,8 +7,8 @@ import kinc.audio2.BufferFormat;
 @:hlNative("kinc", "hl_a1_sound_")
 abstract Sound(hl.Abstract<"kinc_a1_sound_t">) {
 	public var format(get, never):BufferFormat;
-	// public var left(get,set):hl.Ref<Int>; // not sure how I should type those
-	// public var right(get,set):hl.Ref<Int>;
+	public var left(get, set):hl.BytesAccess<hl.UI16>; // not sure how I should type those
+	public var right(get, set):hl.BytesAccess<hl.UI16>;
 	public var size(get, set):Int;
 	public var sample_rate_pos(get, set):F32;
 	@:no_get @:no_set

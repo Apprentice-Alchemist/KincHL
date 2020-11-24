@@ -1,5 +1,5 @@
 -lib kinc
 -cp tests
 --debug
--m Texture
--hl cbin/main.c
+# -m Texture
+-hl out.hl

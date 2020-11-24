@@ -1,16 +1,16 @@
 package kinc.input;
 
-@:hlNative("kinc","keyboard_")
+@:hlNative("kinc", "keyboard_")
 extern class Keyboard {
-	public static function show():Void;
-	public static function hide():Void;
-	public static function active():Bool;
-	public static function setKeyDownCallback(cb:KeyCode->Void):Void;
-	public static function setKeyUpCallback(cb:KeyCode->Void):Void;
-	public static function setKeyPressCallback(cb:Int->Void):Void;
+	static function show():Void;
+	static function hide():Void;
+	static function active():Bool;
+	static function setKeyDownCallback(cb:KeyCode->Void):Void;
+	static function setKeyUpCallback(cb:KeyCode->Void):Void;
+	static function setKeyPressCallback(cb:Int->Void):Void;
 }
 
-enum abstract KeyCode(Int) {
+private enum abstract KeyCode(Int) {
 	var KEY_UNKNOWN = 0;
 	var KEY_BACK = 1; // Android
 	var KEY_CANCEL = 3;

@@ -1,33 +1,34 @@
 #include "window.h"
-
+#include <kinc/log.h>
 kinc_window_options_t* convert_win_opts_hl(win_opts_hl* win) {
   if (win == NULL) {
     return NULL;
   }
 
-  kinc_window_options_t window;
-  window.display_index = win->display_index;
-  window.height = win->height;
-  window.mode = win->mode;
-  window.title = hl_to_utf8(win->title->bytes);
-  window.width = win->width;
-  window.window_features = win->window_features;
-  window.x = win->x;
-  window.y = win->y;
-  return &window;
+  kinc_window_options_t *window = hl_gc_alloc_raw(sizeof(kinc_window_options_t));
+  window->display_index = win->display_index;
+  window->height = win->height;
+  window->mode = win->mode;
+  window->title = win->title == NULL ? NULL : hl_to_utf8(win->title->bytes);
+  window->width = win->width;
+  window->window_features = win->window_features;
+  window->x = win->x;
+  window->y = win->y;
+  window->visible = win->visible;
+  return window;
 }
 kinc_framebuffer_options_t* convert_fb_opts_hl(fb_opts_hl* fb) {
   if (fb == NULL) {
     return NULL;
   }
-  kinc_framebuffer_options_t frame;
-  frame.color_bits = fb->color_bits;
-  frame.depth_bits = fb->depth_bits;
-  frame.frequency = fb->frequency;
-  frame.samples_per_pixel = fb->samples_per_pixel;
-  frame.stencil_bits = fb->stencil_bits;
-  frame.vertical_sync = fb->vertical_sync;
-  return &frame;
+  kinc_framebuffer_options_t *frame = hl_gc_alloc_raw(sizeof(kinc_framebuffer_options_t));
+  frame->color_bits = fb->color_bits;
+  frame->depth_bits = fb->depth_bits;
+  frame->frequency = fb->frequency;
+  frame->samples_per_pixel = fb->samples_per_pixel;
+  frame->stencil_bits = fb->stencil_bits;
+  frame->vertical_sync = fb->vertical_sync;
+  return frame;
 }
 
 HL_PRIM int HL_NAME(hl_window_create)(win_opts_hl* win, fb_opts_hl* fb) {
@@ -55,8 +56,16 @@ HL_PRIM void HL_NAME(hl_window_set_title)(int window_index, vstring* title){kinc
 
 void internal_resize_callback(int x,int y,vclosure *data){
   if(data != NULL){
-    void (*fun)(int,int) = data->hasValue ? data->value : data->fun;
-    fun(x,y);
+    vdynamic* _x = hl_alloc_dynamic(&hlt_i32);
+    _x->v.i = x;
+    vdynamic* _y = hl_alloc_dynamic(&hlt_i32);
+    _y->v.i = y;
+    vdynamic* args[2] = { _x, _y };
+    bool isexp;
+    hl_dyn_call_safe(data, args, 2, &isexp);
+    if(isexp){
+      kinc_log(KINC_LOG_LEVEL_WARNING,"Exception in window_resize_callback");
+    }
   }
 }
 HL_PRIM void HL_NAME(hl_window_set_resize_callback)(int window_index, vclosure *cb){
@@ -64,8 +73,7 @@ HL_PRIM void HL_NAME(hl_window_set_resize_callback)(int window_index, vclosure *
 }
 void internal_ppi_changed_callback(int ppi, vclosure* data) {
   if (data != NULL) {
-    void (*fun)(int) = data->hasValue ? data->value : data->fun;
-    fun(ppi);
+    hl_call1(void,data,int,ppi);
   }
 }
 HL_PRIM void HL_NAME(hl_window_set_ppi_changed_callback)(int window_index, vclosure *cb){

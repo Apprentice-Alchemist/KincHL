@@ -48,6 +48,22 @@ HL_PRIM void HL_NAME(hl_disallow_user_change)(){kinc_disallow_user_change();}
 HL_PRIM void HL_NAME(hl_allow_user_change)(){kinc_allow_user_change();}
 HL_PRIM void HL_NAME(hl_set_keep_screen_on)(bool on){kinc_set_keep_screen_on(on);}
 
+HL_PRIM int HL_NAME(hl_get_graphics_api)(){
+#if KORE_DIRECT3D9
+  return 0;
+#elif KORE_DIRECT3D11
+  return 1;
+#elif KORE_DIRECT3D12
+  return 2;
+#elif KORE_OPENGL
+  return 3;
+#elif KORE_METAL
+  return 4;
+#elif KORE_VULKAN
+  return 5;
+#endif
+}
+
 DEFINE_PRIM(_VOID, hl_start, _NO_ARG)
 DEFINE_PRIM(_I32, hl_init, _STRING _I32 _I32 HL_WINDOW_OPTS HL_FRAMEBUFFER_OPTS)
 DEFINE_PRIM(_VOID, hl_stop, _NO_ARG)
@@ -74,10 +90,11 @@ DEFINE_PRIM(_VOID, hl_unlock_achievement, _I32)
 DEFINE_PRIM(_VOID, hl_disallow_user_change, _NO_ARG)
 DEFINE_PRIM(_VOID, hl_allow_user_change, _NO_ARG)
 DEFINE_PRIM(_VOID, hl_set_keep_screen_on, _BOOL)
+DEFINE_PRIM(_I32, hl_get_graphics_api, _NO_ARG)
 
 void EMPTY_INIT(void* o) {}
 void EMPTY_DESTROY(void* o) {}
-MAKE_OBJ_ARRAY(float, single, _F32)
-MAKE_OBJ_ARRAY(int, int, _I32)
-MAKE_OBJ_ARRAY(bool, bool, _BOOL)
-MAKE_OBJ_ARRAY(int, rtf, _I32)
+// MAKE_OBJ_ARRAY(float, single, _F32)
+// MAKE_OBJ_ARRAY(int, int, _I32)
+// MAKE_OBJ_ARRAY(bool, bool, _BOOL)
+// MAKE_OBJ_ARRAY(int, rtf, _I32)

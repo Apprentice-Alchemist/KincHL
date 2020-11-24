@@ -12,10 +12,4 @@
 #include <kinc/graphics4/texturearray.h>
 #define _LOC _ABSTRACT(kinc_g4_constant_location_t)
 #define _TUNIT _ABSTRACT(kinc_g4_texture_unit_t)
-typedef struct {
-    kinc_g4_constant_location_t loc;
-} hl_const_loc;
-typedef struct {
-    kinc_g4_texture_unit_t loc;
-} hl_tex_unit;
 #endif

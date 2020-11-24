@@ -5,6 +5,11 @@
 #undef max
 #include <kinc/pch.h>
 
+typedef struct {
+  void *finalizer;
+  void *ptr;
+} cffi_ptr;
+
 void EMPTY_INIT(void* obj);
 void EMPTY_DESTROY(void* obj);
 

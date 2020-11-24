@@ -5,10 +5,10 @@ import kinc.Window;
 
 @:hlNative("kinc", "hl_")
 extern class System {
-	static function init(name:String, width:Int, height:Int, win:WindowOptions, fb:FramebufferOptions):Int;
+	static function init(name:String, width:Int, height:Int, win:WindowOptions = null, fb:FramebufferOptions = null):Int;
 	static function start():Void;
 	static function stop():Void;
-	static function log(level:LogLevel,msg:String):Void;
+	static function log(level:LogLevel, msg:String):Void;
 	static function applicationName():String;
 	static function setApplicationName(name:String):Void;
 	static function width():Int;
@@ -29,7 +29,7 @@ extern class System {
 	static function allowUserChange():Void;
 	static function disallowUserChange():Void;
 	static function setKeepScreenOn(on:Bool):Void;
-	
+
 	static function setUpdateCallback(cb:Void->Void):Void;
 	static function setForegroundCallback(cb:Void->Void):Void;
 	static function setResumeCallback(cb:Void->Void):Void;
@@ -42,9 +42,21 @@ extern class System {
 	static function setPasteCallback(cb:String->Void):Void;
 	static function setLoginCallback(cb:Void->Void):Void;
 	static function setLogoutCallback(cb:Void->Void):Void;
+
+	static function getGraphicsApi():GraphicsApi;
 }
+
 enum abstract LogLevel(Int) from Int {
 	var LOG_LEVEL_INFO;
 	var LOG_LEVEL_WARNING;
 	var LOG_LEVEL_ERROR;
+}
+
+enum abstract GraphicsApi(Int) {
+	var D3D9;
+	var D3D11;
+	var D3D12;
+	var OpenGL;
+	var Metal;
+	var Vulkan;
 }

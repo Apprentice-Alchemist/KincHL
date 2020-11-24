@@ -31,7 +31,7 @@
                 "KORE_DIRECT3D11",
                 "KORE_G4",
                 "KORE_G5",
-                "KORE_G5ONG4",
+                "KORE_G4ONG5",
                 "KORE_A3"
             ],
             "windowsSdkVersion": "10.0.18362.0",

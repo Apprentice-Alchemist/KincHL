@@ -1,5 +1,6 @@
 package kinc.g4;
 
+import kinc.util.NA;
 import kinc.g4.RenderTarget.RenderTargetFormat;
 
 @:build(kinc.Macros.build_struct("pipeline",true))
@@ -8,7 +9,8 @@ abstract Pipeline(hl.Abstract<"kinc_g4_pipeline_t">) to hl.Abstract<"kinc_g4_pip
 		this = alloc();
 		init();
 	}
-	public var input_layout(get, set):kinc.util.NativeArray<VertexStructure,"vertex_structure">;
+
+	public var input_layout(get, set):NA<VertexStructure,"vertex_structure">;
 	public var vertex_shader(get, set):Shader;
 	public var fragment_shader(get, set):Shader;
 	public var geometry_shader(get, set):Shader;
@@ -29,12 +31,12 @@ abstract Pipeline(hl.Abstract<"kinc_g4_pipeline_t">) to hl.Abstract<"kinc_g4_pip
 	public var blend_destination(get,set):BlendingOperation;
 	public var alpha_blend_source(get,set):BlendingOperation;
 	public var alpha_blend_destination(get,set):BlendingOperation;
-	public var color_write_mask_red(get,never):kinc.util.NativeArray<Bool,"bool">;
-	public var color_write_mask_green(get, never):kinc.util.NativeArray<Bool, "bool">;
-	public var color_write_mask_blue(get, never):kinc.util.NativeArray<Bool, "bool">;
-	public var color_write_mask_alpha(get, never):kinc.util.NativeArray<Bool, "bool">;
+	public var color_write_mask_red(get,never):hl.BytesAccess<Bool>;
+	public var color_write_mask_green(get, never):hl.BytesAccess<Bool>;
+	public var color_write_mask_blue(get, never):hl.BytesAccess<Bool>;
+	public var color_write_mask_alpha(get, never):hl.BytesAccess<Bool>;
 	public var color_attachment_count(get,set):Int;
-	public var color_attachment(get,never):kinc.util.NativeArray<RenderTargetFormat,"rtf">;
+	public var color_attachment(get,never):hl.BytesAccess<RenderTargetFormat>;
 	public var depth_attachment_bits(get,set):Int;
 	public var stencil_attachment_bits(get,set):Int;
 	public var conservative_rasterization(get,set):Bool;
@@ -77,7 +79,7 @@ enum abstract CullMode(Int) {
 
 enum abstract StencilAction(Int) {
 	var KEEP;
-	var ZERA;
+	var ZERO;
 	var REPLACE;
 	var INCREMENT;
 	var INCREMENT_WRAP;

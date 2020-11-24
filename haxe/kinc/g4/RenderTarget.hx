@@ -13,7 +13,7 @@ abstract RenderTarget(hl.Abstract<"kinc_g4_render_target_t">) to hl.Abstract<"ki
 
 	public function init(width:Int, height:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int,
 		contextId:Int):Void {}
-	public function init_cube(cubeMapSize:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int, contextId:Int):Void {}
+	public function initCube(cubeMapSize:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int, contextId:Int):Void {}
 	public function useColorAsTexture(unit:TextureUnit):Void {}
 	public function useDepthAsTexture(unit:TextureUnit):Void {}
 	public function setDepthStencilFrom(source:RenderTarget):Void {}
@@ -22,11 +22,11 @@ abstract RenderTarget(hl.Abstract<"kinc_g4_render_target_t">) to hl.Abstract<"ki
 }
 
 enum abstract RenderTargetFormat(Int) to Int {
-	var FORMAT_32BIT;
-	var FORMAT_64BIT_FLOAT;
-	var FORMAT_32BIT_RED_FLOAT;
-	var FORMAT_128BIT_FLOAT;
-	var FORMAT_16BIT_DEPTH;
-	var FORMAT_8BIT_RED;
-	var FORMAT_16BIT_RED_FLOAT;
+	var Format32Bit;
+	var Format64BitFloat;
+	var Format32BitRedFloat;
+	var Format128BitFloat;
+	var Format16BitDepth;
+	var Format8BitRed;
+	var Format16BitRedFloat;
 }
