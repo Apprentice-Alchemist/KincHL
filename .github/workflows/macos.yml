@@ -29,7 +29,7 @@ jobs:
       run: |
         cd hashlink
         make libhl
-        make install
+        cp libhl.dylib /usr/local/bin
     - name: Build KincHL
       run: |
         cd KincHL

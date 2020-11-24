@@ -33,7 +33,7 @@ jobs:
       run: |
         cd hashlink
         make libhl
-        make install
+        cp libhl.so /usr/local/bin
     - name: Build KincHL
       run: |
         cd KincHL
