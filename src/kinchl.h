@@ -42,7 +42,7 @@ void EMPTY_DESTROY(void* obj);
 HL_PRIM type HL_NAME(name##_hl_get_##field_name)(obj_type * o) {\
     return o-> field_name;\
   }\
-  DEFINE_PRIM(hl_ret, ##name##_hl_get_##field_name, hl_obj)
+  DEFINE_PRIM(hl_ret, name##_hl_get_##field_name, hl_obj)
 
 #define MAKE_OBJ_ARRAY(obj,name,hl_obj) \
   HL_PRIM obj* HL_NAME(hl_##name##_array_alloc)(int length){\
