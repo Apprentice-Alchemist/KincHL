@@ -10,11 +10,11 @@ jobs:
       uses: krdlab/setup-haxe@master
       with:
           haxe-version: 4.1.3
-    # - name: Checkout hashlink
-    #   uses: actions/checkout@v2
-    #   with:
-    #     repository: "HaxeFoundation/hashlink"
-    #     path: "hashlink"
+    - name: Checkout hashlink
+      uses: actions/checkout@v2
+      with:
+        repository: "HaxeFoundation/hashlink"
+        path: "hashlink"
     - name: Checkout KincHL
       uses: actions/checkout@v2
       with:
@@ -25,14 +25,12 @@ jobs:
         repository: "Kode/Kinc"
         path: "Kinc"
         submodules: "recursive"
-    # - name: Build Hashlink
-    #   run: |
-    #     cd hashlink
-    #     make libhl
-    #     mkdir -p bin
-    #     cp libhl.dylib bin
-    - name: Install Hashlink
-      run: brew install hashlink
+    - name: Build Hashlink
+      run: |
+        cd hashlink
+        make libhl
+        mkdir -p bin
+        cp libhl.dylib ../KincHL/build
     - name: Build KincHL
       run: |
         cd KincHL

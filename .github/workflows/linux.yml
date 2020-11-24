@@ -34,7 +34,7 @@ jobs:
         cd hashlink
         make libhl
         mkdir -p bin
-        cp libhl.so bin
+        cp libhl.so ../KincHL/build
     - name: Build KincHL
       run: |
         cd KincHL
