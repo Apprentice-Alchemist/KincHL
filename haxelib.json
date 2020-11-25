@@ -2,5 +2,9 @@
     "name": "kinc",
     "url": "https://github.com/Apprentice-Alchemist/KincHL",
     "classPath": "haxe",
-    "description": "hashlink bindings for kinc"
+    "description": "hashlink bindings for kinc",
+    "license": "MIT",
+    "releasenote": "N/A",
+    "version": "0.0.0",
+    "contributors": ["zeta"]
 }
