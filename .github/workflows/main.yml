@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   build:
+    if: ${{ !contains(join(github.event.commits.*.message),'[skip ci]') }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
