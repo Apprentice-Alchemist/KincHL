@@ -1,0 +1,302 @@
+{
+	doc: null
+	fields: [{
+		access: [AStatic, APublic]
+		doc: null
+		kind: FFun({
+			args: [{
+				meta: null
+				name: length
+				opt: null
+				type: TPath({
+					name: Int
+					pack: []
+					params: null
+					sub: null
+				})
+				value: null
+			}]
+			expr: {
+				expr: EReturn({
+					expr: EConst(CIdent(null))
+					pos: #pos
+				})
+				pos: #pos
+			}
+			params: null
+			ret: TPath({
+				name: NativeArray_null
+				pack: [kinc, util]
+				params: null
+				sub: null
+			})
+		})
+		meta: [{
+			name: :hlNative
+			params: [{
+				expr: EConst(CString(kinc, DoubleQuotes))
+				pos: #pos
+			}, {
+				expr: EConst(CString(hl_null_array_alloc, DoubleQuotes))
+				pos: #pos
+			}]
+			pos: #pos
+		}]
+		name: alloc
+		pos: #pos
+	}, {
+		access: [APublic]
+		doc: null
+		kind: FFun({
+			args: [{
+				meta: null
+				name: i
+				opt: null
+				type: TPath({
+					name: Int
+					pack: []
+					params: null
+					sub: null
+				})
+				value: null
+			}]
+			expr: {
+				expr: EReturn({
+					expr: ECast({
+						expr: EConst(CIdent(null))
+						pos: #pos
+					}, null)
+					pos: #pos
+				})
+				pos: #pos
+			}
+			params: null
+			ret: null
+		})
+		meta: [{
+			name: :arrayAccess
+			params: null
+			pos: #pos
+		}, {
+			name: :hlNative
+			params: [{
+				expr: EConst(CString(kinc, DoubleQuotes))
+				pos: #pos
+			}, {
+				expr: EConst(CString(hl_null_array_get, DoubleQuotes))
+				pos: #pos
+			}]
+			pos: #pos
+		}]
+		name: get
+		pos: #pos
+	}, {
+		access: [APublic]
+		doc: null
+		kind: FFun({
+			args: [{
+				meta: null
+				name: i
+				opt: null
+				type: TPath({
+					name: Int
+					pack: []
+					params: null
+					sub: null
+				})
+				value: null
+			}, {
+				meta: null
+				name: v
+				opt: null
+				type: null
+				value: null
+			}]
+			expr: {
+				expr: EReturn({
+					expr: ECast({
+						expr: EConst(CIdent(null))
+						pos: #pos
+					}, null)
+					pos: #pos
+				})
+				pos: #pos
+			}
+			params: null
+			ret: null
+		})
+		meta: [{
+			name: :arrayAccess
+			params: null
+			pos: #pos
+		}, {
+			name: :hlNative
+			params: [{
+				expr: EConst(CString(kinc, DoubleQuotes))
+				pos: #pos
+			}, {
+				expr: EConst(CString(hl_null_array_set, DoubleQuotes))
+				pos: #pos
+			}]
+			pos: #pos
+		}]
+		name: set
+		pos: #pos
+	}, {
+		access: [APublic, AStatic]
+		doc: null
+		kind: FFun({
+			args: [{
+				meta: null
+				name: arr
+				opt: null
+				type: TPath({
+					name: Array
+					pack: []
+					params: [TPType(null <- expected enum value)]
+					sub: null
+				})
+				value: null
+			}]
+			expr: {
+				expr: EBlock([{
+					expr: EVars([{
+						expr: {
+							expr: ECall({
+								expr: EConst(CIdent(alloc))
+								pos: #pos
+							}, [{
+								expr: EField({
+									expr: EConst(CIdent(arr))
+									pos: #pos
+								}, length)
+								pos: #pos
+							}])
+							pos: #pos
+						}
+						isFinal: false
+						name: ret
+						type: null
+					}])
+					pos: #pos
+				}, {
+					expr: EFor({
+						expr: EBinop(OpIn, {
+							expr: EConst(CIdent(x))
+							pos: #pos
+						}, {
+							expr: EBinop(OpInterval, {
+								expr: EConst(CInt(0))
+								pos: #pos
+							}, {
+								expr: EField({
+									expr: EConst(CIdent(arr))
+									pos: #pos
+								}, length)
+								pos: #pos
+							})
+							pos: #pos
+						})
+						pos: #pos
+					}, {
+						expr: EBlock([{
+							expr: EBinop(OpAssign, {
+								expr: EArray({
+									expr: EConst(CIdent(ret))
+									pos: #pos
+								}, {
+									expr: EConst(CIdent(x))
+									pos: #pos
+								})
+								pos: #pos
+							}, {
+								expr: EArray({
+									expr: EConst(CIdent(arr))
+									pos: #pos
+								}, {
+									expr: EConst(CIdent(x))
+									pos: #pos
+								})
+								pos: #pos
+							})
+							pos: #pos
+						}])
+						pos: #pos
+					})
+					pos: #pos
+				}, {
+					expr: EBinop(OpAssign, {
+						expr: EArray({
+							expr: EConst(CIdent(ret))
+							pos: #pos
+						}, {
+							expr: EField({
+								expr: EConst(CIdent(arr))
+								pos: #pos
+							}, length)
+							pos: #pos
+						})
+						pos: #pos
+					}, {
+						expr: ECall({
+							expr: EParenthesis({
+								expr: EFunction(FAnonymous, {
+									args: []
+									expr: {
+										expr: EBlock([{
+											expr: EReturn({
+												expr: ECast({
+													expr: EConst(CIdent(null))
+													pos: #pos
+												}, null)
+												pos: #pos
+											})
+											pos: #pos
+										}])
+										pos: #pos
+									}
+									params: []
+									ret: null
+								})
+								pos: #pos
+							})
+							pos: #pos
+						}, [])
+						pos: #pos
+					})
+					pos: #pos
+				}, {
+					expr: EReturn({
+						expr: EConst(CIdent(ret))
+						pos: #pos
+					})
+					pos: #pos
+				}])
+				pos: #pos
+			}
+			params: null
+			ret: null
+		})
+		meta: [{
+			name: :from
+			params: null
+			pos: #pos
+		}]
+		name: fromArray
+		pos: #pos
+	}]
+	isExtern: null
+	kind: TDAbstract(TPath({
+		name: Ref
+		pack: [hl]
+		params: [TPType(null <- expected enum value)]
+		sub: null
+	}), null, null)
+	meta: null
+	name: NativeArray_null
+	pack: [kinc, util]
+	params: null
+	pos: #pos
+}
+line 156: expected enum value
+line 292: expected enum value

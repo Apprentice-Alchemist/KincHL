@@ -1,10 +1,10 @@
-name: Build MacOS
+name: Build Linux
 
 on: [push]
 
 jobs:
-  build-metal:
-    runs-on: macos-latest
+  build-opengl:
+    runs-on: ubuntu-latest
     steps:
     - name: Install Haxe
       uses: krdlab/setup-haxe@master
@@ -25,15 +25,16 @@ jobs:
         repository: "Kode/Kinc"
         path: "Kinc"
         submodules: "recursive"
+    - name: Apt Update
+      run: sudo apt-get update
+      continue-on-error: true
+    - name: Apt Install
+      run: sudo apt-get install libasound2-dev libxinerama-dev libxrandr-dev libgl1-mesa-dev libxi-dev libxcursor-dev --yes --quiet
     - name: Build Hashlink
       run: |
-
         cd hashlink
         make libhl
-        mkdir -p ../KincHL/build
-        mkdir -p ../KincHL/build/build
-        mkdir -p ../KincHL/build/build/Release
-        cp libhl.dylib ../KincHL/build/build/Release
+        sudo cp libhl.so /usr/local/lib
     - name: Build KincHL
       run: |
         cd KincHL

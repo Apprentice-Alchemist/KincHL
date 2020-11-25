@@ -20,7 +20,18 @@ if(require("process").env["GITHUB_WORKSPACE"]){
 }else if(require("process").env["HASHLINK"]){
     const hashlink = require("process").env["HASHLINK"];
     project.addIncludeDir(hashlink + "/include");
-    project.addLib((require("process").platform === "linux" || require("process").platform === "darwin") ? "hl" : "libhl");
+    const platform = require("process").platform;
+    switch (platform) {
+        case "linux":
+            project.addLib("hl");
+            break;
+        case "darwin":
+            project.addLib("libhl.dylib");
+            break;
+        case "win32":
+            project.addLib(hashlink + "\\libhl");
+            break;
+    }
 }else{
     console.log("%HASHLINK% not defined, exiting.");
     require("process").exit(1);

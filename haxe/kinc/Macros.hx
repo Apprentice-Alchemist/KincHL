@@ -10,8 +10,9 @@ import haxe.macro.Expr.Field;
 using haxe.macro.Tools;
 using StringTools;
 
-#if macro
+
 class Macros {
+	#if macro
 	public static function build_struct(s:String, ?no_new:Bool = false, ?no_alloc = false, ?no_destroy = false) {
 		var type = Context.getLocalType();
 		var actual_type = switch type {
@@ -143,28 +144,10 @@ class Macros {
 
 	public static function build_native_array() {
 		function get_return(t:ComplexType):Expr {
-			t = t.toType().followWithAbstracts(true).toComplexType();
-			switch t {
-				case TPath({
-					name: "F32",
-					params: [],
-					pack: ["hl"]
-				}):
-					return macro return 0;
-				case TPath({
-					name: "StdTypes",
-					params: [],
-					sub: "Int",
-					pack: []
-				}), TPath({
-						name: "Int",
-						params: [],
-						pack: []
-					}):
-					return macro return cast 0;
-				default:
+			// t = t.toType().followWithAbstracts(true).toComplexType();
+			// 	default:
 					return macro return cast null;
-			}
+			// }
 		}
 		var type = haxe.macro.Context.getLocalType().followWithAbstracts(true);
 		var paramst:ComplexType = null;
@@ -174,7 +157,9 @@ class Macros {
 				paramst = params[0].toComplexType();
 				switch params[1] {
 					case TInst(t, params): hl_name = t.get().name.substr(1);
-					case x: trace(x);
+					default: 
+					// case TMono(t): trace(t.get());
+					// case x: trace(x); trace(type);
 				}
 			default:
 				throw "Expected TInst";
@@ -301,5 +286,6 @@ class Macros {
 			return haxe.macro.Context.getType("kinc.util." + tname);
 		}
 	}
+	#end
 }
-#end
+
