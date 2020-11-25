@@ -35,25 +35,25 @@ jobs:
         path: "Kinc"
         submodules: "recursive"
     - name: Apt Update
-      if: matrix.os == linux-latest
+      if: matrix.os == 'linux-latest'
       run: sudo apt-get update
       continue-on-error: true
     - name: Apt Install
-      if: matrix.os == linux-latest
+      if: matrix.os == 'linux-latest'
       run: sudo apt-get install libasound2-dev libxinerama-dev libxrandr-dev libgl1-mesa-dev libxi-dev libxcursor-dev --yes --quiet
     - name: Build Hashlink
-      if: matrix.os == linux-latest
+      if: matrix.os == 'linux-latest'
       run: |
         cd hashlink
         make libhl
         sudo cp libhl.so /usr/local/lib
     - name: Build Hashlink
-      if: matrix.os == macos-latest
+      if: matrix.os == 'macos-latest'
       run: |
         cd hashlink
         make libhl
     - name: Build Hashlink
-      if: matrix.os == windows-latest
+      if: matrix.os == 'windows-latest'
       run: |
         cd hashlink
         haxe -cp ${env:GITHUB_WORKSPACE}/KincHL/extra/ --run Replacer libhl.vcxproj 8.1 10.0.19041.0
