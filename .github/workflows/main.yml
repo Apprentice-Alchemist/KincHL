@@ -6,6 +6,7 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-latest, windows-latest, ubuntu-latest]
         graphics: [opengl]
@@ -35,14 +36,14 @@ jobs:
         path: "Kinc"
         submodules: "recursive"
     - name: Apt Update
-      if: matrix.os == 'linux-latest'
+      if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get update
       continue-on-error: true
     - name: Apt Install
-      if: matrix.os == 'linux-latest'
+      if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get install libasound2-dev libxinerama-dev libxrandr-dev libgl1-mesa-dev libxi-dev libxcursor-dev --yes --quiet
     - name: Build Hashlink
-      if: matrix.os == 'linux-latest'
+      if: matrix.os == 'ubuntu-latest'
       run: |
         cd hashlink
         make libhl
