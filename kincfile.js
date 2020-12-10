@@ -3,38 +3,23 @@ project.setDebugDir("Deployment");
 project.addFile("src/**");
 project.addIncludeDir("src/");
 
-if(require("process").env["GITHUB_WORKSPACE"]){
-    project.addIncludeDir(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/src");
-    const platform = require("process").platform;
-    switch(platform){
-        case "linux": 
-            project.addLib("hl");
-            break;
-        case "darwin":
-            project.addLib(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/libhl.dylib");
-            break;
-        case "win32":
+// Assume assume hl is appropriately installed via brew or with make install on linux and osx
+switch(platform){
+    case Platform.Linux:
+        project.addLib("hl");
+        break;
+    case Platform.OSX:
+        project.addLib("libhl.dylib");
+        break;
+    case Platform.Windows:
+        if (require("process").env["GITHUB_WORKSPACE"]) {
             project.addLib(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/bin/libhl");
-            break;
-    }
-}else if(require("process").env["HASHLINK"]){
-    const hashlink = require("process").env["HASHLINK"];
-    project.addIncludeDir(hashlink + "/include");
-    const platform = require("process").platform;
-    switch (platform) {
-        case "linux":
-            project.addLib("hl");
-            break;
-        case "darwin":
-            project.addLib("libhl.dylib");
-            break;
-        case "win32":
-            project.addLib(hashlink + "\\libhl");
-            break;
-    }
-}else{
-    console.log("%HASHLINK% not defined, exiting.");
-    require("process").exit(1);
+            project.addIncludeDir(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/bin/libhl");
+        } else {
+            project.addLib(require("process").env["HASHLINK"] + "/libhl");
+            project.addIncludeDir(require("process").env["HASHLINK"] + "/include");
+        }
+        break;
 }
 
 resolve(project);
