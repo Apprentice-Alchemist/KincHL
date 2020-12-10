@@ -1,5 +1,6 @@
 #include "kinchl.h"
 #include <kinc/audio1/audio.h>
+// #include <kinc/audio1/audio.c>
 #include <kinc/log.h>
 // AUDIO 1
 MAKE_GET(kinc_a1_channel_t, a1_channel, sound, kinc_a1_sound_t*, _ABSTRACT(kinc_a1_channel_t), _ABSTRACT(kinc_a1_sound_t))
@@ -43,35 +44,29 @@ HL_PRIM kinc_a2_buffer_format_t* HL_NAME(a2_buffer_hl_get_format)(kinc_a2_buffer
 }
 DEFINE_PRIM(_ABSTRACT(kinc_a2_buffer_format_t), a2_buffer_hl_get_format, _ABSTRACT(kinc_a2_buffer_t))
 
-static bool audio_thread_registered = false;
-static vclosure* a2_cb = NULL;
-void internal_a2_callback(kinc_a2_buffer_t* buffer, int samples) {
+bool audio_thread_registered = false;
+vclosure* a2_cb = NULL;
+
+static void internal_a2_callback(kinc_a2_buffer_t* buffer, int samples) {
     if (!audio_thread_registered) {
         vdynamic* ret;
         hl_register_thread(&ret);
         audio_thread_registered = true;
     }
+
     if (a2_cb != NULL) {
         hl_blocking(true);
-        vdynamic *buf = hl_alloc_dynamic(&hlt_abstract);
-        buf->v.ptr = buffer;
-        vdynamic *s = hl_alloc_dynamic(&hlt_i32);
-        s->v.i = samples;
-        vdynamic *args[2] = {buf,s};
-        bool isexc = false;
-        hl_dyn_call_safe(a2_cb,args,2,&isexc);
-        if(isexc){
-            kinc_log(KINC_LOG_LEVEL_ERROR,"Exception occured in audio callback");
-        }
+        hl_call2(void, a2_cb, kinc_a2_buffer_t*, buffer, int, samples);
         hl_blocking(false);
     }
 }
+bool a2_cb_root_added = false;
 HL_PRIM void HL_NAME(hl_a2_set_callback)(vclosure* cb) {
-    if (a2_cb != NULL) {
-        hl_remove_root(a2_cb);
+    if (!a2_cb_root_added) {
+        hl_add_root(&a2_cb);
+        a2_cb_root_added = true;
     }
     a2_cb = cb;
-    hl_add_root(a2_cb);
     kinc_a2_set_callback(internal_a2_callback);
 }
 HL_PRIM int HL_NAME(a2_get_samples_per_second)() {
@@ -87,3 +82,40 @@ DEFINE_PRIM(_VOID, a2_shutdown, _NO_ARG)
 DEFINE_PRIM(_VOID, hl_a2_set_callback, _FUN(_VOID, _ABSTRACT(kinc_a2_buffer_t) _I32))
 DEFINE_PRIM(_I32, a2_get_samples_per_second, _NO_ARG)
 DEFINE_PRIM(_I32, a2_set_samples_per_second, _I32)
+
+// HL_PRIM float HL_NAME(sampleLinear)(int16_t* data, float position) {
+//     int pos1 = (int)position;
+//     int pos2 = (int)(position + 1);
+//     float sample1 = data[pos1] / 32767.0f;
+//     float sample2 = data[pos2] / 32767.0f;
+//     float a = position - pos1;
+//     return sample1 * (1 - a) + sample2 * a;
+// }
+
+// DEFINE_PRIM(_F32, sampleLinear, _BYTES _F32)
+
+// #define STB_VORBIS_HEADER_ONLY
+// #include <kinc/audio1/stb_vorbis.c>
+
+// HL_PRIM vbyte* kinc_sound_init_vorbis(vbyte* data, int length) {
+//     return (vbyte*)stb_vorbis_open_memory(data, length, NULL, NULL);
+// }
+
+// HL_PRIM bool kinc_sound_next_vorbis_samples(vbyte* vorbis, vbyte* samples, int length, bool loop, bool atend) {
+//     int read = stb_vorbis_get_samples_float_interleaved((stb_vorbis*)vorbis, 2, (float*)samples, length);
+//     if (read < length / 2) {
+//         if (loop) {
+//             stb_vorbis_seek_start((stb_vorbis*)vorbis);
+//         }
+//         else {
+//             atend = true;
+//         }
+//         for (int i = read; i < length; ++i) {
+//             samples[i] = 0;
+//         }
+//     }
+//     return atend;
+// }
+
+// DEFINE_PRIM(_BYTES, sound_init_vorbis, _BYTES _I32)
+// DEFINE_PRIM(_BOOL, sound_next_vorbis_samples, _BYTES _BYTES _I32 _BOOL _BOOL)

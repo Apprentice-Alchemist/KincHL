@@ -10,7 +10,9 @@ extern class Graphics4 {
 	static function end(index:Int):Void;
 	static function flush():Void;
 	static function swapBuffers():Bool;
-	static function setPipeline(state:Pipeline):Void;
+	static inline function setPipeline(state:Pipeline):Void
+		__setPipeline(@:privateAccess state._handle);
+	@:hlNative("kinc", "hl_g4_set_pipeline") private static function __setPipeline(state:hl.Abstract<"g4_pipeline">):Void;
 	static function setVertexBuffer(buf:VertexBuffer):Void;
 	static function setVertexBuffers(buffers:kinc.util.NativeArray<VertexBuffer>):Void;
 	static function setIndexBuffer(buf:IndexBuffer):Void;
@@ -31,13 +33,13 @@ extern class Graphics4 {
 	static function setRenderTargetFace(target:RenderTarget, face:Int):Void;
 	static function setTexture(unit:TextureUnit, tex:Texture):Void;
 	static function setImageTexture(unit:TextureUnit, tex:Texture):Void;
-	
-	//static function initOcclusionQuery(q:hl.Ref<Int>):Bool;
-	//static function deleteOcclusionQuery(q:Int):Void;
-	//static function startOcclusionQuery(q:Int):Void;
-	//static function endOcclusionQuery(q:Int):Void;
-	//static function areQueryResultsAvailable(q:Int):Bool;
-	//static function getQueryResults(q:Int, pixelCount:hl.Ref<Int>):Void;
+
+	// static function initOcclusionQuery(q:hl.Ref<Int>):Bool;
+	// static function deleteOcclusionQuery(q:Int):Void;
+	// static function startOcclusionQuery(q:Int):Void;
+	// static function endOcclusionQuery(q:Int):Void;
+	// static function areQueryResultsAvailable(q:Int):Bool;
+	// static function getQueryResults(q:Int, pixelCount:hl.Ref<Int>):Void;
 	static function setTextureArray(unit:TextureUnit, array:TextureArray):Void;
 	static function antialiasingSamples():Int;
 	static function setAntialiasingSamples(samles:Int):Void;
@@ -46,10 +48,10 @@ extern class Graphics4 {
 	static function setInt2(location:ConstantLocation, i:Int, i2:Int):Void;
 	static function setInt3(location:ConstantLocation, i:Int, i2:Int, i3:Int):Void;
 	static function setInt4(location:ConstantLocation, i:Int, i2:Int, i3:Int, i4:Int):Void;
-	public static inline function setInts(location:ConstantLocation,arr:Array<Int>):Void {
-		__setInts(location,hl.Bytes.getArray(arr),arr.length);
+	public static inline function setInts(location:ConstantLocation, arr:Array<Int>):Void {
+		__setInts(location, hl.Bytes.getArray(arr), arr.length);
 	}
-	@:hlNative("kinc","hl_g4_set_ints") private static function __setInts(location:ConstantLocation, i:hl.Bytes, count:Int):Void;
+	@:hlNative("kinc", "hl_g4_set_ints") private static function __setInts(location:ConstantLocation, i:hl.Bytes, count:Int):Void;
 	static function setFloat(location:ConstantLocation, i:hl.F32):Void;
 	static function setFloat2(location:ConstantLocation, i:hl.F32, i2:hl.F32):Void;
 	static function setFloat3(location:ConstantLocation, i:hl.F32, i2:hl.F32, i3:hl.F32):Void;
@@ -57,7 +59,7 @@ extern class Graphics4 {
 	public static inline function setFloats(location:ConstantLocation, arr:Array<hl.F32>):Void {
 		__setFloats(location, hl.Bytes.getArray(arr), arr.length);
 	}
-	@:hlNative("kinc", "hl_g4_set_ints") private static function __setFloats(location:ConstantLocation, i:hl.Bytes, count:Int):Void;
+	@:hlNative("kinc", "hl_g4_set_floats") private static function __setFloats(location:ConstantLocation, i:hl.Bytes, count:Int):Void;
 	static function setBool(location:ConstantLocation, b:Bool):Void;
 	static function setMatrix3(location:ConstantLocation, m:Matrix3):Void;
 	static function setMatrix4(location:ConstantLocation, m:Matrix4):Void;

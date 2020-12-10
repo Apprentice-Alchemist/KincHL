@@ -10,7 +10,7 @@ extern class Keyboard {
 	static function setKeyPressCallback(cb:Int->Void):Void;
 }
 
-private enum abstract KeyCode(Int) {
+enum abstract KeyCode(Int) {
 	var KEY_UNKNOWN = 0;
 	var KEY_BACK = 1; // Android
 	var KEY_CANCEL = 3;

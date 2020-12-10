@@ -1,5 +1,8 @@
 -lib kinc
 -cp tests
 --debug
+# -D dump=pretty
+# -D dump-path=build/ast-dump
+# -lib heaps
 # -m Texture
 -hl out.hl

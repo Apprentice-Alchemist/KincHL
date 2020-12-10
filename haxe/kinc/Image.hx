@@ -3,7 +3,7 @@ package kinc;
 import hl.Bytes;
 
 @:build(kinc.Macros.build_struct("image", true))
-abstract Image(hl.Abstract<"kinc_image_t">) to hl.Abstract<"kinc_image_t"> {
+abstract Image(hl.Abstract<"image">) {
 	public function new() {
 		this = alloc();
 	}

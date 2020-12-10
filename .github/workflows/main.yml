@@ -51,12 +51,15 @@ jobs:
       run: |
         cd hashlink
         make libhl
-        sudo cp libhl.so /usr/local/lib
+        make hl
+        make install
     - name: Build Hashlink
       if: matrix.os == 'macos-latest'
       run: |
         cd hashlink
         make libhl
+        make hl
+        make install
     - name: Build Hashlink
       if: matrix.os == 'windows-latest'
       run: |

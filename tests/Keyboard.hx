@@ -15,14 +15,10 @@ class Keyboard {
 			if (k == KEY_SPACE)
 				space_pressed = false;
 		});
-		kinc.System.setCopyCallback(() -> "Hello World");
-		kinc.System.setPasteCallback(function(s:String) {
-			// try
-			// 	trace(s)
-			// catch (e)
-			// 	trace(e);
+		System.setCopyCallback(() -> "Hello World");
+		System.setPasteCallback(function(s:String) {
+			trace(s);
 		});
-		kinc.System.setPasteCallback(null);
 		System.start();
 	}
 

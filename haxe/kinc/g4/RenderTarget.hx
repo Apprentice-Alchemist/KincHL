@@ -1,8 +1,8 @@
 package kinc.g4;
 
-@:build(kinc.Macros.build_struct("render_target"))
+@:build(kinc.Macros.build_struct("g4_render_target"))
 @:hlNative("kinc", "hl_g4_render_target_")
-abstract RenderTarget(hl.Abstract<"kinc_g4_render_target_t">) to hl.Abstract<"kinc_g4_render_target_t"> {
+abstract RenderTarget(hl.Abstract<"g4_render_target">) {
 	public var width(get, set):Int;
 	public var height(get, set):Int;
 	public var texWidth(get, set):Int;

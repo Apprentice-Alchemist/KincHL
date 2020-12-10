@@ -1,50 +1,93 @@
 package kinc.g4;
 
-import kinc.util.NA;
-import kinc.g4.RenderTarget.RenderTargetFormat;
+import kinc.g4.RenderTarget;
+import kinc.util.NativeArray;
 
-@:build(kinc.Macros.build_struct("pipeline",true))
-abstract Pipeline(hl.Abstract<"kinc_g4_pipeline_t">) to hl.Abstract<"kinc_g4_pipeline_t">{
-	public function new(){
-		this = alloc();
-		init();
+class Pipeline {
+	private var _handle:hl.Abstract<"g4_pipeline">;
+
+	public final input_layout:NativeArray<VertexStructure>;
+	public var vertex_shader:Shader;
+	public var fragment_shader:Shader;
+	public var geometry_shader:Shader;
+	public var tessellation_control_shader:Shader;
+	public var tessellation_evaluation_shader:Shader;
+
+	public var cull_mode:CullMode;
+	public var depth_write:Bool;
+	public var depth_mode:CompareMode;
+	public var stencil_mode:CompareMode;
+	public var stencil_both_pass:StencilAction;
+	public var stencil_depth_fail:StencilAction;
+	public var stencil_fail:StencilAction;
+	public var stencil_reference_value:Int;
+	public var stencil_read_mask:Int;
+	public var stencil_write_mask:Int;
+	public var blend_source:BlendingOperation;
+	public var blend_destination:BlendingOperation;
+	public var alpha_blend_source:BlendingOperation;
+	public var alpha_blend_destination:BlendingOperation;
+
+	public final color_write_mask_red:NativeArray<Bool>;
+	public final color_write_mask_green:NativeArray<Bool>;
+	public final color_write_mask_blue:NativeArray<Bool>;
+	public final color_write_mask_alpha:NativeArray<Bool>;
+
+	public var color_attachment_count:Int;
+	public final color_attachment:NativeArray<RenderTargetFormat>;
+	public var depth_attachment_bits:Int;
+	public var stencil_attachment_bits:Int;
+	public var conservative_rasterization:Bool;
+
+	public function new() {
+		this._handle = allocNative();
+
+		@:bypassAccessor this.input_layout = new hl.NativeArray<VertexStructure>(16);
+		for(i in 0...16) input_layout[i] = null;
+
+		this.cull_mode = NOTHING;
+
+		this.depth_write = false;
+		this.depth_mode = ALWAYS;
+
+		this.stencil_mode = ALWAYS;
+		this.stencil_both_pass = KEEP;
+		this.stencil_depth_fail = KEEP;
+		this.stencil_fail = KEEP;
+		this.stencil_reference_value = 0;
+		this.stencil_read_mask = 0xff;
+		this.stencil_write_mask = 0xff;
+
+		this.blend_source = ONE;
+		this.blend_destination = ZERO;
+		this.alpha_blend_source = ONE;
+		this.alpha_blend_destination = ZERO;
+		
+		@:bypassAccessor this.color_write_mask_red = [for (_ in 0...8) true];
+		@:bypassAccessor this.color_write_mask_green = [for (_ in 0...8) true];
+		@:bypassAccessor this.color_write_mask_blue = [for (_ in 0...8) true];
+		@:bypassAccessor this.color_write_mask_alpha = [for (_ in 0...8) true];
+		this.color_attachment_count = 1;
+		@:bypassAccessor this.color_attachment = [for (_ in 0...8) Format32Bit];
+
+		this.depth_attachment_bits = 0;
+		this.stencil_attachment_bits = 0;
+
+		this.conservative_rasterization = false;
 	}
 
-	public var input_layout(get, set):NA<VertexStructure,"vertex_structure">;
-	public var vertex_shader(get, set):Shader;
-	public var fragment_shader(get, set):Shader;
-	public var geometry_shader(get, set):Shader;
-	public var tessellation_control_shader(get, set):Shader;
-	public var tessellation_evaluation_shader(get, set):Shader;
+	public function compile():Void {
+		compilePipeline(this);
+	}
 
-	public var cull_mode(get,set):CullMode;
-	public var depth_write(get,set):Bool;
-	public var depth_mode(get,set):CompareMode;
-	public var stencil_mode(get,set):CompareMode;
-	public var stencil_both_pass(get,set):StencilAction;
-	public var stencil_depth_fail(get,set):StencilAction;
-	public var stencil_fail(get,set):StencilAction;
-	public var stencil_reference_value(get,set):Int;
-	public var stencil_read_mask(get,set):Int;
-	public var stencil_write_mask(get,set):Int;
-	public var blend_source(get,set):BlendingOperation;
-	public var blend_destination(get,set):BlendingOperation;
-	public var alpha_blend_source(get,set):BlendingOperation;
-	public var alpha_blend_destination(get,set):BlendingOperation;
-	public var color_write_mask_red(get,never):hl.BytesAccess<Bool>;
-	public var color_write_mask_green(get, never):hl.BytesAccess<Bool>;
-	public var color_write_mask_blue(get, never):hl.BytesAccess<Bool>;
-	public var color_write_mask_alpha(get, never):hl.BytesAccess<Bool>;
-	public var color_attachment_count(get,set):Int;
-	public var color_attachment(get,never):hl.BytesAccess<RenderTargetFormat>;
-	public var depth_attachment_bits(get,set):Int;
-	public var stencil_attachment_bits(get,set):Int;
-	public var conservative_rasterization(get,set):Bool;
+	public function getConstantLocation(name:String):ConstantLocation return getPipelineConstantLocation(this._handle, name);
 
-	@:hlNative("kinc","pipeline_hl_init") function init():Void {}
-	@:hlNative("kinc", "hl_g4_pipeline_compile") public function compile():Void {}
-	@:hlNative("kinc","hl_g4_pipeline_get_constant_location") public function getConstantLocation(name:String):ConstantLocation return null;
-	@:hlNative("kinc", "hl_g4_pipeline_get_texture_unit") public function getTextureUnit(name:String):TextureUnit return null;
+	public function getTextureUnit(name:String):TextureUnit return getPipelineTextureUnit(this._handle, name);
+
+	@:hlNative("kinc", "hl_g4_pipeline_alloc") @:noCompletion static function allocNative():hl.Abstract<"g4_pipeline"> return null;
+	@:hlNative("kinc", "hl_g4_pipeline_compile") @:noCompletion static function compilePipeline(state:Dynamic):Void {}
+	@:hlNative("kinc", "hl_g4_pipeline_get_texture_unit") @:noCompletion static function getPipelineTextureUnit(state:hl.Abstract<"g4_pipeline">, name:String):TextureUnit return null;
+	@:hlNative("kinc", "hl_g4_pipeline_get_constant_location") @:noCompletion static function getPipelineConstantLocation(state:hl.Abstract<"g4_pipeline">, name:String):ConstantLocation return null;
 }
 
 enum abstract BlendingOperation(Int) {
@@ -68,7 +111,7 @@ enum abstract CompareMode(Int) {
 	var LESS;
 	var LESS_EQUAL;
 	var GREATER;
-	var GREATE_EQUAL;
+	var GREATER_EQUAL;
 }
 
 enum abstract CullMode(Int) {

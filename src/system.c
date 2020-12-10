@@ -16,12 +16,8 @@ HL_PRIM vstring* HL_NAME(hl_application_name)() { return (vstring*)hl_alloc_strb
 HL_PRIM void HL_NAME(hl_set_application_name)(vstring* name) { kinc_set_application_name(hl_to_utf8(name->bytes)); }
 HL_PRIM int HL_NAME(hl_width)() { return kinc_width(); }
 HL_PRIM int HL_NAME(hl_height)() { return kinc_height(); }
-// Not sure wether this is mean to be exposed
-// HL_PRIM bool HL_NAME(hl_internal_handle_messages)(void);
 HL_PRIM void HL_NAME(hl_load_url)(vstring* url) { kinc_load_url(hl_to_utf8(url->bytes)); }
 HL_PRIM vstring* HL_NAME(hl_system_id)() { return (vstring*)hl_alloc_strbytes(hl_to_utf16(kinc_system_id())); }
-// Not sure wether this is mean to be exposed
-// HL_PRIM vstring* HL_NAME(hl_internal_save_path)() { return hl_alloc_strbytes(hl_to_utf16(kinc_internal_save_path())); }
 
 HL_PRIM varray* HL_NAME(hl_video_formats)() {
   const char** formats = kinc_video_formats();
@@ -94,7 +90,3 @@ DEFINE_PRIM(_I32, hl_get_graphics_api, _NO_ARG)
 
 void EMPTY_INIT(void* o) {}
 void EMPTY_DESTROY(void* o) {}
-// MAKE_OBJ_ARRAY(float, single, _F32)
-// MAKE_OBJ_ARRAY(int, int, _I32)
-// MAKE_OBJ_ARRAY(bool, bool, _BOOL)
-// MAKE_OBJ_ARRAY(int, rtf, _I32)

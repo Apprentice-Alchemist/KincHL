@@ -7,7 +7,7 @@
             "program": "hl",
             "cwd": "${workspaceFolder}",
             "logging": {
-                "moduleLoad": false,
+                "moduleLoad": true,
                 "trace": true
             },
             "args": ["out.hl"]

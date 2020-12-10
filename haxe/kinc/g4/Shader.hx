@@ -1,7 +1,7 @@
 package kinc.g4;
 
-@:build(kinc.Macros.build_struct("shader"))
-abstract Shader(hl.Abstract<"kinc_g4_shader_t">) from hl.Abstract<"kinc_g4_shader_t"> to hl.Abstract<"kinc_g4_shader_t"> {
+@:build(kinc.Macros.build_struct("g4_shader"))
+abstract Shader(hl.Abstract<"g4_shader">) {
 	public static function fromFile(file:String, type:ShaderType):Shader {
 		var ret = new Shader();
 		ret.initFromFile(file, type);

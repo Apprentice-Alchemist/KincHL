@@ -7,44 +7,12 @@ vclosure* gamepad_button_cb = NULL;
 
 void internal_gamepad_axis_cb(int gamepad, int axis, float value) {
     if (gamepad_axis_cb != NULL) {
-        vdynamic* arg1 = hl_alloc_dynamic(&hlt_i32);
-        arg1->v.i = gamepad;
-        vdynamic* arg2 = hl_alloc_dynamic(&hlt_i32);
-        arg1->v.i = axis;
-        vdynamic* arg3 = hl_alloc_dynamic(&hlt_f32);
-        arg3->v.f = value;
-        vdynamic* args[3] = { arg1,arg2,arg3 };
-        bool isexc = false;
-        hl_dyn_call_safe(gamepad_axis_cb, args, 3, &isexc);
-        if (isexc) {
-            kinc_log(KINC_LOG_LEVEL_WARNING, "Exception occured in gamepad axis callback");
-            varray* stack = hl_exception_stack();
-            for (int i = 0; i < stack->size; i++) {
-                kinc_log(KINC_LOG_LEVEL_INFO, hl_to_utf8(hl_to_string(hl_aptr(stack, vdynamic*)[i])));
-                kinc_log(KINC_LOG_LEVEL_INFO, "\n");
-            }
-        }
+        hl_call3(void, gamepad_axis_cb, int, gamepad, int, axis, float, value);
     }
 }
 void internal_gamepad_button_cb(int gamepad, int button, float value) {
     if (gamepad_button_cb != NULL) {
-        vdynamic* arg1 = hl_alloc_dynamic(&hlt_i32);
-        arg1->v.i = gamepad;
-        vdynamic* arg2 = hl_alloc_dynamic(&hlt_i32);
-        arg1->v.i = button;
-        vdynamic* arg3 = hl_alloc_dynamic(&hlt_f32);
-        arg3->v.f = value;
-        vdynamic* args[3] = { arg1,arg2,arg3 };
-        bool isexc = false;
-        hl_dyn_call_safe(gamepad_button_cb, args, 3, &isexc);
-        if (isexc) {
-            kinc_log(KINC_LOG_LEVEL_WARNING, "Exception occured in gamepad button callback");
-            varray* stack = hl_exception_stack();
-            for (int i = 0; i < stack->size; i++) {
-                kinc_log(KINC_LOG_LEVEL_INFO, hl_to_utf8(hl_to_string(hl_aptr(stack, vdynamic*)[i])));
-                kinc_log(KINC_LOG_LEVEL_INFO, "\n");
-            }
-        }
+        hl_call3(void, gamepad_button_cb, int, gamepad, int, button, float, value);
     }
 }
 HL_PRIM void HL_NAME(hl_gamepad_set_axis_callback)(vclosure* cb) {

@@ -1,29 +1,29 @@
 #include "graphics4.h"
+#include "image.h"
 
-ALLOC_OBJ(kinc_g4_texture_t, texture, _ABSTRACT(kinc_g4_texture_t), EMPTY_INIT, kinc_g4_texture_destroy)
-MAKE_GET_SET(kinc_g4_texture_t, texture, tex_width, int, _ABSTRACT(kinc_g4_texture_t), _I32)
-MAKE_GET_SET(kinc_g4_texture_t, texture, tex_height, int, _ABSTRACT(kinc_g4_texture_t), _I32)
-MAKE_GET_SET(kinc_g4_texture_t, texture, tex_depth, int, _ABSTRACT(kinc_g4_texture_t), _I32)
-MAKE_GET_SET(kinc_g4_texture_t, texture, format, int, _ABSTRACT(kinc_g4_texture_t), _I32)
+MAKE_GET_SET_EX(g4_texture, tex_width, int, _I32)
+MAKE_GET_SET_EX(g4_texture, tex_height, int, _I32)
+MAKE_GET_SET_EX(g4_texture, tex_depth, int, _I32)
+MAKE_GET_SET_EX(g4_texture, format, int, _I32)
 
-HL_PRIM void kinc_hl_g4_texture_init(kinc_g4_texture_t* texture, int width, int height, kinc_image_format_t format) { kinc_g4_texture_init(texture, width, height, format); }
-HL_PRIM void kinc_hl_g4_texture_init3d(kinc_g4_texture_t* texture, int width, int height, int depth, kinc_image_format_t format) { kinc_g4_texture_init3d(texture, width, height, depth, format); }
-HL_PRIM void kinc_hl_g4_texture_init_from_image(kinc_g4_texture_t* texture, kinc_image_t* image) { kinc_g4_texture_init_from_image(texture, image); }
-HL_PRIM void kinc_hl_g4_texture_init_from_image3d(kinc_g4_texture_t* texture, kinc_image_t* image) { kinc_g4_texture_init_from_image3d(texture, image); }
-HL_PRIM unsigned char* kinc_hl_g4_texture_lock(kinc_g4_texture_t* texture) { return kinc_g4_texture_lock(texture); }
-HL_PRIM void kinc_hl_g4_texture_unlock(kinc_g4_texture_t* texture) { kinc_g4_texture_unlock(texture); }
-HL_PRIM void kinc_hl_g4_texture_clear(kinc_g4_texture_t* texture, int x, int y, int z, int width, int height, int depth, unsigned color) { kinc_g4_texture_clear(texture, x, y, z, width, height, depth, color); }
-HL_PRIM void kinc_hl_g4_texture_generate_mipmaps(kinc_g4_texture_t* texture, int levels) { kinc_g4_texture_generate_mipmaps(texture, levels); }
-HL_PRIM void kinc_hl_g4_texture_set_mipmap(kinc_g4_texture_t* texture, kinc_image_t* mipmap, int level) { kinc_g4_texture_set_mipmap(texture, mipmap, level); }
-HL_PRIM int kinc_hl_g4_texture_stride(kinc_g4_texture_t* texture) { return kinc_g4_texture_stride(texture); }
+HL_PRIM void kinc_hl_g4_texture_init(hl_g4_texture* texture, int width, int height, kinc_image_format_t format) { kinc_g4_texture_init(&texture->t, width, height, format); }
+HL_PRIM void kinc_hl_g4_texture_init3d(hl_g4_texture* texture, int width, int height, int depth, kinc_image_format_t format) { kinc_g4_texture_init3d(&texture->t, width, height, depth, format); }
+HL_PRIM void kinc_hl_g4_texture_init_from_image(hl_g4_texture* texture, hl_image* image) { kinc_g4_texture_init_from_image(&texture->t, &image->t); }
+HL_PRIM void kinc_hl_g4_texture_init_from_image3d(hl_g4_texture* texture, hl_image* image) { kinc_g4_texture_init_from_image3d(&texture->t, &image->t); }
+HL_PRIM unsigned char* kinc_hl_g4_texture_lock(hl_g4_texture* texture) { return kinc_g4_texture_lock(&texture->t); }
+HL_PRIM void kinc_hl_g4_texture_unlock(hl_g4_texture* texture) { kinc_g4_texture_unlock(&texture->t); }
+HL_PRIM void kinc_hl_g4_texture_clear(hl_g4_texture* texture, int x, int y, int z, int width, int height, int depth, unsigned color) { kinc_g4_texture_clear(&texture->t, x, y, z, width, height, depth, color); }
+HL_PRIM void kinc_hl_g4_texture_generate_mipmaps(hl_g4_texture* texture, int levels) { kinc_g4_texture_generate_mipmaps(&texture->t, levels); }
+HL_PRIM void kinc_hl_g4_texture_set_mipmap(hl_g4_texture* texture, hl_image* mipmap, int level) { kinc_g4_texture_set_mipmap(&texture->t, &mipmap->t, level); }
+HL_PRIM int kinc_hl_g4_texture_stride(hl_g4_texture* texture) { return kinc_g4_texture_stride(&texture->t); }
 
-DEFINE_PRIM(_VOID, hl_g4_texture_init, _ABSTRACT(kinc_g4_texture_t) _I32 _I32 _I32)
-DEFINE_PRIM(_VOID, hl_g4_texture_init3d, _ABSTRACT(kinc_g4_texture_t) _I32 _I32 _I32 _I32)
-DEFINE_PRIM(_VOID, hl_g4_texture_init_from_image, _ABSTRACT(kinc_g4_texture_t) _ABSTRACT(kinc_image_t))
-DEFINE_PRIM(_VOID, hl_g4_texture_init_from_image3d, _ABSTRACT(kinc_g4_texture_t) _ABSTRACT(kinc_image_t))
-DEFINE_PRIM(_BYTES, hl_g4_texture_lock, _ABSTRACT(kinc_g4_texture_t))
-DEFINE_PRIM(_VOID, hl_g4_texture_unlock, _ABSTRACT(kinc_g4_texture_t))
-DEFINE_PRIM(_VOID, hl_g4_texture_clear, _ABSTRACT(kinc_g4_texture_t) _I32 _I32 _I32 _I32 _I32 _I32 _I32)
-DEFINE_PRIM(_VOID, hl_g4_texture_generate_mipmaps, _ABSTRACT(kinc_g4_texture_t) _I32)
-DEFINE_PRIM(_VOID, hl_g4_texture_set_mipmap, _ABSTRACT(kinc_g4_texture_t) _ABSTRACT(kinc_image_t) _I32)
-DEFINE_PRIM(_I32, hl_g4_texture_stride, _ABSTRACT(kinc_g4_texture_t))
+DEFINE_PRIM(_VOID, hl_g4_texture_init, _TEXTURE _I32 _I32 _I32)
+DEFINE_PRIM(_VOID, hl_g4_texture_init3d, _TEXTURE _I32 _I32 _I32 _I32)
+DEFINE_PRIM(_VOID, hl_g4_texture_init_from_image, _TEXTURE _ABSTRACT(image))
+DEFINE_PRIM(_VOID, hl_g4_texture_init_from_image3d, _TEXTURE _ABSTRACT(image))
+DEFINE_PRIM(_BYTES, hl_g4_texture_lock, _TEXTURE)
+DEFINE_PRIM(_VOID, hl_g4_texture_unlock, _TEXTURE)
+DEFINE_PRIM(_VOID, hl_g4_texture_clear, _TEXTURE _I32 _I32 _I32 _I32 _I32 _I32 _I32)
+DEFINE_PRIM(_VOID, hl_g4_texture_generate_mipmaps, _TEXTURE _I32)
+DEFINE_PRIM(_VOID, hl_g4_texture_set_mipmap, _TEXTURE _ABSTRACT(image) _I32)
+DEFINE_PRIM(_I32, hl_g4_texture_stride, _TEXTURE)

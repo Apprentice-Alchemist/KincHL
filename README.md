@@ -13,9 +13,8 @@ The build file expects the environment variable `HASHLINK` to point to wherever 
 ```bash
 $ cd path/to/this/repo
 $ node path/to/kinc/make.js --compile --dynlib --noshaders -g $GRAPHICS_API
-$ copy Deployment\KincHL.dll $HASHLINK\kinc.hdll # windows
-or
-$ cp Deplyment/KincHL.so $HASHLINK/kinc.hdll # linux
-or
-$ cp Deployment/KincHL.dylib $HASHLINK/kinc.hdll # macos
+
+$ copy Deployment\KincHL.dll %HASHLINK%\kinc.hdll # windows
+$ cp Deployment/KincHL.so /usr/bin/kinc.hdll # or something like that on linux
+$ cp Deployment/KincHL.dylib /usr/bin/kinc.hdll # or something like that on macos
 ```

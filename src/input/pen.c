@@ -5,8 +5,7 @@
     vclosure * pen_##name##_cb = NULL;\
     void internal_pen_##name##_cb(int window, int x, int y,float pressure){\
         if(pen_##name##_cb != NULL){\
-            void (*fun)(int, int, int,float) = pen_##name##_cb->hasValue ? pen_##name##_cb->value : pen_##name##_cb->fun;\
-            fun(window,x,y,pressure);\
+            hl_call4(void,pen_##name##_cb,int,window,int,x,int,y,float,pressure);\
         }\
     }\
     HL_PRIM void HL_NAME(pen_set_##name##_callback)(vclosure *cb){\

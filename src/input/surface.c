@@ -5,8 +5,7 @@
     vclosure * surface_##name##_cb = NULL;\
     void internal_surface_##name##_cb(int index, int x, int y){\
         if(surface_##name##_cb != NULL){\
-            void (*fun)(int, int, int) = surface_##name##_cb->hasValue ? surface_##name##_cb->value : surface_##name##_cb->fun;\
-            fun(index,x,y);\
+            hl_call3(void,surface_##name##_cb,int,index,int,x,int,y);\
         }\
     }\
     HL_PRIM void HL_NAME(surface_set_##name##_callback)(vclosure *cb){\

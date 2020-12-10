@@ -4,14 +4,28 @@
 #undef min
 #undef max
 #include <hl.h>
-
-typedef struct {
-  void* finalizer;
-  void* ptr;
-} cffi_ptr;
-
+#include <kinc/log.h>
 void EMPTY_INIT(void* obj);
 void EMPTY_DESTROY(void* obj);
+
+#define DEFINE_OBJ_EX(name,type_name)\
+  typedef struct {\
+    void (*finalizer)(type_name*);\
+    type_name t;\
+  } hl_##name;
+
+#define ALLOC_OBJ_EX(name,type_name,init_func,destroy_func)\
+  static void name##_destroy(hl_##name* obj){\
+    destroy_func(&obj->t);\
+  }\
+  HL_PRIM hl_##name*HL_NAME(hl_##name##_alloc)(){\
+    hl_##name * o = (hl_##name*)hl_gc_alloc_finalizer(sizeof(hl_##name));\
+    o->finalizer = (void (*)(type_name*))name##_destroy;\
+    memset(&o->t,0,sizeof(type_name));\
+    init_func(&o->t);\
+    return o;\
+  }\
+  DEFINE_PRIM(_ABSTRACT(name),hl_##name##_alloc, _NO_ARG)
 
 #define ALLOC_OBJ(type,name, hl_type,init,destroy)\
   HL_PRIM type *HL_NAME( name## _hl_alloc)(){\
@@ -27,6 +41,21 @@ void EMPTY_DESTROY(void* obj);
   DEFINE_PRIM(hl_type, name## _hl_alloc,_NO_ARG)\
   DEFINE_PRIM(_VOID, name## _hl_init,hl_type)\
   DEFINE_PRIM(_VOID, name## _hl_destroy,hl_type)
+
+#define MAKE_GET_SET_EX(name,field_name, type, hl_ret)                        \
+  HL_PRIM type HL_NAME(hl_##name##_get_##field_name)(hl_##name * o) {           \
+    return o->t.field_name;                                                         \
+  }                                                                           \
+  HL_PRIM type HL_NAME(hl_##name##_set_##field_name)(hl_##name * o,type v) { \
+    return o->t.field_name = v;                                                     \
+  }                                                                           \
+  DEFINE_PRIM(hl_ret, hl_##name##_get_##field_name, _ABSTRACT(name))                       \
+  DEFINE_PRIM(hl_ret, hl_##name##_set_##field_name, _ABSTRACT(name) hl_ret)
+#define MAKE_GET_EX(name, field_name,type,hl_ret)\
+  HL_PRIM type HL_NAME(hl_##name##_get_##field_name)(hl_##name *o){\
+    return o->t.field_name;\
+  }\
+  DEFINE_PRIM(hl_ret,hl_##name##_get_##field_name,hl_ret)
 
 #define MAKE_GET_SET(obj_type, name,field_name, type, hl_obj, hl_ret)                        \
   HL_PRIM type HL_NAME(name##_hl_get_##field_name)(obj_type * o) {           \

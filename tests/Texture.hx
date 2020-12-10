@@ -1,3 +1,5 @@
+import kinc.g4.VertexStructure;
+import kinc.g4.Pipeline;
 import kinc.Image;
 import kinc.math.Matrix3;
 import kinc.g4.ConstantLocation;
@@ -7,10 +9,10 @@ import kinc.g4.VertexBuffer;
 import kinc.g4.Graphics4;
 
 class Texture {
-	static var pipeline:kinc.g4.Pipeline;
-	static var structure:kinc.g4.VertexStructure;
-	static var vertex_buffer:kinc.g4.VertexBuffer;
-	static var index_buffer:kinc.g4.IndexBuffer;
+	static var pipeline:Pipeline;
+	static var structure:VertexStructure;
+	static var vertex_buffer:VertexBuffer;
+	static var index_buffer:IndexBuffer;
 	static var texunit:TextureUnit;
 	static var offset:ConstantLocation;
 	static var texture:kinc.g4.Texture;
@@ -29,7 +31,8 @@ class Texture {
 		#end
 		texture = new kinc.g4.Texture();
 		texture.initFromImage(img);
-		img.destroy();
+		img = null;
+		
 		var fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/texture.frag"), FragmentShader);
 		var vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/texture.vert"), VertexShader);
 
@@ -40,7 +43,7 @@ class Texture {
 		pipeline = new kinc.g4.Pipeline();
 		pipeline.vertex_shader = vertex_shader;
 		pipeline.fragment_shader = fragment_shader;
-		pipeline.input_layout = [structure];
+		pipeline.input_layout[0] = structure;
 		pipeline.compile();
 
 		texunit = pipeline.getTextureUnit("texsampler");

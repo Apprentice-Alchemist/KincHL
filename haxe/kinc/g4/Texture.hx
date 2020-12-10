@@ -2,9 +2,9 @@ package kinc.g4;
 
 import kinc.Image.ImageFormat;
 
-@:build(kinc.Macros.build_struct("texture",true))
+@:build(kinc.Macros.build_struct("g4_texture",true))
 @:hlNative("kinc","hl_g4_texture_")
-abstract Texture(hl.Abstract<"kinc_g4_texture_t">) to hl.Abstract<"kinc_g4_texture_t"> {
+abstract Texture(hl.Abstract<"g4_texture">) {
 	public function new(){
 		this = alloc();
 	}

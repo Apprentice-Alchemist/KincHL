@@ -10,7 +10,6 @@ import haxe.macro.Expr.Field;
 using haxe.macro.Tools;
 using StringTools;
 
-
 class Macros {
 	#if macro
 	public static function build_struct(s:String, ?no_new:Bool = false, ?no_alloc = false, ?no_destroy = false) {
@@ -62,7 +61,9 @@ class Macros {
 								ret: t
 							}),
 							pos: x.pos,
-							meta: [{name: ":hlNative", pos: x.pos, params: [macro "kinc", macro $v{s + "_hl_get_" + x.name}]}]
+							meta: [
+								{name: ":hlNative", pos: x.pos, params: [macro "kinc", macro $v{"hl_" + s + "_get_" + x.name}]}
+							]
 						});
 					if (!has(x.meta, ":no_set") && set != "never" && set != "null")
 						ret.push({
@@ -88,7 +89,9 @@ class Macros {
 								ret: t
 							}),
 							pos: x.pos,
-							meta: [{name: ":hlNative", pos: x.pos, params: [macro "kinc", macro $v{s + "_hl_set_" + x.name}]}]
+							meta: [
+								{name: ":hlNative", pos: x.pos, params: [macro "kinc", macro $v{"hl_" + s + "_set_" + x.name}]}
+							]
 						});
 				default:
 			}
@@ -106,28 +109,32 @@ class Macros {
 					}
 				}),
 				access: [AStatic],
-				meta: [{
-					name: ":hlNative",
-					params: [macro "kinc", macro $v{s + "_hl_alloc"}],
-					pos: haxe.macro.Context.currentPos()
-				}]
+				meta: [
+					{
+						name: ":hlNative",
+						params: [macro "kinc", macro $v{"hl_" + s + "_alloc"}],
+						pos: haxe.macro.Context.currentPos()
+					}
+				]
 			});
-		if (!no_destroy)
-			ret.push({
-				name: "destroy",
-				pos: haxe.macro.Context.currentPos(),
-				kind: FFun({
-					args: [],
-					expr: macro {},
-					ret: TPath({pack: [], name: "Void"})
-				}),
-				access: [APublic],
-				meta: [{
-					name: ":hlNative",
-					params: [macro "kinc", macro $v{s + "_hl_destroy"}],
-					pos: haxe.macro.Context.currentPos()
-				}]
-			});
+		// if (!no_destroy)
+		// 	ret.push({
+		// 		name: "destroy",
+		// 		pos: haxe.macro.Context.currentPos(),
+		// 		kind: FFun({
+		// 			args: [],
+		// 			expr: macro {},
+		// 			ret: TPath({pack: [], name: "Void"})
+		// 		}),
+		// 		access: [APublic],
+		// 		meta: [
+		// 			{
+		// 				name: ":hlNative",
+		// 				params: [macro "kinc", macro $v{s + "_hl_destroy"}],
+		// 				pos: haxe.macro.Context.currentPos()
+		// 			}
+		// 		]
+		// 	});
 		if (!no_new)
 			ret.push({
 				name: "new",
@@ -146,7 +153,7 @@ class Macros {
 		function get_return(t:ComplexType):Expr {
 			// t = t.toType().followWithAbstracts(true).toComplexType();
 			// 	default:
-					return macro return cast null;
+			return macro return cast null;
 			// }
 		}
 		var type = haxe.macro.Context.getLocalType().followWithAbstracts(true);
@@ -157,9 +164,9 @@ class Macros {
 				paramst = params[0].toComplexType();
 				switch params[1] {
 					case TInst(t, params): hl_name = t.get().name.substr(1);
-					default: 
-					// case TMono(t): trace(t.get());
-					// case x: trace(x); trace(type);
+					default:
+						// case TMono(t): trace(t.get());
+						// case x: trace(x); trace(type);
 				}
 			default:
 				throw "Expected TInst";
@@ -184,97 +191,117 @@ class Macros {
 			var tdef:TypeDefinition = {
 				pack: ["kinc", "util"],
 				name: tname,
-				fields: [{
-					name: "alloc",
-					pos: haxe.macro.Context.currentPos(),
-					kind: FFun({
-						args: [{
-							name: "length",
-							type: TPath({
-								pack: [],
-								name: "Int"
-							})
-						}],
-						expr: macro return null,
-						ret: TPath(tpath)
-					}),
-					meta: [{
-						name: ":hlNative",
-						params: [macro "kinc", macro $v{"hl_" + tname2 + "_array_alloc"}],
-						pos: haxe.macro.Context.currentPos()
-					}],
-					access: [AStatic, APublic]
-				}, {
-					name: "get",
-					pos: haxe.macro.Context.currentPos(),
-					kind: FFun({
-						args: [{
-							name: "i",
-							type: TPath({
-								pack: [],
-								name: "Int"
-							})
-						}],
-						expr: get_return(paramst),
-						ret: paramst
-					}),
-					access: [APublic],
-					meta: [{
-						name: ":arrayAccess",
-						pos: haxe.macro.Context.currentPos()
-					}, {
-						name: ":hlNative",
-						params: [macro "kinc", macro $v{"hl_" + tname2 + "_array_get"}],
-						pos: haxe.macro.Context.currentPos()
-					}]
-				}, {
-					name: "set",
-					pos: haxe.macro.Context.currentPos(),
-					kind: FFun({
-						args: [{
-							name: "i",
-							type: TPath({
-								pack: [],
-								name: "Int"
-							})
-						}, {
-							name: "v",
-							type: paramst
-						}],
-						expr: get_return(paramst),
-						ret: paramst
-					}),
-					access: [APublic],
-					meta: [{
-						name: ":arrayAccess",
-						pos: haxe.macro.Context.currentPos()
-					}, {
-						name: ":hlNative",
-						params: [macro "kinc", macro $v{"hl_" + tname2 + "_array_set"}],
-						pos: haxe.macro.Context.currentPos()
-					}]
-				}, {
-					name: "fromArray",
-					meta: [{name: ":from", pos: haxe.macro.Context.currentPos()}],
-					kind: FFun({
-						args: [{name: "arr", type: TPath({pack: [], name: "Array", params: [TPType(paramst)]})}],
-						expr: macro {
-							var ret = alloc(arr.length);
-							for (x in 0...arr.length) {
-								ret[x] = arr[x];
+				fields: [
+					{
+						name: "alloc",
+						pos: haxe.macro.Context.currentPos(),
+						kind: FFun({
+							args: [
+								{
+									name: "length",
+									type: TPath({
+										pack: [],
+										name: "Int"
+									})
+								}
+							],
+							expr: macro return null,
+							ret: TPath(tpath)
+						}),
+						meta: [
+							{
+								name: ":hlNative",
+								params: [macro "kinc", macro $v{"hl_" + tname2 + "_array_alloc"}],
+								pos: haxe.macro.Context.currentPos()
 							}
-							ret[arr.length] = $e{
-								macro(function() {
-									$e{get_return(paramst)}
-								})()
-							};
-							return ret;
-						},
-						ret: null
-					}),
-					pos: haxe.macro.Context.currentPos(),
-					access: [APublic, AStatic]
-				}],
+						],
+						access: [AStatic, APublic]
+					},
+					{
+						name: "get",
+						pos: haxe.macro.Context.currentPos(),
+						kind: FFun({
+							args: [
+								{
+									name: "i",
+									type: TPath({
+										pack: [],
+										name: "Int"
+									})
+								}
+							],
+							expr: get_return(paramst),
+							ret: paramst
+						}),
+						access: [APublic],
+						meta: [
+							{
+								name: ":arrayAccess",
+								pos: haxe.macro.Context.currentPos()
+							},
+							{
+								name: ":hlNative",
+								params: [macro "kinc", macro $v{"hl_" + tname2 + "_array_get"}],
+								pos: haxe.macro.Context.currentPos()
+							}
+						]
+					},
+					{
+						name: "set",
+						pos: haxe.macro.Context.currentPos(),
+						kind: FFun({
+							args: [
+								{
+									name: "i",
+									type: TPath({
+										pack: [],
+										name: "Int"
+									})
+								},
+								{
+									name: "v",
+									type: paramst
+								}
+							],
+							expr: get_return(paramst),
+							ret: paramst
+						}),
+						access: [APublic],
+						meta: [
+							{
+								name: ":arrayAccess",
+								pos: haxe.macro.Context.currentPos()
+							},
+							{
+								name: ":hlNative",
+								params: [macro "kinc", macro $v{"hl_" + tname2 + "_array_set"}],
+								pos: haxe.macro.Context.currentPos()
+							}
+						]
+					},
+					{
+						name: "fromArray",
+						meta: [{name: ":from", pos: haxe.macro.Context.currentPos()}],
+						kind: FFun({
+							args: [{name: "arr", type: TPath({pack: [], name: "Array", params: [TPType(paramst)]})}],
+							expr: macro {
+								var ret = alloc(arr.length);
+								for (x in 0...arr.length) {
+									ret[x] = arr[x];
+								}
+								ret[arr.length] = $e{
+									macro(function() {
+										$e{get_return(paramst)}
+									})()
+								};
+								return ret;
+							},
+							ret: null
+						}),
+						pos: haxe.macro.Context.currentPos(),
+						access: [APublic, AStatic]
+					}
+				],
 				pos: haxe.macro.Context.currentPos(),
 				kind: TDAbstract(TPath({
 					pack: ["hl"],
@@ -288,4 +315,3 @@ class Macros {
 	}
 	#end
 }
-

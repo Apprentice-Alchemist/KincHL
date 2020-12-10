@@ -1,6 +1,5 @@
 #include "graphics4.h"
-#include <kinc/error.h>
-#include <kinc/log.h>
+
 HL_PRIM void kinc_hl_g4_set_int(kinc_g4_constant_location_t* location, int value) { kinc_g4_set_int(*location, value); }
 HL_PRIM void kinc_hl_g4_set_int2(kinc_g4_constant_location_t* location, int value1, int value2) { kinc_g4_set_int2(*location, value1, value2); }
 HL_PRIM void kinc_hl_g4_set_int3(kinc_g4_constant_location_t* location, int value1, int value2, int value3) { kinc_g4_set_int3(*location, value1, value2, value3); }
