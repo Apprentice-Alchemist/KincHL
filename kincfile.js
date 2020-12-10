@@ -10,11 +10,15 @@ switch(platform){
         break;
     case Platform.OSX:
         project.addLib("libhl.dylib");
+        if (require("process").env["GITHUB_WORKSPACE"]) {
+            // because the files copied to /usr/local/include don't get picked up, so temp fix
+            project.addIncludeDir(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/src");
+        }
         break;
     case Platform.Windows:
         if (require("process").env["GITHUB_WORKSPACE"]) {
             project.addLib(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/bin/libhl");
-            project.addIncludeDir(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/bin/libhl");
+            project.addIncludeDir(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/src");
         } else {
             project.addLib(require("process").env["HASHLINK"] + "/libhl");
             project.addIncludeDir(require("process").env["HASHLINK"] + "/include");
