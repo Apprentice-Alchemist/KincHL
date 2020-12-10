@@ -9,11 +9,12 @@ switch(platform){
         project.addLib("hl");
         break;
     case Platform.OSX:
-        project.addLib("libhl.dylib");
-        if (require("process").env["GITHUB_WORKSPACE"]) {
-            // because the files copied to /usr/local/include don't get picked up, so temp fix
-            project.addIncludeDir(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/src");
-        }
+        project.addLib("/usr/local/lib/libhl.dylib");
+        project.addIncludeDir("/usr/local/include");
+        // if (require("process").env["GITHUB_WORKSPACE"]) {
+        //     // because the files copied to /usr/local/include don't get picked up, so temp fix
+        //     project.addIncludeDir(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/src");
+        // }
         break;
     case Platform.Windows:
         if (require("process").env["GITHUB_WORKSPACE"]) {
