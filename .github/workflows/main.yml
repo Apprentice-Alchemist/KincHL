@@ -52,19 +52,21 @@ jobs:
         cd hashlink
         make libhl
         make hl
-        make install
+        make ui
+        sudo make install
     - name: Build Hashlink
       if: matrix.os == 'macos-latest'
       run: |
         cd hashlink
         make libhl
         make hl
+        make ui
         make install
     - name: Build Hashlink
       if: matrix.os == 'windows-latest'
       run: |
         cd hashlink
-        "${env:GITHUB_WORKSPACE}\KincHL\extra\replace.bat" libhl.vcxproj 8.1 10.0.19041.0
+        ${env:GITHUB_WORKSPACE}\KincHL\extra\replace.bat libhl.vcxproj 8.1 10.0.19041.0
         MSBuild /nologo libhl.vcxproj -m -p:OutDir=bin\
     - name: Build KincHL
       run: |
