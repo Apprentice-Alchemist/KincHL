@@ -68,11 +68,11 @@ jobs:
         cd hashlink
         mkdir bin
         mkdir build
-        cl.exe /c /DLIBHL_EXPORTS src\gc.c src\std\*.c include\pcre\*.c /Isrc /Isrc\std /Iinclude\pcre /Iinclude /Fobuild\
-        link.exe build\*.obj ws2_32.lib user32.lib /DLL /MACHINE:x64 /NOLOGO /OUT:bin/libhl.dll
+        cl.exe /nologo /c /DLIBHL_EXPORTS src\gc.c src\std\*.c include\pcre\*.c /Isrc /Isrc\std /Iinclude\pcre /Iinclude /Fobuild\ /w
+        link.exe /nologo build\*.obj ws2_32.lib user32.lib /DLL /MACHINE:x64 /NOLOGO /OUT:bin/libhl.dll
         del build\*
-        cl.exe /c src/code.c src/jit.c src/main.c src/module.c src/debugger.c src/profile.c /Isrc /Fobuild\
-        link.exe build\*.obj user32.lib bin\libhl.lib /OUT:bin/hl.exe /SUBSYSTEM:CONSOLE
+        cl.exe /nologo /c src/code.c src/jit.c src/main.c src/module.c src/debugger.c src/profile.c /Isrc /Fobuild\ /w
+        link.exe /nologo build\*.obj user32.lib bin\libhl.lib /OUT:bin/hl.exe /SUBSYSTEM:CONSOLE
     - name: Build KincHL
       run: |
         cd KincHL
