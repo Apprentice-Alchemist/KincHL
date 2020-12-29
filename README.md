@@ -8,7 +8,18 @@ Hashlink bindings for [Kinc](https://github.com/Kode/Kinc)
 
 ### Building
 
-The build file expects the environment variable `HASHLINK` to point to wherever you installed hashlink
+On windows the kincfile expects an environment variable called HASHLINK to point to your hashlink installation, which should have the following structure :
+```
+%HASHLINK%
+    - hl.exe
+    - libhl.dll
+    - libhl.lib
+    - *.hdll
+    - /include
+        - hl.h
+        - hlc.h
+        - hlc_main.c
+```
 
 ```bash
 $ cd path/to/this/repo

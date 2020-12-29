@@ -7,6 +7,7 @@ class Pipeline {
 	private var _handle:hl.Abstract<"g4_pipeline">;
 
 	public final input_layout:NativeArray<VertexStructure>;
+	private inline function set_input_layout(s:NativeArray<VertexStructure>){ trace(s.length); for(i in 0...s.length) input_layout[i] = s[i]; input_layout[s.length] = null; return input_layout;}
 	public var vertex_shader:Shader;
 	public var fragment_shader:Shader;
 	public var geometry_shader:Shader;
@@ -79,7 +80,9 @@ class Pipeline {
 	public function compile():Void {
 		compilePipeline(this);
 	}
-
+	public function destroy():Void {
+		destroyPipeline(this._handle);
+	}
 	public function getConstantLocation(name:String):ConstantLocation return getPipelineConstantLocation(this._handle, name);
 
 	public function getTextureUnit(name:String):TextureUnit return getPipelineTextureUnit(this._handle, name);
@@ -88,6 +91,7 @@ class Pipeline {
 	@:hlNative("kinc", "hl_g4_pipeline_compile") @:noCompletion static function compilePipeline(state:Dynamic):Void {}
 	@:hlNative("kinc", "hl_g4_pipeline_get_texture_unit") @:noCompletion static function getPipelineTextureUnit(state:hl.Abstract<"g4_pipeline">, name:String):TextureUnit return null;
 	@:hlNative("kinc", "hl_g4_pipeline_get_constant_location") @:noCompletion static function getPipelineConstantLocation(state:hl.Abstract<"g4_pipeline">, name:String):ConstantLocation return null;
+	@:hlNative("kinc", "hl_g4_pipeline_destroy") @:noCompletion static function destroyPipeline(state:hl.Abstract<"g4_pipeline">):Void {}
 }
 
 enum abstract BlendingOperation(Int) {

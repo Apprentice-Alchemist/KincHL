@@ -15,17 +15,18 @@ void EMPTY_DESTROY(void* obj);
   } hl_##name;
 
 #define ALLOC_OBJ_EX(name,type_name,init_func,destroy_func)\
-  static void name##_destroy(hl_##name* obj){\
+  HL_PRIM void HL_NAME(hl_##name##_destroy)(hl_##name* obj){\
     destroy_func(&obj->t);\
   }\
   HL_PRIM hl_##name*HL_NAME(hl_##name##_alloc)(){\
     hl_##name * o = (hl_##name*)hl_gc_alloc_finalizer(sizeof(hl_##name));\
-    o->finalizer = (void (*)(type_name*))name##_destroy;\
+    o->finalizer = (void (*)(type_name*))kinc_hl_##name##_destroy;\
     memset(&o->t,0,sizeof(type_name));\
     init_func(&o->t);\
     return o;\
   }\
-  DEFINE_PRIM(_ABSTRACT(name),hl_##name##_alloc, _NO_ARG)
+  DEFINE_PRIM(_ABSTRACT(name),hl_##name##_alloc, _NO_ARG)\
+  DEFINE_PRIM(_VOID,hl_##name##_destroy, _ABSTRACT(name))
 
 #define ALLOC_OBJ(type,name, hl_type,init,destroy)\
   HL_PRIM type *HL_NAME( name## _hl_alloc)(){\

@@ -1,5 +1,6 @@
 -lib kinc
 -cp tests
+-cp ../../Libs/Kinc
 --debug
 # -D dump=pretty
 # -D dump-path=build/ast-dump

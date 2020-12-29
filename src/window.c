@@ -54,6 +54,9 @@ HL_PRIM void HL_NAME(hl_window_show)(int window_index) { kinc_window_show(window
 HL_PRIM void HL_NAME(hl_window_hide)(int window_index) { kinc_window_hide(window_index); }
 HL_PRIM void HL_NAME(hl_window_set_title)(int window_index, vstring* title) { kinc_window_set_title(window_index, hl_to_utf8(title->bytes)); }
 
+static vclosure* r_cb = NULL;
+static vclosure* ppi_cb = NULL;
+
 void internal_resize_callback(int x, int y, void* data) {
   if (data != NULL) {
     hl_call2(void,((vclosure*)data),int,x,int,y);

@@ -45,6 +45,7 @@ enum abstract WindowFeatures(Int) from Int to Int {
 }
 
 @:structInit
+@:keep
 class WindowOptions {
 	public var title:String = null;
 	public var x:Int = -1;
@@ -58,6 +59,7 @@ class WindowOptions {
 }
 
 @:structInit
+@:keep
 class FramebufferOptions {
 	public var color_bits:Int = 32;
 	public var depth_bits:Int = 16;

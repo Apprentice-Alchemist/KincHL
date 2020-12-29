@@ -117,24 +117,24 @@ class Macros {
 					}
 				]
 			});
-		// if (!no_destroy)
-		// 	ret.push({
-		// 		name: "destroy",
-		// 		pos: haxe.macro.Context.currentPos(),
-		// 		kind: FFun({
-		// 			args: [],
-		// 			expr: macro {},
-		// 			ret: TPath({pack: [], name: "Void"})
-		// 		}),
-		// 		access: [APublic],
-		// 		meta: [
-		// 			{
-		// 				name: ":hlNative",
-		// 				params: [macro "kinc", macro $v{s + "_hl_destroy"}],
-		// 				pos: haxe.macro.Context.currentPos()
-		// 			}
-		// 		]
-		// 	});
+		if (!no_destroy)
+			ret.push({
+				name: "destroy",
+				pos: haxe.macro.Context.currentPos(),
+				kind: FFun({
+					args: [],
+					expr: macro {},
+					ret: TPath({pack: [], name: "Void"})
+				}),
+				access: [APublic],
+				meta: [
+					{
+						name: ":hlNative",
+						params: [macro "kinc", macro $v{"hl_" + s + "_destroy"}],
+						pos: haxe.macro.Context.currentPos()
+					}
+				]
+			});
 		if (!no_new)
 			ret.push({
 				name: "new",

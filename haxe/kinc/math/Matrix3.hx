@@ -28,4 +28,10 @@ abstract Matrix3(hl.Abstract<"kinc_matrix3x3_t">) to hl.Abstract<"kinc_matrix3x3
 
 	public static function rotationZ(alpha:hl.F32):Matrix3
 		return null;
+
+	@:op(A * B) static function multiply(a:Matrix3,b:Matrix3) {
+		var ret = new Matrix3();
+		// ret.set(0,0,a.get(0,0) * b.get(0,0) + a.get())
+		return ret;
+	}
 }

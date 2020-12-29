@@ -11,9 +11,23 @@ abstract RenderTarget(hl.Abstract<"g4_render_target">) {
 	public var isCubeMap(get, set):Bool;
 	public var isDepthAttachment(get, set):Bool;
 
-	public function init(width:Int, height:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int,
+	public static function create(width:Int, height:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int,
+			contextId:Int):RenderTarget {
+		var ret = new RenderTarget();
+		ret.init(width, height, depthBufferBits, antialiasing, format, stencilBufferBits, contextId);
+		return ret;
+	}
+
+	public static function createCube(cubeMapSize:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int,
+			contextId:Int):RenderTarget {
+		var ret = new RenderTarget();
+		ret.initCube(cubeMapSize, depthBufferBits, antialiasing, format, stencilBufferBits, contextId);
+		return ret;
+	}
+
+	private function init(width:Int, height:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int,
 		contextId:Int):Void {}
-	public function initCube(cubeMapSize:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int, contextId:Int):Void {}
+	private function initCube(cubeMapSize:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int, contextId:Int):Void {}
 	public function useColorAsTexture(unit:TextureUnit):Void {}
 	public function useDepthAsTexture(unit:TextureUnit):Void {}
 	public function setDepthStencilFrom(source:RenderTarget):Void {}
