@@ -22,6 +22,7 @@ jobs:
       with:
           haxe-version: 4.1.3
     - name: Checkout hashlink
+      if: matrix.os != 'macos-latest'
       uses: actions/checkout@v2
       with:
         repository: "HaxeFoundation/hashlink"
@@ -57,9 +58,7 @@ jobs:
     - name: Build Hashlink
       if: matrix.os == 'macos-latest'
       run: |
-        cd hashlink
-        make libhl
-        make hl
+        brew install hashlink
     - name: Build Hashlink
       if: matrix.os == 'windows-latest'
       run: |
