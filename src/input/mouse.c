@@ -2,11 +2,17 @@
 #include <kinc/input/mouse.h>
 #define MAKE_CALLBACK(cb_name) \
 HL_PRIM void HL_NAME(mouse_set_##cb_name##_callback)(vclosure* cb) {\
-    if (mouse_##cb_name##_cb != NULL) {\
-        hl_remove_root(mouse_##cb_name##_cb);\
+    if (!mouse_##cb_name##_cb) {\
+        if(!cb) return;\
+        hl_add_root(&mouse_##cb_name##_cb);\
+    }\
+    if(mouse_##cb_name##_cb && !cb){\
+        hl_remove_root(&mouse_##cb_name##_cb);\
+        mouse_##cb_name##_cb = NULL;\
+        kinc_mouse_##cb_name##_callback = NULL;\
+        return;\
     }\
     mouse_##cb_name##_cb = cb;\
-    hl_add_root(mouse_##cb_name##_cb);\
     kinc_mouse_##cb_name##_callback = internal_mouse_##cb_name##_cb;\
 }
 vclosure* mouse_press_cb = NULL;
@@ -27,12 +33,8 @@ void internal_mouse_release_cb(int window, int button, int x, int y) {
 }
 void internal_mouse_move_cb(int window, int x, int y, int movement_x, int movement_y) {
     if (mouse_move_cb != NULL) {
-        if (mouse_move_cb->hasValue) {
-            ((void (*)(vdynamic*, int, int, int, int, int))mouse_move_cb)(mouse_move_cb->value, window, x, y, movement_x, movement_y);
-        }
-        else {
-            ((void (*)(int, int, int, int, int))mouse_move_cb)(window, x, y, movement_x, movement_y);
-        }
+        vdynamic *args[5] = {hl_make_dyn(&window, &hlt_i32), hl_make_dyn(&x, &hlt_i32), hl_make_dyn(&y, &hlt_i32), hl_make_dyn(&movement_x, &hlt_i32), hl_make_dyn(&movement_y, &hlt_i32)};
+        hl_dyn_call(mouse_move_cb,args,5);
     }
 }
 void internal_mouse_scroll_cb(int window, int delta) {

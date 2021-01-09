@@ -7,6 +7,8 @@
 #include <kinc/log.h>
 void EMPTY_INIT(void* obj);
 void EMPTY_DESTROY(void* obj);
+void print_exception_stack(vdynamic *exc);
+
 
 #define DEFINE_OBJ_EX(name,type_name)\
   typedef struct {\

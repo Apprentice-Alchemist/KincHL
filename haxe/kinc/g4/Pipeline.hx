@@ -7,7 +7,7 @@ class Pipeline {
 	private var _handle:hl.Abstract<"g4_pipeline">;
 
 	public final input_layout:NativeArray<VertexStructure>;
-	private inline function set_input_layout(s:NativeArray<VertexStructure>){ trace(s.length); for(i in 0...s.length) input_layout[i] = s[i]; input_layout[s.length] = null; return input_layout;}
+	
 	public var vertex_shader:Shader;
 	public var fragment_shader:Shader;
 	public var geometry_shader:Shader;

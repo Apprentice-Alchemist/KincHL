@@ -37,14 +37,14 @@ HL_PRIM void HL_NAME(hl_set_safe_zone)(float value) { kinc_set_safe_zone(value);
 HL_PRIM double HL_NAME(hl_frequency)() { return kinc_frequency(); }
 HL_PRIM kinc_ticks_t HL_NAME(hl_timestamp)() { return kinc_timestamp(); }
 HL_PRIM double HL_NAME(hl_time)() { return kinc_time(); }
-HL_PRIM void HL_NAME(hl_login)(){ kinc_login();}
-HL_PRIM bool HL_NAME(hl_waiting_for_login)(){return kinc_waiting_for_login();}
-HL_PRIM void HL_NAME(hl_unlock_achievement)(int id){kinc_unlock_achievement(id);}
-HL_PRIM void HL_NAME(hl_disallow_user_change)(){kinc_disallow_user_change();}
-HL_PRIM void HL_NAME(hl_allow_user_change)(){kinc_allow_user_change();}
-HL_PRIM void HL_NAME(hl_set_keep_screen_on)(bool on){kinc_set_keep_screen_on(on);}
+HL_PRIM void HL_NAME(hl_login)() { kinc_login(); }
+HL_PRIM bool HL_NAME(hl_waiting_for_login)() { return kinc_waiting_for_login(); }
+HL_PRIM void HL_NAME(hl_unlock_achievement)(int id) { kinc_unlock_achievement(id); }
+HL_PRIM void HL_NAME(hl_disallow_user_change)() { kinc_disallow_user_change(); }
+HL_PRIM void HL_NAME(hl_allow_user_change)() { kinc_allow_user_change(); }
+HL_PRIM void HL_NAME(hl_set_keep_screen_on)(bool on) { kinc_set_keep_screen_on(on); }
 
-HL_PRIM int HL_NAME(hl_get_graphics_api)(){
+HL_PRIM int HL_NAME(hl_get_graphics_api)() {
 #if KORE_DIRECT3D9
   return 0;
 #elif KORE_DIRECT3D11
@@ -90,3 +90,12 @@ DEFINE_PRIM(_I32, hl_get_graphics_api, _NO_ARG)
 
 void EMPTY_INIT(void* o) {}
 void EMPTY_DESTROY(void* o) {}
+void print_exception_stack(vdynamic* exc) {
+  uchar* msg = hl_to_string(exc);
+  varray* nstack = hl_exception_stack();
+  uchar** stack = hl_aptr(nstack, uchar*);
+  if (exc) { kinc_log(KINC_LOG_LEVEL_WARNING,"Uncaught exception : %s", hl_to_utf8(msg)); }
+  for (int i = 0; i < nstack->size; i++) {
+    kinc_log(KINC_LOG_LEVEL_INFO, "Called from %s",hl_to_utf8(stack[i]));
+  }
+}

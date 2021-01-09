@@ -7,14 +7,17 @@
   static vclosure* name##_cb = NULL;\
   static expr\
   HL_PRIM void HL_NAME(hl_set_ ##name## _callback)(vclosure *cb){\
-    if(name## _cb != NULL){\
-      hl_remove_root(name## _cb);\
+    if(!name## _cb){\
+      if(!cb) return;\
+      hl_add_root(&name##_cb);\
+    }\
+    if(name##_cb && !cb) {\
+      hl_remove_root(&name##_cb);\
+      name##_cb = NULL;\
+      kinc_set_##name##_callback(NULL);\
     }\
     name## _cb = cb;\
-    if(cb != NULL){\
-      hl_add_root(name## _cb);\
-      kinc_set_ ##name## _callback(internal_ ##name## _callback);\
-    }\
+    kinc_set_ ##name## _callback(internal_ ##name## _callback);\
   }\
   DEFINE_PRIM(_VOID,hl_set_ ##name## _callback,hl_type)
 
@@ -86,14 +89,9 @@ MAKE_CALLBACK(background, void internal_background_callback() {
 
 MAKE_CALLBACK(shutdown, void internal_shutdown_callback() {
   bool isexc = false;
-  hl_dyn_call_safe(shutdown_cb, NULL, 0, &isexc);
+  void * ret = hl_dyn_call_safe(shutdown_cb, NULL, 0, &isexc);
   if (isexc) {
-    kinc_log(KINC_LOG_LEVEL_WARNING, "Exception occured in shutdown callback");
-    varray* stack = hl_exception_stack();
-    for (int i = 0; i < stack->size; i++) {
-      kinc_log(KINC_LOG_LEVEL_INFO, hl_to_utf8(hl_to_string(hl_aptr(stack, vdynamic*)[i])));
-      kinc_log(KINC_LOG_LEVEL_INFO, "\n");
-    }
+    print_exception_stack((vdynamic*)ret);
   }
 }, _FUN(_VOID, _NO_ARG))
 

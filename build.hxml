@@ -6,4 +6,6 @@
 # -D dump-path=build/ast-dump
 # -lib heaps
 # -m Texture
+-lib hldx
+-lib Arcane
 -hl out.hl

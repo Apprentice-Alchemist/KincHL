@@ -2,7 +2,7 @@ let project = new Project("KincHL");
 project.setDebugDir("Deployment");
 project.addFile("src/**");
 project.addIncludeDir("src/");
-
+project.addExclude("src/g5/**");
 switch(platform){
     case Platform.Linux:
         project.addLib("hl");
