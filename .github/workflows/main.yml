@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [windows-latest, ubuntu-latest]
         graphics: [opengl]
         include:
           - os: macos-latest
@@ -55,7 +55,7 @@ jobs:
         make hl
         make ui
         sudo make install
-    - name: Build Hashlink
+    - name: Install Hashlink
       if: matrix.os == 'macos-latest'
       run: |
         brew install hashlink
@@ -73,4 +73,4 @@ jobs:
     - name: Build KincHL
       run: |
         cd KincHL
-        node ../Kinc/make.js --dynlib --compile --noshaders -g ${{matrix.graphics}} --arch x86_64
+        node ../Kinc/make.js --dynlib --compile --noshaders -g ${{matrix.graphics}}
