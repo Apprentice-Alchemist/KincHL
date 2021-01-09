@@ -9,8 +9,10 @@ switch(platform){
         break;
     case Platform.OSX:
         if (require("process").env["GITHUB_WORKSPACE"]) {
-            project.addLib(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/libhl.dylib");
-            project.addIncludeDir(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/src");
+            // project.addLib(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/libhl.dylib");
+            // project.addIncludeDir(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/src");
+            project.addIncludeDir("/usr/local/opt/hashlink/libexec/include");
+            project.addLib("/usr/local/opt/hashlink/libexec/lib/libhl.dylib");
         }else{
             project.addLib("libhl.dylib");
         }
