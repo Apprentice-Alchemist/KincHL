@@ -73,4 +73,4 @@ jobs:
     - name: Build KincHL
       run: |
         cd KincHL
-        node ../Kinc/make.js --dynlib --compile --noshaders -g ${{matrix.graphics}}
+        node ../Kinc/make.js --dynlib --compile --noshaders -g ${{matrix.graphics}} --arch x86_64
