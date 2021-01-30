@@ -21,21 +21,39 @@ jobs:
       uses: krdlab/setup-haxe@master
       with:
           haxe-version: 4.1.3
+    - name: Set up MSVC
+      if: matrix.os == 'windows-latest'
+      uses: ilammy/msvc-dev-cmd@v1
     - name: Checkout hashlink
       uses: actions/checkout@v2
       with:
         repository: "HaxeFoundation/hashlink"
         path: "hashlink"
+
+    - name: Build Hashlink
+      if: matrix.os == 'macos-latest'
+      run: |
+        cd hashlink
+        cc -c src/gc.c src/std/*.c include/pcre/*.c include/mdbg/*.c -I src -I include -I include/pcre -I src/std -target x86_64-apple-macos10.12
+        cc -o libhl.intel.dylib -shared *.o -lpthread -lm -target x86_64-apple-macos10.12
+        rm -f *.o
+        cc -c src/gc.c src/std/*.c include/pcre/*.c include/mdbg/*.c -I src -I include -I include/pcre -I src/std -target arm64-apple-macos11
+        cc -o libhl.arm.dylib -shared *.o -lpthread -lm -target arm64-apple-macos11
+        rm -f *.o
+        lipo -create -output libhl.dylib libhl.intel.dylib libhl.arm.dylib
+
     - name: Checkout KincHL
       uses: actions/checkout@v2
       with:
         path: "KincHL"
+
     - name: Checkout Kinc
       uses: actions/checkout@v2
       with:
         repository: "Kode/Kinc"
         path: "Kinc"
         submodules: "recursive"
+    
     - name: Apt Update
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get update
@@ -43,9 +61,7 @@ jobs:
     - name: Apt Install
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get install libasound2-dev libxinerama-dev libxrandr-dev libgl1-mesa-dev libxi-dev libxcursor-dev --yes --quiet
-    - name: Set up MSVC
-      if: matrix.os == 'windows-latest'
-      uses: ilammy/msvc-dev-cmd@v1
+
     - name: Build Hashlink
       if: matrix.os == 'ubuntu-latest'
       run: |
@@ -54,17 +70,6 @@ jobs:
         make hl
         make ui
         sudo make install
-    - name: Build Hashlink
-      if: matrix.os == 'macos-latest'
-      run: |
-        cd hashlink
-        cc -c src/gc.c src/std/*.c include/pcre/*.c -I src -I include -I include/pcre -I src/std -target x86_64-apple-macos10.12
-        cc -o libhl.intel.dylib -shared *.o -lpthread -lm -target x86_64-apple-macos10.12
-        rm -f *.o
-        cc -c src/gc.c src/std/*.c include/pcre/*.c -I src -I include -I include/pcre -I src/std -target arm64-apple-macos11
-        cc -o libhl.arm.dylib -shared *.o -lpthread -lm -target arm64-apple-macos11
-        rm -f *.o
-        lipo -create -output libhl.dylib libhl.intel.dylib libhl.arm.dylib
     - name: Build Hashlink
       if: matrix.os == 'windows-latest'
       run: |
