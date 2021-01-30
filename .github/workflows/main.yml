@@ -34,13 +34,13 @@ jobs:
       if: matrix.os == 'macos-latest'
       run: |
         cd hashlink
-        cc -c src/gc.c src/std/*.c include/pcre/*.c include/mdbg/*.c -I src -I include -I include/pcre -I src/std -target x86_64-apple-macos10.12
-        cc -o libhl.intel.dylib -shared *.o -lpthread -lm -target x86_64-apple-macos10.12
+        cc -c src/gc.c src/std/*.c include/pcre/*.c include/mdbg/*.c -I src -I include -I include/pcre -I src/std -target x86_64-apple-macos
+        cc -o libhl.x86_64.dylib -shared *.o -lpthread -lm -target x86_64-apple-macos
         rm -f *.o
-        cc -c src/gc.c src/std/*.c include/pcre/*.c include/mdbg/*.c -I src -I include -I include/pcre -I src/std -target arm64-apple-macos11
-        cc -o libhl.arm.dylib -shared *.o -lpthread -lm -target arm64-apple-macos11
+        cc -c src/gc.c src/std/*.c include/pcre/*.c include/mdbg/*.c -I src -I include -I include/pcre -I src/std -target arm64-apple-macos
+        cc -o libhl.arm.dylib -shared *.o -lpthread -lm -target arm64-apple-macos
         rm -f *.o
-        lipo -create -output libhl.dylib libhl.intel.dylib libhl.arm.dylib
+        lipo -create -output libhl.dylib libhl.x86_64.dylib libhl.arm.dylib
 
     - name: Checkout KincHL
       uses: actions/checkout@v2
