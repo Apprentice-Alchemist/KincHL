@@ -89,4 +89,5 @@ jobs:
       run: |
         cd KincHL
         node ../Kinc/make.js --dynlib --noshaders -g ${{matrix.graphics}}
+        cd build
         xcodebuild -configuration Release -project KincHL.xcodeproj ARCHS=x86_64
