@@ -32,19 +32,6 @@ jobs:
         repository: "HaxeFoundation/hashlink"
         path: "hashlink"
 
-    # - name: Build Hashlink
-    #   if: matrix.os == 'macos-latest'
-    #   run: |
-    #     brew install hashlink
-    #     # cd hashlink
-    #     # cc -c src/gc.c src/std/*.c include/pcre/*.c include/mdbg/*.c -I src -I include -I include/pcre -I src/std -target x86_64-apple-macos
-    #     # cc -o libhl.x86_64.dylib -shared *.o -lpthread -lm -target x86_64-apple-macos
-    #     # rm -f *.o
-    #     # cc -c src/gc.c src/std/*.c include/pcre/*.c include/mdbg/*.c -I src -I include -I include/pcre -I src/std -target arm64-apple-macos
-    #     # cc -o libhl.arm.dylib -shared *.o -lpthread -lm -target arm64-apple-macos
-    #     # rm -f *.o
-    #     # lipo -create -output libhl.dylib libhl.x86_64.dylib libhl.arm.dylib
-
     - name: Checkout KincHL
       uses: actions/checkout@v2
       with:
