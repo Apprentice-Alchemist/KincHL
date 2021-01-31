@@ -77,9 +77,16 @@ jobs:
       if: matrix.os == 'windows-latest'
       run: |
         cd hashlink
-        MSBuild libhl.vcxproj /nologo /clp:ErrorsOnly -p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10
-        MSBuild hl.vcxproj /nologo /clp:ErrorsOnly -p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10
+        "MSBuild libhl.vcxproj /nologo /clp:ErrorsOnly -p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
+        "MSBuild hl.vcxproj /nologo /clp:ErrorsOnly -p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
     - name: Build KincHL
+      if: matrix.os != 'macos-latest'
       run: |
         cd KincHL
-        node ../Kinc/make.js --debug --dynlib --compile --noshaders -g ${{matrix.graphics}}
+        node ../Kinc/make.js --dynlib --compile --noshaders -g ${{matrix.graphics}}
+    - name: Build KincHL (MacOS)
+      if: matrix.os == 'macos-latest'
+      run: |
+        cd KincHL
+        node ../Kinc/make.js --dynlib --noshaders -g ${{matrix.graphics}}
+        xcodebuild -configuration Release -project KincHL.xcodeproj ARCHS=x86_64
