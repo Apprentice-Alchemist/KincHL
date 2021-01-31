@@ -8,6 +8,10 @@ extern class Keyboard {
 	static function setKeyDownCallback(cb:KeyCode->Void):Void;
 	static function setKeyUpCallback(cb:KeyCode->Void):Void;
 	static function setKeyPressCallback(cb:Int->Void):Void;
+
+	private static macro function keyCodeToString(e) {
+		return macro "";
+	}
 }
 
 enum abstract KeyCode(Int) {

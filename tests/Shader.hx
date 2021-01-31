@@ -6,6 +6,7 @@ import kinc.g4.Graphics4;
 import kinc.g4.*;
 import kinc.Image;
 import kinc.audio1.Sound;
+
 class Shader {
 	static var fragment_shader:kinc.g4.Shader;
 	static var vertex_shader:kinc.g4.Shader;
@@ -62,7 +63,7 @@ class Shader {
 				idx[i] = indices[i];
 			index_buffer.unlock();
 		}
-		renderTarget = RenderTarget.create(250,250,24,false,Format32Bit,8,0);
+		renderTarget = RenderTarget.create(250, 250, 24, false, Format32Bit, 8, 0);
 		kinc.System.start();
 	}
 

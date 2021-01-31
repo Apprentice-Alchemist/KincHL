@@ -7,10 +7,14 @@ abstract IndexBuffer(hl.Abstract<"g4_index_buffer">) {
 		this = alloc();
 		init(count, format);
 	}
-	function init(count:Int, format:Int):Void {}
-	public function lock():hl.BytesAccess<Int> return null;
-	public function unlock():Void {}
-	public function count():Int return 0;
+
+	function init(count:Int, format:Int):Void;
+
+	public function lock():hl.BytesAccess<Int>;
+
+	public function unlock():Void;
+
+	public function count():Int;
 }
 
 enum abstract IndexBufferFormat(Int) to Int {

@@ -24,10 +24,13 @@ abstract Image(hl.Abstract<"image">) {
 		ret._fromFile(name);
 		return ret;
 	}
+
 	@:hlNative("kinc", "hl_image_init") function init(mem:Bytes, width:Int, height:Int, format:ImageFormat):hl.I64
 		return 0;
+
 	@:hlNative("kinc", "hl_image_init_from_file") function _fromFile(name:String):hl.I64
 		return 0;
+
 	@:hlNative("kinc", "hl_image_init_from_bytes") public function initFromBytes(mem:hl.Bytes, width:Int, height:Int, format:Int):Void {};
 }
 

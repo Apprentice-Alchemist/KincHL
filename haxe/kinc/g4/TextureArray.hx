@@ -12,5 +12,5 @@ abstract TextureArray(hl.Abstract<"g4_texture_array">) {
 		init(na);
 	}
 
-	function init(arr:hl.NativeArray<Image>):Void {}
+	function init(arr:hl.NativeArray<Image>):Void;
 }

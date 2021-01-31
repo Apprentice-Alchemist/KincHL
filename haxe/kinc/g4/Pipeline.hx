@@ -93,19 +93,14 @@ class Pipeline {
 
 	// private function set_input_layout(a)
 	// 	return a;
-
 	// private function set_color_write_mask_red(a)
 	// 	return a;
-
 	// private function set_color_write_mask_green(a)
 	// 	return a;
-
 	// private function set_color_write_mask_blue(a)
 	// 	return a;
-
 	// private function set_color_write_mask_alpha(a)
 	// 	return a;
-
 	// private function set_color_attachment(a)
 	// 	return a;
 

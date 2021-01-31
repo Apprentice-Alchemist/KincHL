@@ -32,7 +32,7 @@ class Texture {
 		texture = new kinc.g4.Texture();
 		texture.initFromImage(img);
 		img = null;
-		
+
 		var fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/texture.frag"), FragmentShader);
 		var vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/texture.vert"), VertexShader);
 

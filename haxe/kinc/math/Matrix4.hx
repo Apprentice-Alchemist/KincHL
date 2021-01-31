@@ -1,6 +1,6 @@
 package kinc.math;
 
-@:hlNative("kinc","hl_matrix4x4_")
+@:hlNative("kinc", "hl_matrix4x4_")
 abstract Matrix4(hl.Abstract<"kinc_matrix4x4_t">) {
 	public inline function new() {
 		this = cast alloc();

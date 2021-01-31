@@ -14,10 +14,14 @@ abstract Shader(hl.Abstract<"g4_shader">) {
 		return ret;
 	}
 
-	public function initFromString(s:String, type:ShaderType) init_from_source(@:privateAccess s.toUtf8(), type);
-	@:hlNative("kinc", "hl_g4_shader_init_from_source") function init_from_source(b:hl.Bytes, type:Int):Void {};
-	@:hlNative("kinc", "hl_g4_shader_init") function _init(b:hl.Bytes, length:Int, type:ShaderType):Void {}
-	@:hlNative("kinc", "hl_g4_shader_init_from_file") public function initFromFile(file:String, type:ShaderType):Void {};
+	public function initFromString(s:String, type:ShaderType)
+		init_from_source(@:privateAccess s.toUtf8(), type);
+
+	@:hlNative("kinc", "hl_g4_shader_init_from_source") function init_from_source(b:hl.Bytes, type:Int):Void;
+
+	@:hlNative("kinc", "hl_g4_shader_init") function _init(b:hl.Bytes, length:Int, type:ShaderType):Void;
+
+	@:hlNative("kinc", "hl_g4_shader_init_from_file") public function initFromFile(file:String, type:ShaderType):Void;
 }
 
 enum abstract ShaderType(Int) to Int {

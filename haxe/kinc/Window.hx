@@ -41,7 +41,8 @@ enum abstract WindowFeatures(Int) from Int to Int {
 	var BORDERLESS = 8;
 	var ON_TOP = 16;
 
-	@:op(A | B) private inline function op(a):WindowFeatures return this | a;
+	@:op(A | B) private inline function op(a):WindowFeatures
+		return this | a;
 }
 
 @:structInit
