@@ -11,15 +11,15 @@ switch(platform){
         if (require("process").env["GITHUB_WORKSPACE"]) {
             // project.addLib(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/libhl.dylib");
             // project.addIncludeDir(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/src");
-            project.addIncludeDir("/usr/local/opt/hashlink/libexec/include");
-            project.addLib("/usr/local/opt/hashlink/libexec/lib/libhl.dylib");
+            project.addIncludeDir("/usr/local/include");
+            project.addLib("/usr/local/lib/libhl.dylib");
         }else{
             project.addLib("libhl.dylib");
         }
         break;
     case Platform.Windows:
         if (require("process").env["GITHUB_WORKSPACE"]) {
-            project.addLib(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/bin/libhl");
+            project.addLib(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/x64/Release/libhl");
             project.addIncludeDir(require("process").env["GITHUB_WORKSPACE"] + "/hashlink/src");
         } else {
             project.addLib(require("process").env["HASHLINK"] + "/libhl");

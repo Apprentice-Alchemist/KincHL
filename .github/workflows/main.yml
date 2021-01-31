@@ -3,7 +3,9 @@ name: Build
 on: [push]
 
 jobs:
+
   build:
+
     if: ${{ !contains(join(github.event.commits.*.message),'[skip ci]') }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -25,24 +27,23 @@ jobs:
       if: matrix.os == 'windows-latest'
       uses: ilammy/msvc-dev-cmd@v1
     - name: Checkout hashlink
-      if: matrix.os != 'macos-latest'
       uses: actions/checkout@v2
       with:
         repository: "HaxeFoundation/hashlink"
         path: "hashlink"
 
-    - name: Build Hashlink
-      if: matrix.os == 'macos-latest'
-      run: |
-        brew install hashlink
-        # cd hashlink
-        # cc -c src/gc.c src/std/*.c include/pcre/*.c include/mdbg/*.c -I src -I include -I include/pcre -I src/std -target x86_64-apple-macos
-        # cc -o libhl.x86_64.dylib -shared *.o -lpthread -lm -target x86_64-apple-macos
-        # rm -f *.o
-        # cc -c src/gc.c src/std/*.c include/pcre/*.c include/mdbg/*.c -I src -I include -I include/pcre -I src/std -target arm64-apple-macos
-        # cc -o libhl.arm.dylib -shared *.o -lpthread -lm -target arm64-apple-macos
-        # rm -f *.o
-        # lipo -create -output libhl.dylib libhl.x86_64.dylib libhl.arm.dylib
+    # - name: Build Hashlink
+    #   if: matrix.os == 'macos-latest'
+    #   run: |
+    #     brew install hashlink
+    #     # cd hashlink
+    #     # cc -c src/gc.c src/std/*.c include/pcre/*.c include/mdbg/*.c -I src -I include -I include/pcre -I src/std -target x86_64-apple-macos
+    #     # cc -o libhl.x86_64.dylib -shared *.o -lpthread -lm -target x86_64-apple-macos
+    #     # rm -f *.o
+    #     # cc -c src/gc.c src/std/*.c include/pcre/*.c include/mdbg/*.c -I src -I include -I include/pcre -I src/std -target arm64-apple-macos
+    #     # cc -o libhl.arm.dylib -shared *.o -lpthread -lm -target arm64-apple-macos
+    #     # rm -f *.o
+    #     # lipo -create -output libhl.dylib libhl.x86_64.dylib libhl.arm.dylib
 
     - name: Checkout KincHL
       uses: actions/checkout@v2
@@ -65,7 +66,7 @@ jobs:
       run: sudo apt-get install libasound2-dev libxinerama-dev libxrandr-dev libgl1-mesa-dev libxi-dev libxcursor-dev --yes --quiet
 
     - name: Build Hashlink
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.os != 'windows-latest'
       run: |
         cd hashlink
         make libhl
@@ -76,13 +77,8 @@ jobs:
       if: matrix.os == 'windows-latest'
       run: |
         cd hashlink
-        mkdir bin
-        mkdir build
-        cl.exe /nologo /c /DLIBHL_EXPORTS src\gc.c src\std\*.c include\pcre\*.c /Isrc /Isrc\std /Iinclude\pcre /Iinclude /Fobuild\ /w
-        link.exe /nologo build\*.obj ws2_32.lib user32.lib /DLL /MACHINE:x64 /NOLOGO /OUT:bin/libhl.dll
-        del build\*
-        cl.exe /nologo /c src/code.c src/jit.c src/main.c src/module.c src/debugger.c src/profile.c /Isrc /Fobuild\ /w
-        link.exe /nologo build\*.obj user32.lib bin\libhl.lib /OUT:bin/hl.exe /SUBSYSTEM:CONSOLE
+        MSBuild libhl.vcxproj /nologo /clp:ErrorsOnly -p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10
+        MSBuild hl.vcxproj /nologo /clp:ErrorsOnly -p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10
     - name: Build KincHL
       run: |
         cd KincHL
