@@ -1,6 +1,6 @@
 ## KincHL
 
-![Build](https://github.com/Apprentice-Alchemist/KincHL/workflows/Build/badge.svg)
+![Build](https://github.com/Apprentice-Alchemist/KincHL/workflows/Build/badge.svg?branch=master)
 
 ---------------------
 
