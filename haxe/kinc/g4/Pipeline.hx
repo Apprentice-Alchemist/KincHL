@@ -1,13 +1,15 @@
 package kinc.g4;
 
+import hl.types.ArrayObj;
 import kinc.g4.RenderTarget;
 import kinc.util.NativeArray;
 
+@:keep
 class Pipeline {
 	private var _handle:hl.Abstract<"g4_pipeline">;
 
-	public final input_layout:NativeArray<VertexStructure>;
-	
+	public var input_layout(default, null):NativeArray<VertexStructure>;
+
 	public var vertex_shader:Shader;
 	public var fragment_shader:Shader;
 	public var geometry_shader:Shader;
@@ -29,13 +31,13 @@ class Pipeline {
 	public var alpha_blend_source:BlendingOperation;
 	public var alpha_blend_destination:BlendingOperation;
 
-	public final color_write_mask_red:NativeArray<Bool>;
-	public final color_write_mask_green:NativeArray<Bool>;
-	public final color_write_mask_blue:NativeArray<Bool>;
-	public final color_write_mask_alpha:NativeArray<Bool>;
+	public var color_write_mask_red(default, null):NativeArray<Bool>; // hl.types.ArrayObj
+	public var color_write_mask_green(default, null):NativeArray<Bool>;
+	public var color_write_mask_blue(default, null):NativeArray<Bool>;
+	public var color_write_mask_alpha(default, null):NativeArray<Bool>;
 
 	public var color_attachment_count:Int;
-	public final color_attachment:NativeArray<RenderTargetFormat>;
+	public var color_attachment(default, null):NativeArray<RenderTargetFormat>;
 	public var depth_attachment_bits:Int;
 	public var stencil_attachment_bits:Int;
 	public var conservative_rasterization:Bool;
@@ -44,7 +46,8 @@ class Pipeline {
 		this._handle = allocNative();
 
 		@:bypassAccessor this.input_layout = new hl.NativeArray<VertexStructure>(16);
-		for(i in 0...16) input_layout[i] = null;
+		for (i in 0...16)
+			input_layout[i] = null;
 
 		this.cull_mode = NOTHING;
 
@@ -63,13 +66,24 @@ class Pipeline {
 		this.blend_destination = ZERO;
 		this.alpha_blend_source = ONE;
 		this.alpha_blend_destination = ZERO;
-		
-		@:bypassAccessor this.color_write_mask_red = [for (_ in 0...8) true];
-		@:bypassAccessor this.color_write_mask_green = [for (_ in 0...8) true];
-		@:bypassAccessor this.color_write_mask_blue = [for (_ in 0...8) true];
-		@:bypassAccessor this.color_write_mask_alpha = [for (_ in 0...8) true];
+
+		@:bypassAccessor this.color_write_mask_red = new hl.NativeArray(8);
+		for (i in 0...8)
+			this.color_write_mask_red[i] = true;
+		@:bypassAccessor this.color_write_mask_green = new hl.NativeArray(8);
+		for (i in 0...8)
+			this.color_write_mask_green[i] = true;
+		@:bypassAccessor this.color_write_mask_blue = new hl.NativeArray(8);
+		for (i in 0...8)
+			this.color_write_mask_blue[i] = true;
+		@:bypassAccessor this.color_write_mask_alpha = new hl.NativeArray(8);
+		for (i in 0...8)
+			this.color_write_mask_alpha[i] = true;
+
 		this.color_attachment_count = 1;
-		@:bypassAccessor this.color_attachment = [for (_ in 0...8) Format32Bit];
+		@:bypassAccessor this.color_attachment = new hl.NativeArray(8);
+		for (i in 0...8)
+			this.color_attachment[i] = Format32Bit;
 
 		this.depth_attachment_bits = 0;
 		this.stencil_attachment_bits = 0;
@@ -77,20 +91,51 @@ class Pipeline {
 		this.conservative_rasterization = false;
 	}
 
+	// private function set_input_layout(a)
+	// 	return a;
+
+	// private function set_color_write_mask_red(a)
+	// 	return a;
+
+	// private function set_color_write_mask_green(a)
+	// 	return a;
+
+	// private function set_color_write_mask_blue(a)
+	// 	return a;
+
+	// private function set_color_write_mask_alpha(a)
+	// 	return a;
+
+	// private function set_color_attachment(a)
+	// 	return a;
+
 	public function compile():Void {
 		compilePipeline(this);
 	}
+
 	public function destroy():Void {
 		destroyPipeline(this._handle);
 	}
-	public function getConstantLocation(name:String):ConstantLocation return getPipelineConstantLocation(this._handle, name);
 
-	public function getTextureUnit(name:String):TextureUnit return getPipelineTextureUnit(this._handle, name);
+	public function getConstantLocation(name:String):ConstantLocation
+		return getPipelineConstantLocation(this._handle, name);
 
-	@:hlNative("kinc", "hl_g4_pipeline_alloc") @:noCompletion static function allocNative():hl.Abstract<"g4_pipeline"> return null;
+	public function getTextureUnit(name:String):TextureUnit
+		return getPipelineTextureUnit(this._handle, name);
+
+	@:hlNative("kinc", "hl_g4_pipeline_alloc") @:noCompletion static function allocNative():hl.Abstract<"g4_pipeline">
+		return null;
+
 	@:hlNative("kinc", "hl_g4_pipeline_compile") @:noCompletion static function compilePipeline(state:Dynamic):Void {}
-	@:hlNative("kinc", "hl_g4_pipeline_get_texture_unit") @:noCompletion static function getPipelineTextureUnit(state:hl.Abstract<"g4_pipeline">, name:String):TextureUnit return null;
-	@:hlNative("kinc", "hl_g4_pipeline_get_constant_location") @:noCompletion static function getPipelineConstantLocation(state:hl.Abstract<"g4_pipeline">, name:String):ConstantLocation return null;
+
+	@:hlNative("kinc", "hl_g4_pipeline_get_texture_unit") @:noCompletion static function getPipelineTextureUnit(state:hl.Abstract<"g4_pipeline">,
+			name:String):TextureUnit
+		return null;
+
+	@:hlNative("kinc", "hl_g4_pipeline_get_constant_location") @:noCompletion static function getPipelineConstantLocation(state:hl.Abstract<"g4_pipeline">,
+			name:String):ConstantLocation
+		return null;
+
 	@:hlNative("kinc", "hl_g4_pipeline_destroy") @:noCompletion static function destroyPipeline(state:hl.Abstract<"g4_pipeline">):Void {}
 }
 

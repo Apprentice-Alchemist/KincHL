@@ -21,6 +21,7 @@ HL_PRIM int HL_NAME(hl_g4_vertex_buffer_count)(hl_g4_vertex_buffer* buf) {
 HL_PRIM int HL_NAME(hl_g4_vertex_buffer_stride)(hl_g4_vertex_buffer* buf) {
     return kinc_g4_vertex_buffer_stride(&buf->t);
 }
+
 HL_PRIM void HL_NAME(hl_g4_index_buffer_init)(hl_g4_index_buffer* buf, int count, int format) {
     kinc_g4_index_buffer_init(&buf->t, count, format);
 }
@@ -37,7 +38,7 @@ HL_PRIM int HL_NAME(hl_g4_index_buffer_count)(hl_g4_index_buffer* buf) {
 DEFINE_PRIM(_VOID, hl_g4_vertex_buffer_init, _ABSTRACT(g4_vertex_buffer) _I32 _VERTEX_STRUCTURE _I32 _I32)
 DEFINE_PRIM(_BYTES, hl_g4_vertex_buffer_lock, _ABSTRACT(g4_vertex_buffer) _I32 _I32)
 DEFINE_PRIM(_BYTES, hl_g4_vertex_buffer_lock_all, _ABSTRACT(g4_vertex_buffer))
-DEFINE_PRIM(_VOID, hl_g4_vertex_buffer_unlock, _ABSTRACT(g4_vertex_buffer) _I32 _I32)
+DEFINE_PRIM(_VOID, hl_g4_vertex_buffer_unlock, _ABSTRACT(g4_vertex_buffer) _I32)
 DEFINE_PRIM(_VOID, hl_g4_vertex_buffer_unlock_all, _ABSTRACT(g4_vertex_buffer))
 DEFINE_PRIM(_I32, hl_g4_vertex_buffer_count, _ABSTRACT(g4_vertex_buffer))
 DEFINE_PRIM(_I32, hl_g4_vertex_buffer_stride, _ABSTRACT(g4_vertex_buffer))

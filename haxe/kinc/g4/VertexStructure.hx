@@ -2,14 +2,14 @@ package kinc.g4;
 
 @:build(kinc.Macros.build_struct("g4_vertex_structure", true))
 abstract VertexStructure(hl.Abstract<"g4_vertex_structure">) {
-	public function new() {
+	public inline function new() {
 		this = alloc();
 		// init();
 	}
 
 	@:default_value(0)
 	public var size(get, set):Int;
-	@:hlNative("kinc", "hl_g4_vertex_structure_add") public function add(name:String, d:VertexData):Void {}
+	@:hlNative("kinc", "hl_g4_vertex_structure_add") public function add(name:String, d:VertexData):Void {};
 	// @:hlNative("kinc", "vertex_structure_hl_init") function init():Void {}
 }
 

@@ -12,7 +12,7 @@ abstract VertexBuffer(hl.Abstract<"g4_vertex_buffer">) {
     private function init(count:Int,structure:VertexStructure,usage:Int,data_step_rate:Int):Void {}
     public function lock(start:Int,count:Int):hl.BytesAccess<hl.F32> return null;
     public function lockAll():hl.BytesAccess<hl.F32> return null;
-    public function unlock(start:Int,count:Int):Void {}
+    public function unlock(count:Int):Void {}
     public function unlockAll():Void {}
     public function count():Int return 0;
     public function stride():Int return 0;

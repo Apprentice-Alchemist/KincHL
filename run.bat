@@ -2,7 +2,7 @@
 @if -%1- equ -- (
     @hl out.hl
 ) else (
-    @haxe build.hxml -m %*
+    @haxe build.hxml
     REM @echo Start
     @hl out.hl
     REM @echo End

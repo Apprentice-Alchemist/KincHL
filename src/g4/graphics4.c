@@ -55,7 +55,8 @@ HL_PRIM void HL_NAME(hl_g4_restore_render_target)() { kinc_g4_restore_render_tar
 HL_PRIM void HL_NAME(hl_g4_set_render_targets)(varray* targets) {
     kinc_g4_render_target_t** arr = malloc(sizeof(kinc_g4_render_target_t*) * targets->size);
     for (int i = 0; i < targets->size; i++) {
-        arr[i] = &(hl_aptr(targets, hl_g4_render_target*)[i]->t);
+        kinc_g4_render_target_t* t = &(hl_aptr(targets, hl_g4_render_target*)[i]->t);
+        arr[i] = t;
     }
     kinc_g4_set_render_targets(arr, targets->size);
     free(arr);
@@ -69,12 +70,14 @@ HL_PRIM void HL_NAME(hl_g4_set_texture)(kinc_g4_texture_unit_t* unit, hl_g4_text
 HL_PRIM void HL_NAME(hl_g4_set_image_texture)(kinc_g4_texture_unit_t* unit, hl_g4_texture* texture) {
     kinc_g4_set_image_texture(*unit, &texture->t);
 }
+
 //HL_PRIM bool HL_NAME(hl_g4_init_occlusion_query)(unsigned* occlusionQuery) { return kinc_g4_init_occlusion_query(occlusionQuery); }
 //HL_PRIM void HL_NAME(hl_g4_delete_occlusion_query)(unsigned occlusionQuery) { kinc_g4_delete_occlusion_query(occlusionQuery); }
 //HL_PRIM void HL_NAME(hl_g4_start_occlusion_query)(unsigned occlusionQuery) { kinc_g4_start_occlusion_query(occlusionQuery); }
 //HL_PRIM void HL_NAME(hl_g4_end_occlusion_query)(unsigned occlusionQuery) { kinc_g4_end_occlusion_query(occlusionQuery); }
 //HL_PRIM bool HL_NAME(hl_g4_are_query_results_available)(unsigned occlusionQuery) { return kinc_g4_are_query_results_available(occlusionQuery); }
 //HL_PRIM void HL_NAME(hl_g4_get_query_results)(unsigned occlusionQuery, unsigned* pixelCount) { kinc_g4_get_query_results(occlusionQuery, pixelCount); }
+
 HL_PRIM void HL_NAME(hl_g4_set_texture_array)(kinc_g4_texture_unit_t* unit, hl_g4_texture_array* array) {
     kinc_g4_set_texture_array(*unit, &array->t);
 }

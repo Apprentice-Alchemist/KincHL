@@ -21,8 +21,18 @@ extern class System {
 	static function safeZone():hl.F32;
 	static function setSafeZone(value:hl.F32):Void;
 	static function frequency():Float;
+
+	/**
+	 * Milliseconds
+	 * @return hl.I64
+	 */
 	static function timestamp():hl.I64;
+
+	/**
+	 * Returns the time in seconds.
+	 */
 	static function time():Float;
+
 	static function login():Void;
 	static function waitingForLogin():Bool;
 	static function unlockAchievement(id:Int):Void;

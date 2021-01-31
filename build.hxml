@@ -1,4 +1,5 @@
--lib kinc
+-cp haxe
 -cp tests
 --debug
+-m Audio
 -hl out.hl

@@ -2,7 +2,7 @@ package kinc.util;
 
 @:forward
 abstract NativeArray<T>(hl.NativeArray<T>) from hl.NativeArray<T> to hl.NativeArray<T> {
-	@:from public static function fromArray<T>(arr:Array<T>):NativeArray<T> {
+	@:from public static inline function fromArray<T>(arr:Array<T>):NativeArray<T> {
 		var ret = new hl.NativeArray<T>(arr.length);
 		for (i in 0...arr.length)
 			ret[i] = arr[i];

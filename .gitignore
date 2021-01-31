@@ -1,5 +1,4 @@
 src/*.glsl
-src/*.glsl
 build/*
 Deployment/*.vert
 Deployment/*.frag
@@ -7,4 +6,5 @@ Deployment/*.dll
 *.hdll
 *.hl
 build.bat
-kinc.hdll
+haxe/kinc/g5
+src/g5

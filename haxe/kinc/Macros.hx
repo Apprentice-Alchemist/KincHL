@@ -9,55 +9,39 @@ import haxe.macro.Expr.Field;
 
 using haxe.macro.Tools;
 using StringTools;
+using Lambda;
 
 class Macros {
 	#if macro
-	public static function build_struct(s:String, ?no_new:Bool = false, ?no_alloc = false, ?no_destroy = false) {
-		var type = Context.getLocalType();
-		var actual_type = switch type {
-			case TInst(t, params):
-				t.get();
-			default: null;
+	public static function getDefaultValue(t:ComplexType) {
+		return switch t {
+			case TPath(p): switch p.name {
+					case "Int", "Float", "Single", "F32", "F64": macro 0;
+					default: macro null;
+				}
+			default: macro null;
 		}
-		var meta = switch type {
-			case TInst(t, params):
-				t.get().meta;
-			case TAbstract(t, params):
-				t.get().meta;
-			default: null;
-		}
+	}
+
+	public static function build_struct(s:String, no_new:Bool = false, no_alloc = false, no_destroy = false) {
 		var fields = haxe.macro.Context.getBuildFields();
 		var ret:Array<Field> = [];
 		for (x in fields) {
 			switch x.kind {
-				case FProp(get, set, t, e):
+				case FProp(get_v, set_v, t, e):
+					function get(m:Metadata, n:String)
+						return m.find(meta -> meta.name == n);
 					function has(m:Metadata, n:String) {
-						for (x in m)
-							if (x.name == n)
-								return true;
-						return false;
+						return m.find(meta -> meta.name == n) != null;
 					}
-					if (!has(x.meta, ":no_get"))
+					if (!has(x.meta, ":no_get") && get_v == "get")
 						ret.push({
-							name: get + "_" + x.name,
+							name: "get_" + x.name,
 							doc: "",
 							access: [],
 							kind: FFun({
 								args: [],
-								expr: {
-									var expr = null;
-									if (has(x.meta, ":default_value")) {
-										for (m in x.meta) {
-											if (m.name == ":default_value") {
-												expr = m.params[0];
-											}
-										}
-									}
-									if (expr == null)
-										macro return cast null;
-									else
-										macro return $e{expr};
-								},
+								expr: macro return $e{getDefaultValue(t)},
 								ret: t
 							}),
 							pos: x.pos,
@@ -65,27 +49,14 @@ class Macros {
 								{name: ":hlNative", pos: x.pos, params: [macro "kinc", macro $v{"hl_" + s + "_get_" + x.name}]}
 							]
 						});
-					if (!has(x.meta, ":no_set") && set != "never" && set != "null")
+					if (!has(x.meta, ":no_set") && set_v == "set")
 						ret.push({
-							name: set + "_" + x.name,
+							name: "set_" + x.name,
 							doc: "",
 							access: [],
 							kind: FFun({
 								args: [{name: "v", type: t}],
-								expr: {
-									var expr = null;
-									if (has(x.meta, ":default_value")) {
-										for (m in x.meta) {
-											if (m.name == ":default_value") {
-												expr = m.params[0];
-											}
-										}
-									}
-									if (expr == null)
-										macro return cast null;
-									else
-										macro return $e{expr};
-								},
+								expr: macro return $e{getDefaultValue(t)},
 								ret: t
 							}),
 							pos: x.pos,
