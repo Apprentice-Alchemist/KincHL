@@ -3,8 +3,7 @@
 #include <kinc/error.h>
 #include <kinc/log.h>
 #include <kinc/system.h>
-#include <kinc/window.h>
-#include <kinc/vr/vrinterface.h>
+
 HL_PRIM int HL_NAME(hl_init)(vstring* title, int w, int h, win_opts_hl* win, fb_opts_hl* fb) {
   return kinc_init(hl_to_utf8(title->bytes), w, h, convert_win_opts_hl(win), convert_fb_opts_hl(fb));
 }
@@ -22,7 +21,8 @@ HL_PRIM vstring* HL_NAME(hl_system_id)() { return (vstring*)hl_alloc_strbytes(hl
 HL_PRIM varray* HL_NAME(hl_video_formats)() {
   const char** formats = kinc_video_formats();
   int format_count = 0;
-  for (; formats[format_count] != NULL; format_count++) {}
+  while(formats[format_count] != NULL)
+    format_count++;
   varray* ret = hl_alloc_array(&hlt_dyn, format_count);
   for (int x = 0; x < format_count; x++) {
     hl_aptr(ret, vstring*)[x] = (vstring*)hl_alloc_strbytes(hl_to_utf16(formats[x]));

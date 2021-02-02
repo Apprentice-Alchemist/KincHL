@@ -1,5 +1,6 @@
 package kinc;
 
+import hl.Api;
 import hl.I64;
 import kinc.Window;
 
