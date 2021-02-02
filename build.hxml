@@ -1,6 +1,6 @@
 -cp haxe
 -cp tests
 --debug
--m Audio
+-m Shader
 Keyboard
 -hl out.hl

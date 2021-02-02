@@ -118,7 +118,7 @@ MAKE_CALLBACK(copy, char* internal_copy_callback() {
 }, _FUN(_STRING, _NO_ARG))
 
 MAKE_CALLBACK(paste, void internal_paste_callback(char* s) {
-  vdynamic* arg1 = hl_alloc_strbytes("%s",hl_to_utf16(s));
+  vdynamic* arg1 = hl_alloc_strbytes("%s", hl_to_utf16(s));
   vdynamic* args[1] = { arg1 };
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(paste_cb, args, 1, &isexc);

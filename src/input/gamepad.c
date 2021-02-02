@@ -1,18 +1,48 @@
 #include "kinchl.h"
 #include <kinc/input/gamepad.h>
-#include <kinc/log.h>
+#include <kinc/system.h>
 
 vclosure* gamepad_axis_cb = NULL;
 vclosure* gamepad_button_cb = NULL;
 
 void internal_gamepad_axis_cb(int gamepad, int axis, float value) {
     if (gamepad_axis_cb != NULL) {
-        hl_call3(void, gamepad_axis_cb, int, gamepad, int, axis, float, value);
+        vdynamic args[3];
+        vdynamic *vargs[3] = {&args[0],&args[1],&args[2]};
+        vargs[0]->t = &hlt_i32;
+        vargs[1]->t = &hlt_i32;
+        vargs[2]->t = &hlt_f32;
+
+        vargs[0]->v.i = gamepad;
+        vargs[1]->v.i = axis;
+        vargs[2]->v.f = value;
+        bool isExc = false;
+        vdynamic* exc = hl_dyn_call_safe(gamepad_axis_cb,vargs,3,&isExc);
+        if(isExc){
+            kinc_log(KINC_LOG_LEVEL_ERROR,"Exception occured in gamepad axis callback.");
+            print_exception_stack(exc);
+            kinc_stop();
+        }
     }
 }
 void internal_gamepad_button_cb(int gamepad, int button, float value) {
     if (gamepad_button_cb != NULL) {
-        hl_call3(void, gamepad_button_cb, int, gamepad, int, button, float, value);
+        vdynamic args[3];
+        vdynamic* vargs[3] = { &args[0],&args[1],&args[2] };
+        vargs[0]->t = &hlt_i32;
+        vargs[1]->t = &hlt_i32;
+        vargs[2]->t = &hlt_f32;
+
+        vargs[0]->v.i = gamepad;
+        vargs[1]->v.i = button;
+        vargs[2]->v.f = value;
+        bool isExc = false;
+        vdynamic* exc = hl_dyn_call_safe(gamepad_button_cb, vargs, 3, &isExc);
+        if (isExc) {
+            kinc_log(KINC_LOG_LEVEL_ERROR, "Exception occured in gamepad button callback.");
+            print_exception_stack(exc);
+            kinc_stop();
+        }
     }
 }
 HL_PRIM void HL_NAME(hl_gamepad_set_axis_callback)(vclosure* cb) {

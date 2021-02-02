@@ -5,7 +5,21 @@
     vclosure * pen_##name##_cb = NULL;\
     void internal_pen_##name##_cb(int window, int x, int y,float pressure){\
         if(pen_##name##_cb != NULL){\
-            hl_call4(void,pen_##name##_cb,int,window,int,x,int,y,float,pressure);\
+            vdynamic args[4] = {\
+                {&hlt_i32,0},{&hlt_i32,0},{&hlt_i32,0},{&hlt_f32,0.0}\
+            };\
+            args[0].v.i = window;\
+            args[1].v.i = x;\
+            args[2].v.i = y;\
+            args[3].v.f = pressure;\
+            vdynamic* vargs[4] = { &args[0],&args[1],&args[2],&args[3] };\
+            bool isExc = false;\
+            vdynamic* exc = hl_dyn_call_safe(pen_##name##_cb, vargs, 4, &isExc);\
+            if (isExc) {\
+                kinc_log(KINC_LOG_LEVEL_ERROR, "Exception occured in pen" #name " callback");\
+                print_exception_stack(exc);\
+                kinc_stop();\
+            }\
         }\
     }\
     HL_PRIM void HL_NAME(pen_set_##name##_callback)(vclosure *cb){\

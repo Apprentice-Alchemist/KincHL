@@ -1,10 +1,12 @@
 #ifndef HL_NAME
 #define HL_NAME(n) kinc_##n
+
 #include <kinc/pch.h>
 #undef min
 #undef max
 #include <hl.h>
 #include <kinc/log.h>
+
 void EMPTY_INIT(void* obj);
 void EMPTY_DESTROY(void* obj);
 void print_exception_stack(vdynamic* exc);
@@ -94,4 +96,5 @@ HL_PRIM type HL_NAME(hl_##name##_get_##field_name)(obj_type * o) {           \
   DEFINE_PRIM(_REF(hl_obj),hl_##name##_array_alloc,_I32)                     \
   DEFINE_PRIM(hl_obj,hl_##name##_array_get,_REF(hl_obj) _I32)                \
   DEFINE_PRIM(hl_obj,hl_##name##_array_set,_REF(hl_obj) _I32 hl_obj)
+
 #endif

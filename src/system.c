@@ -5,6 +5,10 @@
 #include <kinc/system.h>
 
 HL_PRIM int HL_NAME(hl_init)(vstring* title, int w, int h, win_opts_hl* win, fb_opts_hl* fb) {
+  // vdynamic *err = malloc(sizeof(vdynamic));
+  // err->t = &hlt_i32;
+  // err->v.i = 5;
+  // hl_throw(err);
   return kinc_init(hl_to_utf8(title->bytes), w, h, convert_win_opts_hl(win), convert_fb_opts_hl(fb));
 }
 HL_PRIM void HL_NAME(hl_start)() { kinc_start(); }
