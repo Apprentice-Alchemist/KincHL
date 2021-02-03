@@ -41,7 +41,7 @@ abstract RenderTarget(hl.Abstract<"g4_render_target">) {
 	public function generateMipmaps(levels:Int):Void;
 }
 
-enum abstract RenderTargetFormat(Int) to Int {
+enum abstract RenderTargetFormat(Int) from Int to Int {
 	var Format32Bit;
 	var Format64BitFloat;
 	var Format32BitRedFloat;

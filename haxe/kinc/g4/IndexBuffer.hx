@@ -17,7 +17,7 @@ abstract IndexBuffer(hl.Abstract<"g4_index_buffer">) {
 	public function count():Int;
 }
 
-enum abstract IndexBufferFormat(Int) to Int {
+enum abstract IndexBufferFormat(Int) from Int to Int {
 	var IbFormat32BIT;
 	var IbFormat16BIT;
 }

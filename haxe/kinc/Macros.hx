@@ -19,8 +19,8 @@ class Macros {
 				params: _,
 				sub: sub
 			}): switch sub {
-				case "Void": macro return;
-				case "Int", "Single", "Float": macro return cast 0; // enum abstracts
+				case "Void": macro {};
+				case "Int", "Single", "Float": macro return 0;
 				case "Bool": macro return false;
 				default: macro return null;
 			}

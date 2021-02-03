@@ -24,7 +24,7 @@ abstract Shader(hl.Abstract<"g4_shader">) {
 	@:hlNative("kinc", "hl_g4_shader_init_from_file") public function initFromFile(file:String, type:ShaderType):Void;
 }
 
-enum abstract ShaderType(Int) to Int {
+enum abstract ShaderType(Int) from Int to Int {
 	var FragmentShader;
 	var VertexShader;
 	var GeometryShader;

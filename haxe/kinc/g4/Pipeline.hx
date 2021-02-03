@@ -134,7 +134,7 @@ class Pipeline {
 	@:hlNative("kinc", "hl_g4_pipeline_destroy") @:noCompletion static function destroyPipeline(state:hl.Abstract<"g4_pipeline">):Void {}
 }
 
-enum abstract BlendingOperation(Int) {
+enum abstract BlendingOperation(Int) from Int to Int {
 	var ONE;
 	var ZERO;
 	var SOURCE_ALPHA;
@@ -147,7 +147,7 @@ enum abstract BlendingOperation(Int) {
 	var INV_DEST_COLOR;
 }
 
-enum abstract CompareMode(Int) {
+enum abstract CompareMode(Int) from Int to Int {
 	var ALWAYS;
 	var NEVER;
 	var EQUAL;
@@ -158,13 +158,13 @@ enum abstract CompareMode(Int) {
 	var GREATER_EQUAL;
 }
 
-enum abstract CullMode(Int) {
+enum abstract CullMode(Int) from Int to Int {
 	var CLOCKWISE;
 	var COUNTER_CLOCKWISE;
 	var NOTHING;
 }
 
-enum abstract StencilAction(Int) {
+enum abstract StencilAction(Int) from Int to Int {
 	var KEEP;
 	var ZERO;
 	var REPLACE;

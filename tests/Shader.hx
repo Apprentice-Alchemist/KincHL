@@ -1,11 +1,11 @@
+import kinc.g4.TextureUnit;
+import kinc.g4.RenderTarget;
 import kinc.g4.Pipeline;
 import kinc.g4.VertexStructure;
 import kinc.g4.IndexBuffer;
 import kinc.g4.VertexBuffer;
 import kinc.g4.Graphics4;
-import kinc.g4.*;
 import kinc.Image;
-import kinc.audio1.Sound;
 
 class Shader {
 	static var fragment_shader:kinc.g4.Shader;

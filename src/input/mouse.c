@@ -39,9 +39,7 @@ void internal_mouse_press_cb(int window, int button, int x, int y) {
         bool isExc = false;
         vdynamic* exc = hl_dyn_call_safe(mouse_press_cb, vargs, 4, &isExc);
         if (isExc) {
-            kinc_log(KINC_LOG_LEVEL_ERROR, "Exception occured in mouse press callback");
-            print_exception_stack(exc);
-            kinc_stop();
+            handle_exception("mouse press callback",exc);
         }
     }
 }
@@ -60,9 +58,7 @@ void internal_mouse_release_cb(int window, int button, int x, int y) {
         bool isExc = false;
         vdynamic* exc = hl_dyn_call_safe(mouse_release_cb, vargs, 4, &isExc);
         if (isExc) {
-            kinc_log(KINC_LOG_LEVEL_ERROR, "Exception occured in mouse release callback");
-            print_exception_stack(exc);
-            kinc_stop();
+            handle_exception("mouse release callback", exc);
         }
     }
 }
@@ -83,9 +79,7 @@ void internal_mouse_move_cb(int window, int x, int y, int movement_x, int moveme
         bool isExc = false;
         vdynamic* exc = hl_dyn_call_safe(mouse_move_cb, vargs, 5, &isExc);
         if (isExc) {
-            kinc_log(KINC_LOG_LEVEL_ERROR, "Exception occured in mouse move callback");
-            print_exception_stack(exc);
-            kinc_stop();
+            handle_exception("mouse move callback", exc);
         }
     }
 }
@@ -100,9 +94,7 @@ void internal_mouse_scroll_cb(int window, int delta) {
         bool isExc = false;
         vdynamic* exc = hl_dyn_call_safe(mouse_scroll_cb, vargs, 2, &isExc);
         if (isExc) {
-            kinc_log(KINC_LOG_LEVEL_ERROR, "Exception occured in mouse scroll callback");
-            print_exception_stack(exc);
-            kinc_stop();
+            handle_exception("mouse scroll callback", exc);
         }
     }
 }
@@ -115,9 +107,7 @@ void internal_mouse_enter_window_cb(int window) {
         bool isExc = false;
         vdynamic* exc = hl_dyn_call_safe(mouse_enter_window_cb, vargs, 1, &isExc);
         if (isExc) {
-            kinc_log(KINC_LOG_LEVEL_ERROR, "Exception occured in mouse enter window callback");
-            print_exception_stack(exc);
-            kinc_stop();
+            handle_exception("mouse enter window callback", exc);
         }
     }
 }
@@ -130,9 +120,7 @@ void internal_mouse_leave_window_cb(int window) {
         bool isExc = false;
         vdynamic* exc = hl_dyn_call_safe(mouse_leave_window_cb, vargs, 1, &isExc);
         if (isExc) {
-            kinc_log(KINC_LOG_LEVEL_ERROR, "Exception occured in mouse leave window callback");
-            print_exception_stack(exc);
-            kinc_stop();
+            handle_exception("mouse leave window callback", exc);
         }
     }
 }

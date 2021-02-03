@@ -24,10 +24,10 @@ HL_PRIM hl_display_mode* HL_NAME(hl_display_available_mode)(int index,int mode_i
 DEFINE_PRIM(_ABSTRACT(kinc_display_mode_t), hl_display_available_mode, _I32 _I32)
 
 #define __MAKE_GET(field_name,type,hl_ret)\
-HL_PRIM type HL_NAME(display_mode_hl_get_ ##field_name)(hl_display_mode * o) {\
+HL_PRIM type HL_NAME(hl_display_mode_get_ ##field_name)(hl_display_mode * o) {\
     return o->internal. field_name;\
   }\
-  DEFINE_PRIM(hl_ret, display_mode_hl_get_ ##field_name, _ABSTRACT(kinc_display_mode_t))
+  DEFINE_PRIM(hl_ret, hl_display_mode_get_ ##field_name, _ABSTRACT(kinc_display_mode_t))
 __MAKE_GET(x,int,_I32)
 __MAKE_GET(y,int,_I32)
 __MAKE_GET(width, int, _I32)

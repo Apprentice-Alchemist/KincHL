@@ -10,7 +10,7 @@ abstract VertexBuffer(hl.Abstract<"g4_vertex_buffer">) {
 		init(count, structure, usage, data_step_rate);
 	}
 
-	private function init(count:Int, structure:VertexStructure, usage:Int, data_step_rate:Int):Void;
+	function init(count:Int, structure:VertexStructure, usage:Int, data_step_rate:Int):Void;
 
 	public function lock(start:Int, count:Int):hl.BytesAccess<hl.F32>;
 
@@ -25,7 +25,7 @@ abstract VertexBuffer(hl.Abstract<"g4_vertex_buffer">) {
 	public function stride():Int;
 }
 
-enum abstract Usage(Int) to Int {
+enum abstract Usage(Int) from Int to Int {
 	var StaticUsage;
 	var DynamicUsage;
 	var ReadableUsage;

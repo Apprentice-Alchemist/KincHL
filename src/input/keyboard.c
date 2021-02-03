@@ -5,11 +5,11 @@ DEFINE_PRIM(_VOID, keyboard_show, _NO_ARG)
 DEFINE_PRIM(_VOID, keyboard_hide, _NO_ARG)
 DEFINE_PRIM(_BOOL, keyboard_active, _NO_ARG)
 
-vclosure* key_down_cb = NULL;
-vclosure* key_up_cb = NULL;
-vclosure* key_press_cb = NULL;
+static vclosure* key_down_cb = NULL;
+static vclosure* key_up_cb = NULL;
+static vclosure* key_press_cb = NULL;
 
-void internal_key_down_cb(int key) {
+static void internal_key_down_cb(int key) {
     if (key_down_cb != NULL) {
         vdynamic args[3];
         vdynamic* vargs[3] = { &args[0] };
@@ -19,14 +19,12 @@ void internal_key_down_cb(int key) {
         bool isExc = false;
         vdynamic* exc = hl_dyn_call_safe(key_down_cb, vargs, 1, &isExc);
         if (isExc) {
-            kinc_log(KINC_LOG_LEVEL_ERROR, "Exception occured in key down callback.");
-            print_exception_stack(exc);
-            kinc_stop();
+            handle_exception("key down callback", exc);
         }
     }
 }
 
-void internal_key_up_cb(int key) {
+static void internal_key_up_cb(int key) {
     if (key_up_cb != NULL) {
         vdynamic args[3];
         vdynamic* vargs[3] = { &args[0] };
@@ -36,14 +34,12 @@ void internal_key_up_cb(int key) {
         bool isExc = false;
         vdynamic* exc = hl_dyn_call_safe(key_up_cb, vargs, 1, &isExc);
         if (isExc) {
-            kinc_log(KINC_LOG_LEVEL_ERROR, "Exception occured in key up callback.");
-            print_exception_stack(exc);
-            kinc_stop();
+            handle_exception("key up callback", exc);
         }
     }
 }
 
-void internal_key_press_cb(unsigned c) {
+static void internal_key_press_cb(unsigned c) {
     if (key_up_cb != NULL) {
         vdynamic args[3];
         vdynamic* vargs[3] = { &args[0] };
@@ -53,37 +49,53 @@ void internal_key_press_cb(unsigned c) {
         bool isExc = false;
         vdynamic* exc = hl_dyn_call_safe(key_press_cb, vargs, 1, &isExc);
         if (isExc) {
-            kinc_log(KINC_LOG_LEVEL_ERROR, "Exception occured in key press callback.");
-            print_exception_stack(exc);
-            kinc_stop();
+            handle_exception("key press callback", exc);
         }
     }
 }
 
 HL_PRIM void HL_NAME(keyboard_set_key_down_callback)(vclosure* cb) {
-    if (key_down_cb != NULL) {
-        hl_remove_root(key_down_cb);
+    if (!key_down_cb) {
+        if (!cb) return;
+        hl_add_root(&key_down_cb);
+    }
+    if (key_down_cb && !cb) {
+        hl_remove_root(&key_down_cb);
+        key_down_cb = NULL;
+        kinc_keyboard_key_down_callback = NULL;
+        return;
     }
     key_down_cb = cb;
-    hl_add_root(key_down_cb);
     kinc_keyboard_key_down_callback = internal_key_down_cb;
 }
 
 HL_PRIM void HL_NAME(keyboard_set_key_up_callback)(vclosure* cb) {
-    if (key_up_cb != NULL) {
-        hl_remove_root(key_up_cb);
+    if (!key_up_cb) {
+        if (!cb) return;
+        hl_add_root(&key_up_cb);
+    }
+    if (key_up_cb && !cb) {
+        hl_remove_root(&key_up_cb);
+        key_up_cb = NULL;
+        kinc_keyboard_key_up_callback = NULL;
+        return;
     }
     key_up_cb = cb;
-    hl_add_root(key_up_cb);
     kinc_keyboard_key_up_callback = internal_key_up_cb;
 }
 
 HL_PRIM void HL_NAME(keyboard_set_key_press_callback)(vclosure* cb) {
-    if (key_press_cb != NULL) {
-        hl_remove_root(key_press_cb);
+    if (!key_press_cb) {
+        if (!cb) return;
+        hl_add_root(&key_press_cb);
+    }
+    if (key_press_cb && !cb) {
+        hl_remove_root(&key_press_cb);
+        key_press_cb = NULL;
+        kinc_keyboard_key_press_callback = NULL;
+        return;
     }
     key_press_cb = cb;
-    hl_add_root(key_press_cb);
     kinc_keyboard_key_press_callback = internal_key_press_cb;
 }
 

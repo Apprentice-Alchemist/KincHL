@@ -1,11 +1,10 @@
 #include "kinchl.h"
 #include <kinc/input/gamepad.h>
-#include <kinc/system.h>
 
-vclosure* gamepad_axis_cb = NULL;
-vclosure* gamepad_button_cb = NULL;
+static vclosure* gamepad_axis_cb = NULL;
+static vclosure* gamepad_button_cb = NULL;
 
-void internal_gamepad_axis_cb(int gamepad, int axis, float value) {
+static void internal_gamepad_axis_cb(int gamepad, int axis, float value) {
     if (gamepad_axis_cb != NULL) {
         vdynamic args[3];
         vdynamic *vargs[3] = {&args[0],&args[1],&args[2]};
@@ -19,13 +18,12 @@ void internal_gamepad_axis_cb(int gamepad, int axis, float value) {
         bool isExc = false;
         vdynamic* exc = hl_dyn_call_safe(gamepad_axis_cb,vargs,3,&isExc);
         if(isExc){
-            kinc_log(KINC_LOG_LEVEL_ERROR,"Exception occured in gamepad axis callback.");
-            print_exception_stack(exc);
-            kinc_stop();
+            handle_exception("gamepad axis callback",exc);
         }
     }
 }
-void internal_gamepad_button_cb(int gamepad, int button, float value) {
+
+static void internal_gamepad_button_cb(int gamepad, int button, float value) {
     if (gamepad_button_cb != NULL) {
         vdynamic args[3];
         vdynamic* vargs[3] = { &args[0],&args[1],&args[2] };
@@ -39,26 +37,38 @@ void internal_gamepad_button_cb(int gamepad, int button, float value) {
         bool isExc = false;
         vdynamic* exc = hl_dyn_call_safe(gamepad_button_cb, vargs, 3, &isExc);
         if (isExc) {
-            kinc_log(KINC_LOG_LEVEL_ERROR, "Exception occured in gamepad button callback.");
-            print_exception_stack(exc);
-            kinc_stop();
+            handle_exception("gamepad button callback", exc);
         }
     }
 }
+
 HL_PRIM void HL_NAME(hl_gamepad_set_axis_callback)(vclosure* cb) {
-    if (gamepad_axis_cb != NULL) {
-        hl_remove_root(gamepad_axis_cb);
+    if (!gamepad_axis_cb) {
+        if(!cb) return;
+        hl_add_root(&gamepad_axis_cb);
+    }
+    if(gamepad_axis_cb && !cb){
+        hl_remove_root(&gamepad_axis_cb);
+        gamepad_axis_cb = NULL;
+        kinc_gamepad_axis_callback = NULL;
+        return;
     }
     gamepad_axis_cb = cb;
-    hl_add_root(gamepad_axis_cb);
     kinc_gamepad_axis_callback = internal_gamepad_axis_cb;
 }
+
 HL_PRIM void HL_NAME(hl_gamepad_set_button_callback)(vclosure* cb) {
-    if (gamepad_button_cb != NULL) {
-        hl_remove_root(gamepad_button_cb);
+    if (!gamepad_button_cb) {
+        if(!cb) return;
+        hl_add_root(&gamepad_button_cb);
+    }
+    if(gamepad_axis_cb && !cb){
+        hl_remove_root(&gamepad_button_cb);
+        gamepad_axis_cb = NULL;
+        kinc_gamepad_axis_callback = NULL;
+        return;
     }
     gamepad_button_cb = cb;
-    hl_add_root(gamepad_button_cb);
     kinc_gamepad_button_callback = internal_gamepad_button_cb;
 }
 

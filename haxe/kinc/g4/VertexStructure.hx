@@ -11,7 +11,7 @@ abstract VertexStructure(hl.Abstract<"g4_vertex_structure">) {
 	@:hlNative("kinc", "hl_g4_vertex_structure_add") public function add(name:String, d:VertexData):Void;
 }
 
-enum abstract VertexData(Int) {
+enum abstract VertexData(Int) from Int to Int {
 	var None;
 	var Float1;
 	var Float2;

@@ -5,10 +5,6 @@
 #include <kinc/system.h>
 
 HL_PRIM int HL_NAME(hl_init)(vstring* title, int w, int h, win_opts_hl* win, fb_opts_hl* fb) {
-  // vdynamic *err = malloc(sizeof(vdynamic));
-  // err->t = &hlt_i32;
-  // err->v.i = 5;
-  // hl_throw(err);
   return kinc_init(hl_to_utf8(title->bytes), w, h, convert_win_opts_hl(win), convert_fb_opts_hl(fb));
 }
 HL_PRIM void HL_NAME(hl_start)() { kinc_start(); }
@@ -25,7 +21,7 @@ HL_PRIM vstring* HL_NAME(hl_system_id)() { return (vstring*)hl_alloc_strbytes(hl
 HL_PRIM varray* HL_NAME(hl_video_formats)() {
   const char** formats = kinc_video_formats();
   int format_count = 0;
-  while(formats[format_count] != NULL)
+  while (formats[format_count] != NULL)
     format_count++;
   varray* ret = hl_alloc_array(&hlt_dyn, format_count);
   for (int x = 0; x < format_count; x++) {
@@ -92,14 +88,16 @@ DEFINE_PRIM(_VOID, hl_allow_user_change, _NO_ARG)
 DEFINE_PRIM(_VOID, hl_set_keep_screen_on, _BOOL)
 DEFINE_PRIM(_I32, hl_get_graphics_api, _NO_ARG)
 
-void EMPTY_INIT(void* o) {}
-void EMPTY_DESTROY(void* o) {}
-void print_exception_stack(vdynamic* exc) {
-  uchar* msg = hl_to_string(exc);
+void print_exception_stack() {
   varray* nstack = hl_exception_stack();
   uchar** stack = hl_aptr(nstack, uchar*);
-  if (exc) { kinc_log(KINC_LOG_LEVEL_WARNING,"Uncaught exception : %s", hl_to_utf8(msg)); }
   for (int i = 0; i < nstack->size; i++) {
-    kinc_log(KINC_LOG_LEVEL_INFO, "Called from %s",hl_to_utf8(stack[i]));
+    kinc_log(KINC_LOG_LEVEL_INFO, "Called from %s", hl_to_utf8(stack[i]));
   }
+}
+
+void handle_exception(const char* where, vdynamic* exc) {
+  kinc_log(KINC_LOG_LEVEL_ERROR, "[KincHL] Uncaught exception in %s : %s", where, hl_to_utf8(hl_to_string(exc)));
+  print_exception_stack(exc);
+  kinc_stop();
 }

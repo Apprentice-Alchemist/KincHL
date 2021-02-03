@@ -5,11 +5,11 @@
 #undef min
 #undef max
 #include <hl.h>
-#include <kinc/log.h>
 
-void EMPTY_INIT(void* obj);
-void EMPTY_DESTROY(void* obj);
-void print_exception_stack(vdynamic* exc);
+#define EMPTY_INIT(obj)
+#define EMPTY_DESTROY(obj)
+
+void handle_exception(const char* where,vdynamic* exc);
 
 #define DEFINE_OBJ_EX(name,type_name)\
   typedef struct {\

@@ -34,14 +34,14 @@ abstract Image(hl.Abstract<"image">) {
 	@:hlNative("kinc", "hl_image_init_from_bytes") public function initFromBytes(mem:hl.Bytes, width:Int, height:Int, format:Int):Void {};
 }
 
-enum abstract ImageCompression(Int) {
+enum abstract ImageCompression(Int) from Int to Int {
 	var COMPRESSION_NONE;
 	var COMPRESSION_DXT5;
 	var COMPRESSION_ASTC;
 	var COMPRESSION_PVRTC;
 }
 
-enum abstract ImageFormat(Int) {
+enum abstract ImageFormat(Int) from Int to Int {
 	var FORMAT_RGBA32;
 	var FORMAT_GREY8;
 	var FORMAT_RGB24;

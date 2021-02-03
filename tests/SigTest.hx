@@ -16,7 +16,7 @@ class SigTest {
 				} else {
 					var tmp = haxe.io.Path.normalize(haxe.io.Path.join([dir, haxe.io.Path.withoutExtension(x)]));
 					var tmp2 = StringTools.replace((StringTools.startsWith(tmp, "/") ? tmp.substr(1) : tmp), "/", ".");
-					if (StringTools.startsWith(tmp2, "kinc.util"))
+					if (StringTools.startsWith(tmp2, "kinc.util") || tmp2.indexOf("g5") > -1)
 						continue; // supress macro shenanigans
 					arr.push(tmp2);
 				}

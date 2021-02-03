@@ -4,19 +4,5 @@
     "C_Cpp.formatting": "vcFormat",
     "C_Cpp.vcFormat.wrap.preserveBlocks": "oneLiners",
     "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "sameLine",
-    "C_Cpp.vcFormat.space.beforeFunctionOpenParenthesis": "remove",
-    "files.associations": {
-        "*.h": "c",
-        "system_error": "cpp",
-        "xlocale": "cpp",
-        "image.h": "c",
-        "array": "c",
-        "vector": "c",
-        "xstring": "c",
-        "xutility": "c",
-        "kinchl.h": "c",
-        "audio.h": "c",
-        "matrix.h": "c",
-        "cstdlib": "c"
-    }
+    "C_Cpp.vcFormat.space.beforeFunctionOpenParenthesis": "remove"
 }
