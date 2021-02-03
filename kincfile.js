@@ -1,5 +1,4 @@
 const process = require("process");
-const fs = require("fs");
 
 let project = new Project("KincHL");
 project.setDebugDir("Deployment");
