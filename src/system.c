@@ -4,6 +4,13 @@
 #include <kinc/log.h>
 #include <kinc/system.h>
 
+static vbyte* copy(const char*in){
+  size_t len = strlen(in);
+  vbyte* ret = hl_gc_alloc_noptr((int)len);
+  memcpy(ret,in,len);
+  return ret;
+}
+
 HL_PRIM int HL_NAME(hl_init)(vstring* title, int w, int h, win_opts_hl* win, fb_opts_hl* fb) {
   return kinc_init(hl_to_utf8(title->bytes), w, h, convert_win_opts_hl(win), convert_fb_opts_hl(fb));
 }
@@ -11,12 +18,12 @@ HL_PRIM void HL_NAME(hl_start)() { kinc_start(); }
 HL_PRIM void HL_NAME(hl_stop)() { kinc_stop(); }
 HL_PRIM void HL_NAME(hl_log)(int level, vstring* msg) { kinc_log(level, hl_to_utf8(msg->bytes)); }
 
-HL_PRIM vbyte* HL_NAME(hl_application_name)() { return kinc_application_name(); }
+HL_PRIM vbyte* HL_NAME(hl_application_name)() { return copy(kinc_application_name()); }
 HL_PRIM void HL_NAME(hl_set_application_name)(vbyte* name) { kinc_set_application_name(name); }
 HL_PRIM int HL_NAME(hl_width)() { return kinc_width(); }
 HL_PRIM int HL_NAME(hl_height)() { return kinc_height(); }
 HL_PRIM void HL_NAME(hl_load_url)(vbyte* url) { kinc_load_url(url); }
-HL_PRIM vstring* HL_NAME(hl_system_id)() { return kinc_system_id(); }
+HL_PRIM vbyte* HL_NAME(hl_system_id)() { return copy(kinc_system_id()); }
 
 HL_PRIM varray* HL_NAME(hl_video_formats)() {
   const char** formats = kinc_video_formats();
@@ -25,12 +32,12 @@ HL_PRIM varray* HL_NAME(hl_video_formats)() {
     format_count++;
   varray* ret = hl_alloc_array(&hlt_bytes, format_count);
   for (int x = 0; x < format_count; x++) {
-    hl_aptr(ret, vbyte*)[x] = formats[x];
+    hl_aptr(ret, vbyte*)[x] = copy(formats[x]);
   }
   return ret;
 }
 
-HL_PRIM vbyte* HL_NAME(hl_language)() { return kinc_language(); }
+HL_PRIM vbyte* HL_NAME(hl_language)() { return copy(kinc_language()); }
 HL_PRIM void HL_NAME(hl_vibrate)(int milliseconds) { kinc_vibrate(milliseconds); }
 HL_PRIM float HL_NAME(hl_safe_zone)() { return kinc_safe_zone(); }
 HL_PRIM bool HL_NAME(hl_automatic_safe_zone)() { return kinc_automatic_safe_zone(); }
