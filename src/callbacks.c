@@ -69,16 +69,20 @@ MAKE_CALLBACK(shutdown, void internal_shutdown_callback() {
   }
 }, _FUN(_VOID, _NO_ARG))
 
-MAKE_CALLBACK(drop_files, void internal_drop_files_callback(wchar_t* s) {
-  vdynamic* arg1 = hl_alloc_dynamic(&hlt_bytes);
-# if defined(HL_WIN)
-  arg1->v.ptr = hl_to_utf8(s);
-# elif defined(HL_MAC) || defined(HL_LINUX)
+static char* convert_to_utf8(const wchar_t* s) {
+#if defined(HL_WIN)
+  return hl_to_utf8(s);
+#elif defined(HL_MAC) || defined(HL_LINUX)
   size_t len = wcstombs(NULL, s, 0) + 1;
   char* dest = hl_gc_alloc_noptr(len);
   wcstombs(dest, s, len);
-  arg1->v.ptr = dest;
-# endif
+  return dest;
+#endif
+}
+
+MAKE_CALLBACK(drop_files, void internal_drop_files_callback(wchar_t* s) {
+  vdynamic* arg1 = hl_alloc_dynamic(&hlt_bytes);
+  arg1->v.ptr = convert_to_utf8(s);
   vdynamic* args[1] = { arg1 };
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(drop_files_cb, args, 1, &isexc);
