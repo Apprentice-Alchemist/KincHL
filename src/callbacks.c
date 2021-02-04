@@ -71,9 +71,9 @@ MAKE_CALLBACK(shutdown, void internal_shutdown_callback() {
 
 MAKE_CALLBACK(drop_files, void internal_drop_files_callback(wchar_t* s) {
   vdynamic* arg1 = hl_alloc_dynamic(&hlt_bytes);
-# ifdef HL_WIN
+# if defined(HL_WIN)
   arg1->v.ptr = hl_to_utf8(s);
-# elif (HL_MAC || HL_LINUX)
+# elif defined(HL_MAC) || defined(HL_LINUX)
   size_t len = wcstombs(NULL, s, 0) + 1;
   char* dest = hl_gc_alloc_noptr(len);
   wcstombs(dest, s, len);
