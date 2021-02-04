@@ -70,14 +70,22 @@ MAKE_CALLBACK(shutdown, void internal_shutdown_callback() {
 }, _FUN(_VOID, _NO_ARG))
 
 MAKE_CALLBACK(drop_files, void internal_drop_files_callback(wchar_t* s) {
-  vdynamic* arg1 = hl_alloc_strbytes(s);
+  vdynamic* arg1 = hl_alloc_dynamic(&hlt_bytes);
+# ifdef HL_WIN
+  arg1->v.ptr = hl_to_utf8(s);
+# elif (HL_MAC || HL_LINUX)
+  size_t len = wcstombs(NULL, s, 0) + 1;
+  char* dest = hl_gc_alloc_noptr(len);
+  wcstombs(dest, s, len);
+  arg1->v.ptr = dest;
+# endif
   vdynamic* args[1] = { arg1 };
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(drop_files_cb, args, 1, &isexc);
   if (isexc) {
     handle_exception("drop files callback", ret);
   }
-}, _FUN(_VOID, _STRING))
+}, _FUN(_VOID, _BYTES))
 
 MAKE_CALLBACK(cut, char* internal_cut_callback() {
   bool isexc = false;
@@ -100,14 +108,15 @@ MAKE_CALLBACK(copy, char* internal_copy_callback() {
 }, _FUN(_STRING, _NO_ARG))
 
 MAKE_CALLBACK(paste, void internal_paste_callback(char* s) {
-  vdynamic* arg1 = hl_alloc_strbytes(USTR("%s"), hl_to_utf16(s));
+  vdynamic* arg1 = hl_alloc_dynamic(&hlt_bytes);
+  arg1->v.ptr = (void*)s;
   vdynamic* args[1] = { arg1 };
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(paste_cb, args, 1, &isexc);
   if (isexc) {
     handle_exception("paste callback", ret);
   }
-}, _FUN(_VOID, _STRING))
+}, _FUN(_VOID, _BYTES))
 
 MAKE_CALLBACK(login, void internal_login_callback() {
   bool isexc = false;

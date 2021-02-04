@@ -16,8 +16,8 @@ class Keyboard {
 				space_pressed = false;
 		});
 		System.setCopyCallback(() -> "Hello World");
-		System.setPasteCallback(function(s:String) {
-			trace(s);
+		System.setPasteCallback(function(s) {
+			trace(Std.string(s));
 		});
 		System.start();
 	}

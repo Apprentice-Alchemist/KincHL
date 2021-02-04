@@ -1,23 +1,24 @@
 package kinc;
 
+import kinc.util.CString;
 import hl.Api;
 import hl.I64;
 import kinc.Window;
 
-@:hlNative("kinc", "hl_")
+@:hlNative("kinc","hl_")
 extern class System {
 	static function init(name:String, width:Int, height:Int, win:WindowOptions = null, fb:FramebufferOptions = null):Int;
 	static function start():Void;
 	static function stop():Void;
-	static function log(level:LogLevel, msg:String):Void;
-	static function applicationName():String;
-	static function setApplicationName(name:String):Void;
+	static function log(level:LogLevel, msg:CString):Void;
+	static function applicationName():CString;
+	static function setApplicationName(name:CString):Void;
 	static function width():Int;
 	static function height():Int;
-	static function loadUrl(url:String):Void;
-	static function systemId():String;
+	static function loadUrl(url:CString):Void;
+	static function systemId():CString;
 	static function videoFormats():hl.NativeArray<String>;
-	static function language():String;
+	static function language():CString;
 	static function vibrate(milliseconds:Int):Void;
 	static function safeZone():hl.F32;
 	static function setSafeZone(value:hl.F32):Void;
@@ -47,10 +48,10 @@ extern class System {
 	static function setPauseCallback(cb:Void->Void):Void;
 	static function setBackgroundCallback(cb:Void->Void):Void;
 	static function setShutdownCallback(cb:Void->Void):Void;
-	static function setDropFilesCallback(cb:String->Void):Void;
+	static function setDropFilesCallback(cb:CString->Void):Void;
 	static function setCutCallback(cb:Void->String):Void;
 	static function setCopyCallback(cb:Void->String):Void;
-	static function setPasteCallback(cb:String->Void):Void;
+	static function setPasteCallback(cb:CString->Void):Void;
 	static function setLoginCallback(cb:Void->Void):Void;
 	static function setLogoutCallback(cb:Void->Void):Void;
 

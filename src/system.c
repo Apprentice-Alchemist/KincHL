@@ -11,25 +11,26 @@ HL_PRIM void HL_NAME(hl_start)() { kinc_start(); }
 HL_PRIM void HL_NAME(hl_stop)() { kinc_stop(); }
 HL_PRIM void HL_NAME(hl_log)(int level, vstring* msg) { kinc_log(level, hl_to_utf8(msg->bytes)); }
 
-HL_PRIM vstring* HL_NAME(hl_application_name)() { return (vstring*)hl_alloc_strbytes(hl_to_utf16(kinc_application_name())); }
-HL_PRIM void HL_NAME(hl_set_application_name)(vstring* name) { kinc_set_application_name(hl_to_utf8(name->bytes)); }
+HL_PRIM vbyte* HL_NAME(hl_application_name)() { return kinc_application_name(); }
+HL_PRIM void HL_NAME(hl_set_application_name)(vbyte* name) { kinc_set_application_name(name); }
 HL_PRIM int HL_NAME(hl_width)() { return kinc_width(); }
 HL_PRIM int HL_NAME(hl_height)() { return kinc_height(); }
-HL_PRIM void HL_NAME(hl_load_url)(vstring* url) { kinc_load_url(hl_to_utf8(url->bytes)); }
-HL_PRIM vstring* HL_NAME(hl_system_id)() { return (vstring*)hl_alloc_strbytes(hl_to_utf16(kinc_system_id())); }
+HL_PRIM void HL_NAME(hl_load_url)(vbyte* url) { kinc_load_url(url); }
+HL_PRIM vstring* HL_NAME(hl_system_id)() { return kinc_system_id(); }
 
 HL_PRIM varray* HL_NAME(hl_video_formats)() {
   const char** formats = kinc_video_formats();
   int format_count = 0;
   while (formats[format_count] != NULL)
     format_count++;
-  varray* ret = hl_alloc_array(&hlt_dyn, format_count);
+  varray* ret = hl_alloc_array(&hlt_bytes, format_count);
   for (int x = 0; x < format_count; x++) {
-    hl_aptr(ret, vstring*)[x] = (vstring*)hl_alloc_strbytes(hl_to_utf16(formats[x]));
+    hl_aptr(ret, vbyte*)[x] = formats[x];
   }
   return ret;
 }
-HL_PRIM vstring* HL_NAME(hl_language)() { return (vstring*)hl_alloc_strbytes(hl_to_utf16(kinc_language())); }
+
+HL_PRIM vbyte* HL_NAME(hl_language)() { return kinc_language(); }
 HL_PRIM void HL_NAME(hl_vibrate)(int milliseconds) { kinc_vibrate(milliseconds); }
 HL_PRIM float HL_NAME(hl_safe_zone)() { return kinc_safe_zone(); }
 HL_PRIM bool HL_NAME(hl_automatic_safe_zone)() { return kinc_automatic_safe_zone(); }
@@ -63,15 +64,15 @@ HL_PRIM int HL_NAME(hl_get_graphics_api)() {
 DEFINE_PRIM(_VOID, hl_start, _NO_ARG)
 DEFINE_PRIM(_I32, hl_init, _STRING _I32 _I32 HL_WINDOW_OPTS HL_FRAMEBUFFER_OPTS)
 DEFINE_PRIM(_VOID, hl_stop, _NO_ARG)
-DEFINE_PRIM(_VOID, hl_log, _I32 _STRING)
-DEFINE_PRIM(_STRING, hl_application_name, _NO_ARG)
-DEFINE_PRIM(_VOID, hl_set_application_name, _STRING)
+DEFINE_PRIM(_VOID, hl_log, _I32 _BYTES)
+DEFINE_PRIM(_BYTES, hl_application_name, _NO_ARG)
+DEFINE_PRIM(_VOID, hl_set_application_name, _BYTES)
 DEFINE_PRIM(_I32, hl_width, _NO_ARG)
 DEFINE_PRIM(_I32, hl_height, _NO_ARG)
-DEFINE_PRIM(_VOID, hl_load_url, _STRING)
-DEFINE_PRIM(_STRING, hl_system_id, _NO_ARG)
+DEFINE_PRIM(_VOID, hl_load_url, _BYTES)
+DEFINE_PRIM(_BYTES, hl_system_id, _NO_ARG)
 DEFINE_PRIM(_ARR, hl_video_formats, _NO_ARG)
-DEFINE_PRIM(_STRING, hl_language, _NO_ARG)
+DEFINE_PRIM(_BYTES, hl_language, _NO_ARG)
 DEFINE_PRIM(_VOID, hl_vibrate, _I32)
 DEFINE_PRIM(_F32, hl_safe_zone, _NO_ARG)
 DEFINE_PRIM(_BOOL, hl_automatic_safe_zone, _NO_ARG)

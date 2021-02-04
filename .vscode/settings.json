@@ -4,5 +4,9 @@
     "C_Cpp.formatting": "vcFormat",
     "C_Cpp.vcFormat.wrap.preserveBlocks": "oneLiners",
     "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "sameLine",
-    "C_Cpp.vcFormat.space.beforeFunctionOpenParenthesis": "remove"
+    "C_Cpp.vcFormat.space.beforeFunctionOpenParenthesis": "remove",
+    "files.associations": {
+        "*.h": "c",
+        "cstring": "c"
+    }
 }
