@@ -22,8 +22,9 @@ switch(platform){
             project.addLib(process.env["GITHUB_WORKSPACE"] + "/hashlink/x64/Release/libhl");
             project.addIncludeDir(process.env["GITHUB_WORKSPACE"] + "/hashlink/src");
         } else {
-            project.addLib(process.env["HASHLINK"] + "/libhl");
-            project.addIncludeDir(process.env["HASHLINK"] + "/include");
+            let hlpath = process.env["HASHLINK"] === undefined ? process.env["HASHLINKPATH"] : process.env["HASHLINK"]; 
+            project.addLib(hlpath + "/libhl");
+            project.addIncludeDir(hlpath + "/include");
         }
         break;
 }
