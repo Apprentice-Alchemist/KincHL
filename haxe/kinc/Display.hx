@@ -1,11 +1,13 @@
 package kinc;
 
+import kinc.util.CString;
+
 extern class Display {
 	@:hlNative("kinc", "display_init") static function init():Void;
 	@:hlNative("kinc", "primary_display") static function primaryDisplay():Int;
 	@:hlNative("kinc", "count_displays") static function countDisplays():Int;
 	@:hlNative("kinc", "display_available") static function displayAvailable(index:Int):Bool;
-	@:hlNative("kinc", "hl_display_name") static function getName(index:Int):String;
+	@:hlNative("kinc", "hl_display_name") static function getName(index:Int):CString;
 	@:hlNative("kinc", "hl_display_current_mode") static function currentMode(index:Int):DisplayMode;
 	@:hlNative("kinc", "display_count_available_modes") static function countAvailableModes(index:Int):Int;
 	@:hlNative("kinc", "hl_display_available_mode") static function availableMode(index:Int, mode_index:Int):DisplayMode;

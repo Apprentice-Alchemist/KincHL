@@ -73,7 +73,7 @@ void handle_exception(const char* where,vdynamic* exc);
   DEFINE_PRIM(hl_ret, hl_##name##_set_##field_name, hl_obj hl_ret)
 
 #define MAKE_GET(obj_type,name,field_name,type,hl_obj,hl_ret)                \
-HL_PRIM type HL_NAME(hl_##name##_get_##field_name)(obj_type * o) {           \
+  HL_PRIM type HL_NAME(hl_##name##_get_##field_name)(obj_type * o) {         \
     return o-> field_name;                                                   \
   }                                                                          \
   DEFINE_PRIM(hl_ret, hl_##name##_get_##field_name, hl_obj)
