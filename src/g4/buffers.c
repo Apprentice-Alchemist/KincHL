@@ -1,7 +1,6 @@
 #include "graphics4.h"
 
 HL_PRIM void HL_NAME(hl_g4_vertex_buffer_init)(hl_g4_vertex_buffer* buf, int count, hl_g4_vertex_structure* structure, int usage, int data_step_rate) {
-    printf("vertex buffer init");
     kinc_g4_vertex_buffer_init(&buf->t, count, &structure->t, usage, data_step_rate);
 }
 HL_PRIM float* HL_NAME(hl_g4_vertex_buffer_lock_all)(hl_g4_vertex_buffer* buf) {
