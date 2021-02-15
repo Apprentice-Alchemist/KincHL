@@ -10,6 +10,7 @@ switch(platform){
         project.addLib("hl");
         break;
     case Platform.OSX:
+        // TODO handle this somewhere else
         if (process.env["GITHUB_WORKSPACE"]) {
             project.addIncludeDir("/usr/local/include");
             project.addLib("/usr/local/lib/libhl.dylib");
@@ -18,13 +19,18 @@ switch(platform){
         }
         break;
     case Platform.Windows:
-        if (process.env["GITHUB_WORKSPACE"]) {
-            project.addLib(process.env["GITHUB_WORKSPACE"] + "/hashlink/x64/Release/libhl");
-            project.addIncludeDir(process.env["GITHUB_WORKSPACE"] + "/hashlink/src");
-        } else {
-            project.addLib(process.env["HASHLINK"] + "/libhl");
-            project.addIncludeDir(process.env["HASHLINK"] + "/include");
-        }
+        let hl_inc = "";
+        if(process.env["HASHLINK_SRC"]) hl_inc = process.env["HASHLINK_SRC"];
+        else if(process.env["HASHLINK"]) hl_inc = process.env["HASHLINK"] + "/include";
+        else if(process.env["HASHLINKPATH"]) hl_inc = process.env["HASHLINKPATH"] + "/include";
+        else throw "could not find hashlink include path";
+        let hl_bin = "";
+        if (process.env["HASHLINK_BIN"]) hl_bin = process.env["HASHLINK_BIN"];
+        else if (process.env["HASHLINK"]) hl_bin = process.env["HASHLINK"];
+        else if (process.env["HASHLINKPATH"]) hl_bin = process.env["HASHLINKPATH"];
+        else throw "could not find hashlink binaries";
+        project.addLib(hl_bin + "/libhl");
+        project.addIncludeDir(hl_inc);
         break;
 }
 
