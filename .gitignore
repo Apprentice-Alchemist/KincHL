@@ -8,3 +8,4 @@ Deployment/*.dll
 build.bat
 haxe/kinc/g5
 src/g5
+.vscode/
