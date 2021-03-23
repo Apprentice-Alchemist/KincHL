@@ -65,3 +65,15 @@ jobs:
       run: |
         cd KincHL
         haxe -cp .github --run Build ${{matrix.graphics}}
+      
+    - name: Upload Artifact
+      uses: 'actions/upload-artifact@v2'
+      with:
+        name: ${{ matrix.os }} ${{ matrix.graphics }}
+        path: kinc.hdll
+    - name: Upload Windows Artifact
+      if: matrix.os == 'windows-latest'
+      uses: 'actions/upload-artifact@v2'
+      with:
+        name: ${{ matrix.os }} ${{ matrix.graphics }}
+        path: kinc.lib
