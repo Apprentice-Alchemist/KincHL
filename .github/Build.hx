@@ -23,7 +23,9 @@ function main() {
 	Sys.setCwd("build");
 	FileSystem.createDirectory("bin");
 	if (sys_name == "mac") {
-		assert(Sys.command("xcodebuild", ["-configuration", "Release", "-project", "KincHL.xcodeproj", "ARCHS=x86_64","LD_FINAL_OUTPUT_FILE=bin/kinc.hdll"]) == 0, "xcodebuild error");
+		File.saveContent("KincHL.xcodeproj",File.getContent("KincHL.xcodeproj").replace("KincHL.dylib","kinc.hdll".replace("KincHL","kinc")));
+		assert(Sys.command("xcodebuild", ["-configuration", "Release", "-project", "KincHL.xcodeproj", "ARCHS=x86_64"]) == 0, "xcodebuild error");
+		File.copy("build/Release/kinc.hdll","bin/kinc.hdll");
 	} else if(sys_name == "windows") {
 		Sys.command("MSBuild", ["KincHL.vcxproj", "/m", "/p:Configuration=Release,Platform=x64,OutDir=Release/,TargetExt=.hdll,TargetName=kinc"]);
 		File.copy("Release/kinc.hdll", "bin/kinc.hdll");
