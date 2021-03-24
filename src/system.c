@@ -106,6 +106,6 @@ void print_exception_stack() {
 
 void handle_exception(const char* where, vdynamic* exc) {
   kinc_log(KINC_LOG_LEVEL_ERROR, "[KincHL] Uncaught exception in %s : %s", where, hl_to_utf8(hl_to_string(exc)));
-  print_exception_stack(exc);
+  print_exception_stack();
   kinc_stop();
 }

@@ -49,16 +49,16 @@ bool audio_thread_registered = false;
 vclosure* a2_cb = NULL;
 
 static void internal_a2_callback(kinc_a2_buffer_t* buffer, int samples) {
-    if (!audio_thread_registered) {
-        vdynamic* ret;
-        hl_register_thread(&ret);
-        audio_thread_registered = true;
-    }
+    // if (!audio_thread_registered) {
+    //     vdynamic* ret;
+    //     hl_register_thread(&ret);
+    //     audio_thread_registered = true;
+    // }
 
     if (a2_cb != NULL) {
-        hl_blocking(true);
+        // hl_blocking(true);
         hl_call2(void, a2_cb, kinc_a2_buffer_t*, buffer, int, samples);
-        hl_blocking(false);
+        // hl_blocking(false);
     }
 }
 

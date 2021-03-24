@@ -1,6 +1,7 @@
 -cp haxe
 -cp tests
 --debug
--m Shader
+-m Audio
 kinc
+-D hl_check_align
 -hl out.hl

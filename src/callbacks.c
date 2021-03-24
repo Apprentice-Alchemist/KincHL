@@ -21,7 +21,7 @@
   }\
   DEFINE_PRIM(_VOID,hl_set_ ##name## _callback,hl_type)
 
-MAKE_CALLBACK(update, void internal_update_callback() {
+MAKE_CALLBACK(update, void internal_update_callback(void) {
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(update_cb, NULL, 0, &isexc);
   if (isexc) {
@@ -29,7 +29,7 @@ MAKE_CALLBACK(update, void internal_update_callback() {
   }
 }, _FUN(_VOID, _NO_ARG))
 
-MAKE_CALLBACK(foreground, void internal_foreground_callback() {
+MAKE_CALLBACK(foreground, void internal_foreground_callback(void) {
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(foreground_cb, NULL, 0, &isexc);
   if (isexc) {
@@ -37,7 +37,7 @@ MAKE_CALLBACK(foreground, void internal_foreground_callback() {
   }
 }, _FUN(_VOID, _NO_ARG))
 
-MAKE_CALLBACK(resume, void internal_resume_callback() {
+MAKE_CALLBACK(resume, void internal_resume_callback(void) {
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(resume_cb, NULL, 0, &isexc);
   if (isexc) {
@@ -45,7 +45,7 @@ MAKE_CALLBACK(resume, void internal_resume_callback() {
   }
 }, _FUN(_VOID, _NO_ARG))
 
-MAKE_CALLBACK(pause, void internal_pause_callback() {
+MAKE_CALLBACK(pause, void internal_pause_callback(void) {
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(pause_cb, NULL, 0, &isexc);
   if (isexc) {
@@ -53,7 +53,7 @@ MAKE_CALLBACK(pause, void internal_pause_callback() {
   }
 }, _FUN(_VOID, _NO_ARG))
 
-MAKE_CALLBACK(background, void internal_background_callback() {
+MAKE_CALLBACK(background, void internal_background_callback(void) {
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(background_cb, NULL, 0, &isexc);
   if (isexc) {
@@ -61,7 +61,7 @@ MAKE_CALLBACK(background, void internal_background_callback() {
   }
 }, _FUN(_VOID, _NO_ARG))
 
-MAKE_CALLBACK(shutdown, void internal_shutdown_callback() {
+MAKE_CALLBACK(shutdown, void internal_shutdown_callback(void) {
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(shutdown_cb, NULL, 0, &isexc);
   if (isexc) {
@@ -91,7 +91,7 @@ MAKE_CALLBACK(drop_files, void internal_drop_files_callback(wchar_t* s) {
   }
 }, _FUN(_VOID, _BYTES))
 
-MAKE_CALLBACK(cut, char* internal_cut_callback() {
+MAKE_CALLBACK(cut, char* internal_cut_callback(void) {
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(cut_cb, NULL, 0, &isexc);
   if (isexc) {
@@ -101,7 +101,7 @@ MAKE_CALLBACK(cut, char* internal_cut_callback() {
   return hl_to_utf8(((vstring*)ret)->bytes);
 }, _FUN(_STRING, _NO_ARG))
 
-MAKE_CALLBACK(copy, char* internal_copy_callback() {
+MAKE_CALLBACK(copy, char* internal_copy_callback(void) {
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(copy_cb, NULL, 0, &isexc);
   if (isexc) {
@@ -122,7 +122,7 @@ MAKE_CALLBACK(paste, void internal_paste_callback(char* s) {
   }
 }, _FUN(_VOID, _BYTES))
 
-MAKE_CALLBACK(login, void internal_login_callback() {
+MAKE_CALLBACK(login, void internal_login_callback(void) {
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(login_cb, NULL, 0, &isexc);
   if (isexc) {
@@ -130,7 +130,7 @@ MAKE_CALLBACK(login, void internal_login_callback() {
   }
 }, _FUN(_VOID, _NO_ARG))
 
-MAKE_CALLBACK(logout, void internal_logout_callback() {
+MAKE_CALLBACK(logout, void internal_logout_callback(void) {
   bool isexc = false;
   vdynamic* ret = hl_dyn_call_safe(login_cb, NULL, 0, &isexc);
   if (isexc) {

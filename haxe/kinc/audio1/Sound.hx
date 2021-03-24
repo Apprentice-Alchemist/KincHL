@@ -9,8 +9,8 @@ abstract Sound(hl.Abstract<"kinc_a1_sound_t">) {
 	public static function create(filename:String):Sound;
 
 	public var format(get, never):BufferFormat;
-	public var left(get, never):hl.Bytes;
-	public var right(get, never):hl.Bytes;
+	public var left(get, never):hl.BytesAccess<hl.UI16>;
+	public var right(get, never):hl.BytesAccess<hl.UI16>;
 	public var size(get, set):Int;
 	public var sample_rate_pos(get, set):F32;
 	public var volume(get, set):F32;

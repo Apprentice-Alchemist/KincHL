@@ -22,10 +22,14 @@ On windows the kincfile expects an environment variable called HASHLINK to point
 ```
 
 ```bash
+# windows
 $ cd path/to/this/repo
-$ node path/to/kinc/make.js --compile --dynlib --noshaders -g $GRAPHICS_API
+$ ./build.bat
+$ copy build/bin/ %HASHLINK%
 
-$ copy Deployment\KincHL.dll %HASHLINK%\kinc.hdll # windows
-$ cp Deployment/KincHL.so /usr/bin/kinc.hdll # or something like that on linux
-$ cp Deployment/KincHL.dylib /usr/bin/kinc.hdll # or something like that on macos
+# linux or macos
+$ node Kinc/make --dynlib --noshaders --compile
+$ cp Deployment/KincHL.so /usr/bin/kinc.hdll # Linux
+$ cp Deployment/KincHL.dylib /usr/bin/kinc.hdll # Macos
+# And hope it all works out fine
 ```

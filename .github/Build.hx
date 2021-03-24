@@ -23,9 +23,9 @@ function main() {
 	Sys.setCwd("build");
 	FileSystem.createDirectory("bin");
 	if (sys_name == "mac") {
-		File.saveContent("KincHL.xcodeproj",File.getContent("KincHL.xcodeproj").replace("KincHL.dylib","kinc.hdll".replace("KincHL","kinc")));
+		// File.saveContent("KincHL.xcodeproj",File.getContent("KincHL.xcodeproj").replace("KincHL.dylib","kinc.hdll".replace("KincHL","kinc")));
 		assert(Sys.command("xcodebuild", ["-configuration", "Release", "-project", "KincHL.xcodeproj", "ARCHS=x86_64"]) == 0, "xcodebuild error");
-		File.copy("build/Release/kinc.hdll","bin/kinc.hdll");
+		// File.copy("build/Release/kinc.hdll","bin/kinc.hdll");
 	} else if(sys_name == "windows") {
 		Sys.command("MSBuild", ["KincHL.vcxproj", "/m", "/p:Configuration=Release,Platform=x64,OutDir=Release/,TargetExt=.hdll,TargetName=kinc"]);
 		File.copy("Release/kinc.hdll", "bin/kinc.hdll");
@@ -37,6 +37,6 @@ function main() {
 		Sys.setCwd("..");
 		File.copy("Release/kinc.hdll","bin/kinc.hdll");
 	}
-	File.copy("bin/kinc.hdll",Path.normalize(gw + "/" + "kinc.hdll"));
+	try File.copy("bin/kinc.hdll",Path.normalize(gw + "/" + "kinc.hdll")) catch(_) {};
 	try File.copy("bin/kinc.lib", Path.normalize(gw + "/" + "kinc.lib")) catch(_) {};
 }

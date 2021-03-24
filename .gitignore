@@ -5,7 +5,6 @@ Deployment/*.frag
 Deployment/*.dll
 *.hdll
 *.hl
-build.bat
 haxe/kinc/g5
 src/g5
 .vscode/
