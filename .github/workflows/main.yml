@@ -45,7 +45,7 @@ jobs:
       continue-on-error: true
     - name: Apt Install
       if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get install libasound2-dev libxinerama-dev libxrandr-dev libgl1-mesa-dev libxi-dev libxcursor-dev --yes --quiet
+      run: sudo apt-get install libasound2-dev libxinerama-dev libxrandr-dev libgl1-mesa-dev libxi-dev libxcursor-dev libudev-dev --yes --quiet
 
     - name: Build Hashlink
       if: matrix.os != 'windows-latest'
