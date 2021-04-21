@@ -100,6 +100,8 @@ HL_PRIM kinc_g4_texture_unit_t* HL_NAME(hl_g4_pipeline_get_texture_unit)(hl_g4_p
 }
 
 MAKE_GET_SET_EX(g4_vertex_structure, size, int, _I32)
+MAKE_GET_SET_EX(g4_vertex_structure, instanced, bool, _BOOL)
+
 
 HL_PRIM void HL_NAME(hl_g4_vertex_structure_add)(hl_g4_vertex_structure* obj, vstring* name, int d) {
     kinc_g4_vertex_structure_add(&(obj->t), hl_to_utf8(name->bytes), d);

@@ -7,6 +7,7 @@ abstract VertexStructure(hl.Abstract<"g4_vertex_structure">) {
 	}
 
 	public var size(get, set):Int;
+	public var instanced(get, set):Bool;
 
 	@:hlNative("kinc", "hl_g4_vertex_structure_add") public function add(name:String, d:VertexData):Void;
 }

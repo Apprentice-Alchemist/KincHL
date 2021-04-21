@@ -17,7 +17,7 @@ extern class System {
 	static function height():Int;
 	static function loadUrl(url:CString):Void;
 	static function systemId():CString;
-	static function videoFormats():hl.NativeArray<String>;
+	static function videoFormats():hl.NativeArray<CString>;
 	static function language():CString;
 	static function vibrate(milliseconds:Int):Void;
 	static function safeZone():hl.F32;
