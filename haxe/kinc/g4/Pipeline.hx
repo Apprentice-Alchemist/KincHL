@@ -1,8 +1,46 @@
 package kinc.g4;
 
-import hl.types.ArrayObj;
+import kinc.util.RefArray;
 import kinc.g4.RenderTarget;
-import kinc.util.NativeArray;
+import hl.NativeArray;
+
+// @:build(kinc.Macros.build_struct("g4_pipeline", true))
+// @:hlNative("kinc", "hl_g4_pipeline_")
+// abstract Pipe(hl.Abstract<"g4_pipeline">) {
+// 	public var input_layout(get, never):RefArray<VertexStructure, 16>;
+// 	public var vertex_shader(get, set):Shader;
+// 	public var fragment_shader(get, set):Shader;
+// 	public var geometry_shader(get, set):Shader;
+// 	public var tessellation_control_shader(get, set):Shader;
+// 	public var tessellation_evaluation_shader(get, set):Shader;
+// 	public var cull_mode(get, set):CullMode;
+// 	public var depth_write(get, set):Bool;
+// 	public var depth_mode(get, set):CompareMode;
+// 	public var stencil_mode(get, set):CompareMode;
+// 	public var stencil_both_pass(get, set):StencilAction;
+// 	public var stencil_depth_fail(get, set):StencilAction;
+// 	public var stencil_fail(get, set):StencilAction;
+// 	public var stencil_reference_value(get, set):Int;
+// 	public var stencil_read_mask(get, set):Int;
+// 	public var stencil_write_mask(get, set):Int;
+// 	public var blend_source(get, set):BlendingOperation;
+// 	public var blend_destination(get, set):BlendingOperation;
+// 	public var alpha_blend_source(get, set):BlendingOperation;
+// 	public var alpha_blend_destination(get, set):BlendingOperation;
+// 	public var color_write_mask_red(get, never):RefArray<Bool, 8>;
+// 	public var color_write_mask_green(get, never):RefArray<Bool, 8>;
+// 	public var color_write_mask_blue(get, never):RefArray<Bool, 8>;
+// 	public var color_write_mask_alpha(get, never):RefArray<Bool, 8>;
+// 	public var color_attachment_count(get, set):Int;
+// 	public var color_attachment(get, never):RefArray<RenderTargetFormat, 8>;
+// 	public var depth_attachment_bits(get, set):Int;
+// 	public var stencil_attachment_bits(get, set):Int;
+// 	public var conservative_rasterization(get, set):Bool;
+// 	public function compile():Void;
+// 	public function destroy():Void;
+// 	public function getConstantLocation(name:String):ConstantLocation;
+// 	public function getTextureUnit(name:String):TextureUnit;
+// }
 
 @:keep
 class Pipeline {
@@ -31,7 +69,7 @@ class Pipeline {
 	public var alpha_blend_source:BlendingOperation;
 	public var alpha_blend_destination:BlendingOperation;
 
-	public var color_write_mask_red(default, null):NativeArray<Bool>; // hl.types.ArrayObj
+	public var color_write_mask_red(default, null):NativeArray<Bool>;
 	public var color_write_mask_green(default, null):NativeArray<Bool>;
 	public var color_write_mask_blue(default, null):NativeArray<Bool>;
 	public var color_write_mask_alpha(default, null):NativeArray<Bool>;

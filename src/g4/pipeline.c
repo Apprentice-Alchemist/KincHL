@@ -1,5 +1,8 @@
 #include "graphics4.h"
 
+// MAKE_GET_EX(g4_pipeline, input_layout, kinc_g4_vertex_structure_t**,_REF(_VERTEX_STRUCTURE))
+// MAKE_GET_SET_EX(g4_shader,vertex_shader,hl_g4_shader,_SHADER);
+
 typedef struct {
     hl_type* t;
     hl_g4_pipeline* _handle;

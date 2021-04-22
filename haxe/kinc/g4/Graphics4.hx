@@ -14,7 +14,7 @@ extern class Graphics4 {
 		__setPipeline(@:privateAccess state._handle);
 	@:hlNative("kinc", "hl_g4_set_pipeline") private static function __setPipeline(state:hl.Abstract<"g4_pipeline">):Void;
 	static function setVertexBuffer(buf:VertexBuffer):Void;
-	static function setVertexBuffers(buffers:kinc.util.NativeArray<VertexBuffer>):Void;
+	static function setVertexBuffers(buffers:hl.NativeArray<VertexBuffer>):Void;
 	static function setIndexBuffer(buf:IndexBuffer):Void;
 	static function drawIndexedVertices():Void;
 	static function viewport(x:Int, y:Int, w:Int, h:Int):Void;
@@ -29,7 +29,7 @@ extern class Graphics4 {
 	static function renderTargetsInvertedY():Bool;
 	static function nonPow2TexturesSupported():Bool;
 	static function restoreRenderTarget():Void;
-	static function setRenderTargets(arr:kinc.util.NativeArray<RenderTarget>):Void;
+	static function setRenderTargets(arr:hl.NativeArray<RenderTarget>):Void;
 	static function setRenderTargetFace(target:RenderTarget, face:Int):Void;
 	static function setTexture(unit:TextureUnit, tex:Texture):Void;
 	static function setImageTexture(unit:TextureUnit, tex:Texture):Void;
