@@ -3,28 +3,17 @@
 
 #define MAKE_CALLBACK(cb_name) \
 HL_PRIM void HL_NAME(mouse_set_##cb_name##_callback)(vclosure* cb) {\
-    if (!mouse_##cb_name##_cb) {\
-        if(!cb) return;\
-        hl_add_root(&mouse_##cb_name##_cb);\
-    }\
-    if(mouse_##cb_name##_cb && !cb){\
-        hl_remove_root(&mouse_##cb_name##_cb);\
-        mouse_##cb_name##_cb = NULL;\
-        kinc_mouse_##cb_name##_callback = NULL;\
-        return;\
-    }\
     mouse_##cb_name##_cb = cb;\
-    kinc_mouse_##cb_name##_callback = internal_mouse_##cb_name##_cb;\
 }
 
-vclosure* mouse_press_cb = NULL;
-vclosure* mouse_release_cb = NULL;
-vclosure* mouse_move_cb = NULL;
-vclosure* mouse_scroll_cb = NULL;
-vclosure* mouse_enter_window_cb = NULL;
-vclosure* mouse_leave_window_cb = NULL;
+static vclosure* mouse_press_cb = NULL;
+static vclosure* mouse_release_cb = NULL;
+static vclosure* mouse_move_cb = NULL;
+static vclosure* mouse_scroll_cb = NULL;
+static vclosure* mouse_enter_window_cb = NULL;
+static vclosure* mouse_leave_window_cb = NULL;
 
-void internal_mouse_press_cb(int window, int button, int x, int y) {
+static void internal_mouse_press_cb(int window, int button, int x, int y) {
     if (mouse_press_cb != NULL) {
         vdynamic args[4];
         args[0].t = &hlt_i32;
@@ -43,7 +32,7 @@ void internal_mouse_press_cb(int window, int button, int x, int y) {
         }
     }
 }
-void internal_mouse_release_cb(int window, int button, int x, int y) {
+static void internal_mouse_release_cb(int window, int button, int x, int y) {
     if (mouse_release_cb != NULL) {
         vdynamic args[4];
         args[0].t = &hlt_i32;
@@ -62,7 +51,7 @@ void internal_mouse_release_cb(int window, int button, int x, int y) {
         }
     }
 }
-void internal_mouse_move_cb(int window, int x, int y, int movement_x, int movement_y) {
+static void internal_mouse_move_cb(int window, int x, int y, int movement_x, int movement_y) {
     if (mouse_move_cb != NULL) {
         vdynamic args[5];
         args[0].t = &hlt_i32;
@@ -83,7 +72,7 @@ void internal_mouse_move_cb(int window, int x, int y, int movement_x, int moveme
         }
     }
 }
-void internal_mouse_scroll_cb(int window, int delta) {
+static void internal_mouse_scroll_cb(int window, int delta) {
     if (mouse_scroll_cb != NULL) {
         vdynamic args[2];
         args[0].t = &hlt_i32;
@@ -98,7 +87,7 @@ void internal_mouse_scroll_cb(int window, int delta) {
         }
     }
 }
-void internal_mouse_enter_window_cb(int window) {
+static void internal_mouse_enter_window_cb(int window) {
     if (mouse_enter_window_cb != NULL) {
         vdynamic args[2];
         args[0].t = &hlt_i32;
@@ -111,7 +100,7 @@ void internal_mouse_enter_window_cb(int window) {
         }
     }
 }
-void internal_mouse_leave_window_cb(int window) {
+static void internal_mouse_leave_window_cb(int window) {
     if (mouse_leave_window_cb != NULL) {
         vdynamic args[2];
         args[0].t = &hlt_i32;
@@ -123,6 +112,19 @@ void internal_mouse_leave_window_cb(int window) {
             handle_exception("mouse leave window callback", exc);
         }
     }
+}
+
+void hl_mouse_init() {
+    #define _INIT(name) \
+        hl_add_root(&mouse_ ##name## _cb); \
+        kinc_mouse_ ##name## _callback = internal_mouse_ ##name## _cb;
+    _INIT(press)
+    _INIT(release)
+    _INIT(move)
+    _INIT(scroll)
+    _INIT(enter_window)
+    _INIT(leave_window)
+    #undef _INIT
 }
 MAKE_CALLBACK(press)
 MAKE_CALLBACK(release)

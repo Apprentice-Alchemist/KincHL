@@ -54,49 +54,25 @@ static void internal_key_press_cb(unsigned c) {
     }
 }
 
-HL_PRIM void HL_NAME(keyboard_set_key_down_callback)(vclosure* cb) {
-    if (!key_down_cb) {
-        if (!cb) return;
-        hl_add_root(&key_down_cb);
-    }
-    if (key_down_cb && !cb) {
-        hl_remove_root(&key_down_cb);
-        key_down_cb = NULL;
-        kinc_keyboard_key_down_callback = NULL;
-        return;
-    }
-    key_down_cb = cb;
+void hl_keyboard_init() {
     kinc_keyboard_key_down_callback = internal_key_down_cb;
+    kinc_keyboard_key_up_callback = internal_key_up_cb;
+    kinc_keyboard_key_press_callback = internal_key_press_cb;
+    hl_add_root(&key_down_cb);
+    hl_add_root(&key_up_cb);
+    hl_add_root(&key_press_cb);
+}
+
+HL_PRIM void HL_NAME(keyboard_set_key_down_callback)(vclosure* cb) {
+    key_down_cb = cb;
 }
 
 HL_PRIM void HL_NAME(keyboard_set_key_up_callback)(vclosure* cb) {
-    if (!key_up_cb) {
-        if (!cb) return;
-        hl_add_root(&key_up_cb);
-    }
-    if (key_up_cb && !cb) {
-        hl_remove_root(&key_up_cb);
-        key_up_cb = NULL;
-        kinc_keyboard_key_up_callback = NULL;
-        return;
-    }
     key_up_cb = cb;
-    kinc_keyboard_key_up_callback = internal_key_up_cb;
 }
 
 HL_PRIM void HL_NAME(keyboard_set_key_press_callback)(vclosure* cb) {
-    if (!key_press_cb) {
-        if (!cb) return;
-        hl_add_root(&key_press_cb);
-    }
-    if (key_press_cb && !cb) {
-        hl_remove_root(&key_press_cb);
-        key_press_cb = NULL;
-        kinc_keyboard_key_press_callback = NULL;
-        return;
-    }
     key_press_cb = cb;
-    kinc_keyboard_key_press_callback = internal_key_press_cb;
 }
 
 DEFINE_PRIM(_VOID, keyboard_set_key_down_callback, _FUN(_VOID, _I32))

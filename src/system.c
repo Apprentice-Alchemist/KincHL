@@ -11,7 +11,24 @@ static vbyte* copy(const char*in){
   return ret;
 }
 
+extern void hl_callbacks_init(void);
+extern void hl_window_init(void);
+extern void hl_gamepad_init(void);
+extern void hl_keyboard_init(void);
+extern void hl_mouse_init(void);
+extern void hl_pen_init(void);
+extern void hl_sensor_init(void);
+extern void hl_surface_init(void);
+
 HL_PRIM int HL_NAME(hl_init)(vstring* title, int w, int h, win_opts_hl* win, fb_opts_hl* fb) {
+  hl_callbacks_init();
+  hl_window_init();
+  hl_gamepad_init();
+  hl_keyboard_init();
+  hl_mouse_init();
+  hl_pen_init();
+  hl_sensor_init();
+  hl_surface_init();
   return kinc_init(hl_to_utf8(title->bytes), w, h, convert_win_opts_hl(win), convert_fb_opts_hl(fb));
 }
 HL_PRIM void HL_NAME(hl_start)() { kinc_start(); }

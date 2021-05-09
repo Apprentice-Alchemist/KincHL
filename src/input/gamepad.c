@@ -42,41 +42,26 @@ static void internal_gamepad_button_cb(int gamepad, int button, float value) {
     }
 }
 
-HL_PRIM void HL_NAME(hl_gamepad_set_axis_callback)(vclosure* cb) {
-    if (!gamepad_axis_cb) {
-        if(!cb) return;
-        hl_add_root(&gamepad_axis_cb);
-    }
-    if(gamepad_axis_cb && !cb){
-        hl_remove_root(&gamepad_axis_cb);
-        gamepad_axis_cb = NULL;
-        kinc_gamepad_axis_callback = NULL;
-        return;
-    }
-    gamepad_axis_cb = cb;
+void hl_gamepad_init() {
     kinc_gamepad_axis_callback = internal_gamepad_axis_cb;
+    kinc_gamepad_button_callback = internal_gamepad_button_cb;
+    hl_add_root(&gamepad_axis_cb);
+    hl_add_root(&gamepad_button_cb);
+}
+
+HL_PRIM void HL_NAME(hl_gamepad_set_axis_callback)(vclosure* cb) {
+    gamepad_axis_cb = cb;
 }
 
 HL_PRIM void HL_NAME(hl_gamepad_set_button_callback)(vclosure* cb) {
-    if (!gamepad_button_cb) {
-        if(!cb) return;
-        hl_add_root(&gamepad_button_cb);
-    }
-    if(gamepad_axis_cb && !cb){
-        hl_remove_root(&gamepad_button_cb);
-        gamepad_axis_cb = NULL;
-        kinc_gamepad_axis_callback = NULL;
-        return;
-    }
     gamepad_button_cb = cb;
-    kinc_gamepad_button_callback = internal_gamepad_button_cb;
 }
 
-HL_PRIM vstring* HL_NAME(hl_gamepad_vendor)(int gamepad) {
-    return (vstring*)hl_alloc_strbytes(hl_to_utf16(kinc_gamepad_vendor(gamepad)));
+HL_PRIM vbyte* HL_NAME(hl_gamepad_vendor)(int gamepad) {
+    return (vbyte*)kinc_gamepad_vendor(gamepad);
 }
-HL_PRIM vstring* HL_NAME(hl_gamepad_product_name)(int gamepad) {
-    return (vstring*)hl_alloc_strbytes(hl_to_utf16(kinc_gamepad_product_name(gamepad)));
+HL_PRIM vbyte* HL_NAME(hl_gamepad_product_name)(int gamepad) {
+    return (vbyte*)kinc_gamepad_product_name(gamepad);
 }
 HL_PRIM bool HL_NAME(hl_gamepad_connected)(int gamepad) {
     return kinc_gamepad_connected(gamepad);
@@ -84,6 +69,6 @@ HL_PRIM bool HL_NAME(hl_gamepad_connected)(int gamepad) {
 
 DEFINE_PRIM(_VOID, hl_gamepad_set_axis_callback, _FUN(_VOID, _I32 _I32 _F32))
 DEFINE_PRIM(_VOID, hl_gamepad_set_button_callback, _FUN(_VOID, _I32 _I32 _F32))
-DEFINE_PRIM(_STRING, hl_gamepad_vendor, _I32)
-DEFINE_PRIM(_STRING, hl_gamepad_product_name, _I32)
+DEFINE_PRIM(_BYTES, hl_gamepad_vendor, _I32)
+DEFINE_PRIM(_BYTES, hl_gamepad_product_name, _I32)
 DEFINE_PRIM(_BOOL, hl_gamepad_connected, _I32)

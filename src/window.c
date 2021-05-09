@@ -57,23 +57,36 @@ HL_PRIM void HL_NAME(hl_window_set_title)(int window_index, vstring* title) { ki
 static vclosure* r_cb = NULL;
 static vclosure* ppi_cb = NULL;
 
-void internal_resize_callback(int x, int y, void* data) {
+void hl_window_init() {
+  hl_add_root(&r_cb);
+  hl_add_root(&ppi_cb);
+}
+
+static void internal_resize_callback(int x, int y, void* data) {
   if (data != NULL) {
     hl_call2(void,((vclosure*)data),int,x,int,y);
   }
 }
+
 HL_PRIM void HL_NAME(hl_window_set_resize_callback)(int window_index, vclosure* cb) {
+  r_cb = cb;
   kinc_window_set_resize_callback(window_index, internal_resize_callback, (void*)cb);
 }
-void internal_ppi_changed_callback(int ppi, void* data) {
+
+static void internal_ppi_changed_callback(int ppi, void* data) {
   if (data != NULL) {
     hl_call1(void,((vclosure*)data),int,ppi);
   }
 }
+
 HL_PRIM void HL_NAME(hl_window_set_ppi_changed_callback)(int window_index, vclosure* cb) {
+  ppi_cb = cb;
   kinc_window_set_ppi_changed_callback(window_index, internal_ppi_changed_callback, (void*)cb);
 }
-HL_PRIM bool HL_NAME(hl_window_vsynced)(int window_index) { return kinc_window_vsynced(window_index); }
+
+HL_PRIM bool HL_NAME(hl_window_vsynced)(int window_index) {
+  return kinc_window_vsynced(window_index);
+}
 
 DEFINE_PRIM(_I32, hl_window_create, HL_WINDOW_OPTS HL_FRAMEBUFFER_OPTS)
 DEFINE_PRIM(_VOID, hl_window_destroy, _I32)

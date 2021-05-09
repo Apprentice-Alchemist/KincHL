@@ -41,34 +41,19 @@ static void internal_rotation_cb(float x, float y, float z) {
     }
 }
 
-HL_PRIM void HL_NAME(set_acceleration_callback)(vclosure* cb) {
-    if (!acceleration_cb) {
-        if(!cb) return;
-        hl_add_root(&acceleration_cb);
-    }
-    if(acceleration_cb && !cb){
-        hl_remove_root(&acceleration_cb);
-        acceleration_cb = NULL;
-        kinc_acceleration_callback = NULL;
-        return;
-    }
-    acceleration_cb = cb;
+void hl_sensor_init() {
+    hl_add_root(&acceleration_cb);
+    hl_add_root(&rotation_cb);
     kinc_acceleration_callback = internal_acceleration_cb;
+    kinc_rotation_callback = internal_rotation_cb;
+}
+
+HL_PRIM void HL_NAME(set_acceleration_callback)(vclosure* cb) {
+    acceleration_cb = cb;
 }
 
 HL_PRIM void HL_NAME(set_rotation_callback)(vclosure* cb) {
-    if (!rotation_cb) {
-        if (!cb) return;
-        hl_add_root(&rotation_cb);
-    }
-    if (rotation_cb && !cb) {
-        hl_remove_root(&rotation_cb);
-        rotation_cb = NULL;
-        kinc_rotation_callback = NULL;
-        return;
-    }
     rotation_cb = cb;
-    kinc_rotation_callback = internal_rotation_cb;
 }
 
 DEFINE_PRIM(_VOID, set_acceleration_callback, _FUN(_VOID, _F32 _F32 _F32))
