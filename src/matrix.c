@@ -1,6 +1,6 @@
 #include "kinchl.h"
 #include <kinc/math/matrix.h>
-#include <kinc/system.h>
+
 HL_PRIM kinc_matrix3x3_t *HL_NAME(hl_matrix3x3_alloc)()
 {
     kinc_matrix3x3_t *m = hl_gc_alloc_raw(sizeof(kinc_matrix3x3_t));
@@ -22,29 +22,25 @@ HL_PRIM void HL_NAME(hl_matrix3x3_transpose)(kinc_matrix3x3_t *mat)
 HL_PRIM kinc_matrix3x3_t *HL_NAME(hl_matrix3x3_identity)()
 {
     kinc_matrix3x3_t *ret = hl_gc_alloc_raw(sizeof(kinc_matrix3x3_t));
-    kinc_matrix3x3_t mat = kinc_matrix3x3_identity();
-    memcpy(ret->m, mat.m, sizeof(mat.m));
+    *ret = kinc_matrix3x3_identity();
     return ret;
 }
 HL_PRIM kinc_matrix3x3_t *HL_NAME(hl_matrix3x3_rotation_x)(float alpha)
 {
     kinc_matrix3x3_t *ret = hl_gc_alloc_raw(sizeof(kinc_matrix3x3_t));
-    kinc_matrix3x3_t mat = kinc_matrix3x_rotation_x(alpha);
-    memcpy(ret->m, mat.m, sizeof(mat.m));
+    *ret = kinc_matrix3x3_rotation_x(alpha);
     return ret;
 }
 HL_PRIM kinc_matrix3x3_t *HL_NAME(hl_matrix3x3_rotation_y)(float alpha)
 {
     kinc_matrix3x3_t *ret = hl_gc_alloc_raw(sizeof(kinc_matrix3x3_t));
-    kinc_matrix3x3_t mat = kinc_matrix3x_rotation_y(alpha);
-    memcpy(ret->m, mat.m, sizeof(mat.m));
+    *ret = kinc_matrix3x3_rotation_y(alpha);
     return ret;
 }
 HL_PRIM kinc_matrix3x3_t *HL_NAME(hl_matrix3x3_rotation_z)(float alpha)
 {
     kinc_matrix3x3_t *ret = hl_gc_alloc_raw(sizeof(kinc_matrix3x3_t));
-    kinc_matrix3x3_t mat = kinc_matrix3x_rotation_z(alpha);
-    memcpy(ret->m, mat.m, sizeof(mat.m));
+    *ret = kinc_matrix3x3_rotation_z(alpha);
     return ret;
 }
 DEFINE_PRIM(_ABSTRACT(kinc_matrix3x3_t), hl_matrix3x3_alloc, _NO_ARG)
