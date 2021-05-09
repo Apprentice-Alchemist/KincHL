@@ -29,7 +29,7 @@ MAKE_CB(touch_start)
 MAKE_CB(move)
 MAKE_CB(touch_end)
 
-hl_surface_init() {
+void hl_surface_init() {
     hl_add_root(&surface_touch_start_cb);
     hl_add_root(&surface_move_cb);
     hl_add_root(&surface_touch_end_cb);

@@ -66,14 +66,10 @@ MAKE_CALLBACK(shutdown, void internal_shutdown_callback(void) {
 }, _FUN(_VOID, _NO_ARG))
 
 static char* convert_to_utf8(const wchar_t* s) {
-// #if defined(HL_WIN)
-//   return hl_to_utf8(s);
-// #elif defined(HL_MAC) || defined(HL_LINUX)
   size_t len = wcstombs(NULL, s, 0) + 1;
   char* dest = hl_gc_alloc_noptr((int)len);
   wcstombs(dest, s, len);
   return dest;
-// #endif
 }
 
 MAKE_CALLBACK(drop_files, void internal_drop_files_callback(wchar_t* s) {
@@ -142,7 +138,7 @@ MAKE_CALLBACK(logout, void internal_logout_callback(void) {
 
 void hl_callbacks_init() {
   #define _INIT(name) \
-    hl_add_root(&##name##_cb); \
+    hl_add_root(&name##_cb); \
     kinc_set_##name##_callback(internal_##name##_callback);
   _INIT(update);
   _INIT(foreground);
