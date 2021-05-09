@@ -40,7 +40,7 @@ static void internal_key_up_cb(int key) {
 }
 
 static void internal_key_press_cb(unsigned c) {
-    if (key_up_cb != NULL) {
+    if (key_press_cb != NULL) {
         vdynamic args[3];
         vdynamic* vargs[3] = { &args[0] };
         vargs[0]->t = &hlt_i32;
