@@ -1,0 +1,15 @@
+package kinc.io;
+
+import kinc.util.CString;
+
+@:build(kinc.Macros.build_struct("file_writer",false,false,true))
+abstract FileWriter(hl.Abstract<"file_writer">) {
+    /**
+     * Writes files in the platform dependent save directory.
+     * @param path 
+     * @return Bool
+     */
+    public function open(path:CString):Bool;
+    public function write(data:hl.Bytes,size:Int):Void;
+    public function close():Void;
+}
