@@ -5,7 +5,7 @@ import hl.Api;
 import hl.I64;
 import kinc.Window;
 
-@:hlNative("kinc","hl_")
+@:hlNative("kinc", "hl_")
 extern class System {
 	static function init(name:String, width:Int, height:Int, win:WindowOptions = null, fb:FramebufferOptions = null):Int;
 	static function start():Void;
@@ -17,7 +17,7 @@ extern class System {
 	static function height():Int;
 	static function loadUrl(url:CString):Void;
 	static function systemId():CString;
-	static function videoFormats():hl.NativeArray<CString>;
+	// static function videoFormats():hl.NativeArray<CString>;
 	static function language():CString;
 	static function vibrate(milliseconds:Int):Void;
 	static function safeZone():hl.F32;
@@ -65,10 +65,11 @@ enum abstract LogLevel(Int) from Int {
 }
 
 enum abstract GraphicsApi(Int) {
-	var D3D9;
-	var D3D11;
-	var D3D12;
-	var OpenGL;
-	var Metal;
-	var Vulkan;
+	var D3D9 = 0;
+	var D3D11 = 1;
+	var D3D12 = 2;
+	var OpenGL = 3;
+	var Metal = 4;
+	var Vulkan = 5;
+	var Other = -1;
 }

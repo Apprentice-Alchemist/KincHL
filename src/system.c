@@ -121,6 +121,8 @@ HL_PRIM int HL_NAME(hl_get_graphics_api)() {
     return 4;
 #elif KORE_VULKAN
     return 5;
+#else
+    return -1;
 #endif
 }
 

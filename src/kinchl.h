@@ -1,5 +1,6 @@
 #ifndef HL_NAME
 #define HL_NAME(n) kinc_##n
+#include <kinc/global.h>
 #include <hl.h>
 
 #define EMPTY_INIT(obj)
