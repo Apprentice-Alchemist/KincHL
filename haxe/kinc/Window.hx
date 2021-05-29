@@ -19,7 +19,7 @@ extern class Window {
 	static function width(index:Int):Int;
 	static function height(index:Int):Int;
 	static function display(index:Int):Int;
-	static function getMode(index:Int):Int;
+	static function getMode(index:Int):WindowMode;
 	static function show(index:Int):Void;
 	static function hide(index:Int):Void;
 	static function setTitle(index:Int, name:String):Void;
