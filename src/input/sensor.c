@@ -2,8 +2,8 @@
 #include <kinc/input/acceleration.h>
 #include <kinc/input/rotation.h>
 
-static vclosure* acceleration_cb = NULL;
-static vclosure* rotation_cb = NULL;
+static vclosure *acceleration_cb = NULL;
+static vclosure *rotation_cb = NULL;
 
 static void internal_acceleration_cb(float x, float y, float z) {
     if (acceleration_cb != NULL) {
@@ -14,9 +14,9 @@ static void internal_acceleration_cb(float x, float y, float z) {
         args[1].v.f = y;
         args[0].t = &hlt_f32;
         args[2].v.f = z;
-        vdynamic* vargs[3] = { &args[0],&args[1],&args[2] };
+        vdynamic *vargs[3] = {&args[0], &args[1], &args[2]};
         bool isExc = false;
-        vdynamic* ret = hl_dyn_call_safe(acceleration_cb, vargs, 3, &isExc);
+        vdynamic *ret = hl_dyn_call_safe(acceleration_cb, vargs, 3, &isExc);
         if (isExc) {
             handle_exception("acceleration callback", ret);
         }
@@ -32,11 +32,11 @@ static void internal_rotation_cb(float x, float y, float z) {
         args[1].v.f = y;
         args[0].t = &hlt_f32;
         args[2].v.f = z;
-        vdynamic* vargs[3] = { &args[0],&args[1],&args[2] };
+        vdynamic *vargs[3] = {&args[0], &args[1], &args[2]};
         bool isExc = false;
-        vdynamic* ret = hl_dyn_call_safe(acceleration_cb, vargs, 3, &isExc);
+        vdynamic *ret = hl_dyn_call_safe(acceleration_cb, vargs, 3, &isExc);
         if (isExc) {
-            handle_exception("rotation callback",ret);
+            handle_exception("rotation callback", ret);
         }
     }
 }
@@ -48,11 +48,11 @@ void hl_sensor_init() {
     kinc_rotation_callback = internal_rotation_cb;
 }
 
-HL_PRIM void HL_NAME(set_acceleration_callback)(vclosure* cb) {
+HL_PRIM void HL_NAME(set_acceleration_callback)(vclosure *cb) {
     acceleration_cb = cb;
 }
 
-HL_PRIM void HL_NAME(set_rotation_callback)(vclosure* cb) {
+HL_PRIM void HL_NAME(set_rotation_callback)(vclosure *cb) {
     rotation_cb = cb;
 }
 

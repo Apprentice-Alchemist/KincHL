@@ -1,17 +1,17 @@
 #include "kinchl.h"
 #include <kinc/input/mouse.h>
 
-#define MAKE_CALLBACK(cb_name) \
-HL_PRIM void HL_NAME(mouse_set_##cb_name##_callback)(vclosure* cb) {\
-    mouse_##cb_name##_cb = cb;\
-}
+#define MAKE_CALLBACK(cb_name)                                            \
+    HL_PRIM void HL_NAME(mouse_set_##cb_name##_callback)(vclosure * cb) { \
+        mouse_##cb_name##_cb = cb;                                        \
+    }
 
-static vclosure* mouse_press_cb = NULL;
-static vclosure* mouse_release_cb = NULL;
-static vclosure* mouse_move_cb = NULL;
-static vclosure* mouse_scroll_cb = NULL;
-static vclosure* mouse_enter_window_cb = NULL;
-static vclosure* mouse_leave_window_cb = NULL;
+static vclosure *mouse_press_cb = NULL;
+static vclosure *mouse_release_cb = NULL;
+static vclosure *mouse_move_cb = NULL;
+static vclosure *mouse_scroll_cb = NULL;
+static vclosure *mouse_enter_window_cb = NULL;
+static vclosure *mouse_leave_window_cb = NULL;
 
 static void internal_mouse_press_cb(int window, int button, int x, int y) {
     if (mouse_press_cb != NULL) {
@@ -24,11 +24,11 @@ static void internal_mouse_press_cb(int window, int button, int x, int y) {
         args[2].v.i = x;
         args[3].t = &hlt_i32;
         args[3].v.i = y;
-        vdynamic* vargs[4] = { &args[0],&args[1],&args[2],&args[3] };
+        vdynamic *vargs[4] = {&args[0], &args[1], &args[2], &args[3]};
         bool isExc = false;
-        vdynamic* exc = hl_dyn_call_safe(mouse_press_cb, vargs, 4, &isExc);
+        vdynamic *exc = hl_dyn_call_safe(mouse_press_cb, vargs, 4, &isExc);
         if (isExc) {
-            handle_exception("mouse press callback",exc);
+            handle_exception("mouse press callback", exc);
         }
     }
 }
@@ -43,9 +43,9 @@ static void internal_mouse_release_cb(int window, int button, int x, int y) {
         args[2].v.i = x;
         args[3].t = &hlt_i32;
         args[3].v.i = y;
-        vdynamic* vargs[4] = { &args[0],&args[1],&args[2],&args[3] };
+        vdynamic *vargs[4] = {&args[0], &args[1], &args[2], &args[3]};
         bool isExc = false;
-        vdynamic* exc = hl_dyn_call_safe(mouse_release_cb, vargs, 4, &isExc);
+        vdynamic *exc = hl_dyn_call_safe(mouse_release_cb, vargs, 4, &isExc);
         if (isExc) {
             handle_exception("mouse release callback", exc);
         }
@@ -64,9 +64,9 @@ static void internal_mouse_move_cb(int window, int x, int y, int movement_x, int
         args[3].v.i = movement_x;
         args[4].t = &hlt_i32;
         args[4].v.i = movement_y;
-        vdynamic* vargs[5] = { &args[0],&args[1],&args[2],&args[3],&args[4] };
+        vdynamic *vargs[5] = {&args[0], &args[1], &args[2], &args[3], &args[4]};
         bool isExc = false;
-        vdynamic* exc = hl_dyn_call_safe(mouse_move_cb, vargs, 5, &isExc);
+        vdynamic *exc = hl_dyn_call_safe(mouse_move_cb, vargs, 5, &isExc);
         if (isExc) {
             handle_exception("mouse move callback", exc);
         }
@@ -79,9 +79,9 @@ static void internal_mouse_scroll_cb(int window, int delta) {
         args[0].v.i = window;
         args[1].t = &hlt_i32;
         args[1].v.i = delta;
-        vdynamic* vargs[2] = { &args[0],&args[1]};
+        vdynamic *vargs[2] = {&args[0], &args[1]};
         bool isExc = false;
-        vdynamic* exc = hl_dyn_call_safe(mouse_scroll_cb, vargs, 2, &isExc);
+        vdynamic *exc = hl_dyn_call_safe(mouse_scroll_cb, vargs, 2, &isExc);
         if (isExc) {
             handle_exception("mouse scroll callback", exc);
         }
@@ -92,9 +92,9 @@ static void internal_mouse_enter_window_cb(int window) {
         vdynamic args[2];
         args[0].t = &hlt_i32;
         args[0].v.i = window;
-        vdynamic* vargs[1] = { &args[0]};
+        vdynamic *vargs[1] = {&args[0]};
         bool isExc = false;
-        vdynamic* exc = hl_dyn_call_safe(mouse_enter_window_cb, vargs, 1, &isExc);
+        vdynamic *exc = hl_dyn_call_safe(mouse_enter_window_cb, vargs, 1, &isExc);
         if (isExc) {
             handle_exception("mouse enter window callback", exc);
         }
@@ -105,9 +105,9 @@ static void internal_mouse_leave_window_cb(int window) {
         vdynamic args[2];
         args[0].t = &hlt_i32;
         args[0].v.i = window;
-        vdynamic* vargs[1] = { &args[0] };
+        vdynamic *vargs[1] = {&args[0]};
         bool isExc = false;
-        vdynamic* exc = hl_dyn_call_safe(mouse_leave_window_cb, vargs, 1, &isExc);
+        vdynamic *exc = hl_dyn_call_safe(mouse_leave_window_cb, vargs, 1, &isExc);
         if (isExc) {
             handle_exception("mouse leave window callback", exc);
         }
@@ -115,16 +115,16 @@ static void internal_mouse_leave_window_cb(int window) {
 }
 
 void hl_mouse_init() {
-    #define _INIT(name) \
-        hl_add_root(&mouse_ ##name## _cb); \
-        kinc_mouse_ ##name## _callback = internal_mouse_ ##name## _cb;
+#define _INIT(name)                  \
+    hl_add_root(&mouse_##name##_cb); \
+    kinc_mouse_##name##_callback = internal_mouse_##name##_cb;
     _INIT(press)
     _INIT(release)
     _INIT(move)
     _INIT(scroll)
     _INIT(enter_window)
     _INIT(leave_window)
-    #undef _INIT
+#undef _INIT
 }
 MAKE_CALLBACK(press)
 MAKE_CALLBACK(release)

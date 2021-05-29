@@ -2,23 +2,23 @@
 #define _GRAPHICS4_H_
 #include "kinchl.h"
 #include <kinc/graphics4/graphics.h>
+#include <kinc/graphics4/indexbuffer.h>
 #include <kinc/graphics4/pipeline.h>
 #include <kinc/graphics4/rendertarget.h>
 #include <kinc/graphics4/shader.h>
 #include <kinc/graphics4/texture.h>
-#include <kinc/graphics4/vertexstructure.h>
-#include <kinc/graphics4/vertexbuffer.h>
-#include <kinc/graphics4/indexbuffer.h>
 #include <kinc/graphics4/texturearray.h>
+#include <kinc/graphics4/vertexbuffer.h>
+#include <kinc/graphics4/vertexstructure.h>
 
-DEFINE_OBJ_EX(g4_pipeline,kinc_g4_pipeline_t)
-DEFINE_OBJ_EX(g4_render_target,kinc_g4_render_target_t)
-DEFINE_OBJ_EX(g4_shader,kinc_g4_shader_t)
-DEFINE_OBJ_EX(g4_texture,kinc_g4_texture_t)
-DEFINE_OBJ_EX(g4_vertex_structure,kinc_g4_vertex_structure_t)
-DEFINE_OBJ_EX(g4_vertex_buffer,kinc_g4_vertex_buffer_t)
-DEFINE_OBJ_EX(g4_index_buffer,kinc_g4_index_buffer_t)
-DEFINE_OBJ_EX(g4_texture_array,kinc_g4_texture_array_t)
+DEFINE_OBJ_EX(g4_pipeline, kinc_g4_pipeline_t)
+DEFINE_OBJ_EX(g4_render_target, kinc_g4_render_target_t)
+DEFINE_OBJ_EX(g4_shader, kinc_g4_shader_t)
+DEFINE_OBJ_EX(g4_texture, kinc_g4_texture_t)
+DEFINE_OBJ_EX(g4_vertex_structure, kinc_g4_vertex_structure_t)
+DEFINE_OBJ_EX(g4_vertex_buffer, kinc_g4_vertex_buffer_t)
+DEFINE_OBJ_EX(g4_index_buffer, kinc_g4_index_buffer_t)
+DEFINE_OBJ_EX(g4_texture_array, kinc_g4_texture_array_t)
 
 #define _PIPELINE _ABSTRACT(g4_pipeline)
 #define _RENDER_TARGET _ABSTRACT(g4_render_target)

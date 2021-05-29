@@ -4,14 +4,14 @@
 // MAKE_GET_SET_EX(g4_shader,vertex_shader,hl_g4_shader,_SHADER);
 
 typedef struct {
-    hl_type* t;
-    hl_g4_pipeline* _handle;
-    varray* input_layout;
-    hl_g4_shader* vertex_shader;
-    hl_g4_shader* fragment_shader;
-    hl_g4_shader* geometry_shader;
-    hl_g4_shader* tessellation_control_shader;
-    hl_g4_shader* tessellation_evaluation_shader;
+    hl_type *t;
+    hl_g4_pipeline *_handle;
+    varray *input_layout;
+    hl_g4_shader *vertex_shader;
+    hl_g4_shader *fragment_shader;
+    hl_g4_shader *geometry_shader;
+    hl_g4_shader *tessellation_control_shader;
+    hl_g4_shader *tessellation_evaluation_shader;
     kinc_g4_cull_mode_t cull_mode;
     bool depth_write;
     kinc_g4_compare_mode_t depth_mode;
@@ -28,22 +28,22 @@ typedef struct {
     kinc_g4_blending_operation_t alpha_blend_source;
     kinc_g4_blending_operation_t alpha_blend_destination;
     // BlendingOperation alphaBlendOperation;
-    varray* color_write_mask_red;
-    varray* color_write_mask_green;
-    varray* color_write_mask_blue;
-    varray* color_write_mask_alpha;
+    varray *color_write_mask_red;
+    varray *color_write_mask_green;
+    varray *color_write_mask_blue;
+    varray *color_write_mask_alpha;
     int color_attachment_count;
-    varray* color_attachment;
+    varray *color_attachment;
     int depth_attachment_bits;
     int stencil_attachment_bits;
     bool conservative_rasterization;
 } hl_g4_pipeline_haxe;
 
-HL_PRIM void HL_NAME(hl_g4_pipeline_compile)(hl_g4_pipeline_haxe* state) {
+HL_PRIM void HL_NAME(hl_g4_pipeline_compile)(hl_g4_pipeline_haxe *state) {
 #define GET(n) n == NULL ? NULL : &(n->t);
 #define COPY(x) pipe->x = state->x;
-    kinc_g4_pipeline_t* pipe = &(state->_handle->t);
-    hl_g4_vertex_structure** arr = hl_aptr(state->input_layout, hl_g4_vertex_structure*);
+    kinc_g4_pipeline_t *pipe = &(state->_handle->t);
+    hl_g4_vertex_structure **arr = hl_aptr(state->input_layout, hl_g4_vertex_structure *);
     for (int i = 0; i < 16 && arr[i] != NULL; i++) {
         pipe->input_layout[i] = &(arr[i]->t);
     }
@@ -91,13 +91,13 @@ HL_PRIM void HL_NAME(hl_g4_pipeline_compile)(hl_g4_pipeline_haxe* state) {
     kinc_g4_pipeline_compile(pipe);
 }
 
-HL_PRIM kinc_g4_constant_location_t* HL_NAME(hl_g4_pipeline_get_constant_location)(hl_g4_pipeline* state, vstring* name) {
-    kinc_g4_constant_location_t* ret = hl_gc_alloc_raw(sizeof(kinc_g4_constant_location_t));
+HL_PRIM kinc_g4_constant_location_t *HL_NAME(hl_g4_pipeline_get_constant_location)(hl_g4_pipeline *state, vstring *name) {
+    kinc_g4_constant_location_t *ret = hl_gc_alloc_raw(sizeof(kinc_g4_constant_location_t));
     *ret = kinc_g4_pipeline_get_constant_location(&(state->t), hl_to_utf8(name->bytes));
     return ret;
 }
-HL_PRIM kinc_g4_texture_unit_t* HL_NAME(hl_g4_pipeline_get_texture_unit)(hl_g4_pipeline* state, vstring* name) {
-    kinc_g4_texture_unit_t* ret = hl_gc_alloc_raw(sizeof(kinc_g4_texture_unit_t));
+HL_PRIM kinc_g4_texture_unit_t *HL_NAME(hl_g4_pipeline_get_texture_unit)(hl_g4_pipeline *state, vstring *name) {
+    kinc_g4_texture_unit_t *ret = hl_gc_alloc_raw(sizeof(kinc_g4_texture_unit_t));
     *ret = kinc_g4_pipeline_get_texture_unit(&(state->t), hl_to_utf8(name->bytes));
     return ret;
 }
@@ -105,8 +105,7 @@ HL_PRIM kinc_g4_texture_unit_t* HL_NAME(hl_g4_pipeline_get_texture_unit)(hl_g4_p
 MAKE_GET_SET_EX(g4_vertex_structure, size, int, _I32)
 MAKE_GET_SET_EX(g4_vertex_structure, instanced, bool, _BOOL)
 
-
-HL_PRIM void HL_NAME(hl_g4_vertex_structure_add)(hl_g4_vertex_structure* obj, vstring* name, int d) {
+HL_PRIM void HL_NAME(hl_g4_vertex_structure_add)(hl_g4_vertex_structure *obj, vstring *name, int d) {
     kinc_g4_vertex_structure_add(&(obj->t), hl_to_utf8(name->bytes), d);
 }
 

@@ -1,0 +1,5 @@
+BasedOnStyle: llvm
+ColumnLimit: 0
+AllowShortBlocksOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+IndentWidth: 4
