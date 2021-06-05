@@ -31,7 +31,9 @@ function main() {
 			"-project",
 			"KincHL.xcodeproj",
 			"ARCHS=x86_64",
-			"EXECUTABLE_PATH=kinc.hdll",
+			// "EXECUTABLE_PATH=kinc.hdll",
+			"EXECUTABLE_NAME=kinc",
+			"EXECUTABLE_SUFFIX=hdll",
 			"EXECUTABLE_FOLDER_PATH=bin"
 		]) != 0)
 			Sys.exit(1);
