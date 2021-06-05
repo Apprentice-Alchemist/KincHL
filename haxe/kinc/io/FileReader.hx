@@ -8,6 +8,7 @@ enum abstract FileType(Int) {
 }
 
 @:build(kinc.Macros.build_struct("file_reader",false,false,true))
+@:hlNative("kinc","hl_file_reader_")
 abstract FileReader(hl.Abstract<"file_reader">) {
     public function open(path:CString,type:FileType):Bool;
     public function read(data:hl.Bytes,size:Int):Int;

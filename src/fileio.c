@@ -44,7 +44,7 @@ DEFINE_PRIM(_BOOL, hl_file_reader_open, _READER _BYTES _I32)
 DEFINE_PRIM(_VOID, hl_file_reader_close, _READER)
 DEFINE_PRIM(_I32, hl_file_reader_read, _READER _BYTES _I32)
 DEFINE_PRIM(_I32, hl_file_reader_size, _READER)
-DEFINE_PRIM(_I32, hl_file_reader_pos, _NO_ARG)
+DEFINE_PRIM(_I32, hl_file_reader_pos, _READER _NO_ARG)
 DEFINE_PRIM(_VOID, hl_file_reader_seek, _READER _I32)
 
 DEFINE_PRIM(_BOOL, hl_file_writer_open, _WRITER _BYTES)

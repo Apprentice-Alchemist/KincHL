@@ -1,7 +1,8 @@
 const process = require("process");
 
 let project = new Project("KincHL");
-project.setDebugDir("Deployment");
+project.setDebugDir("");
+project.addDefine("KORE_DEBUGDIR=\"\"");
 project.addFile("src/**");
 project.addIncludeDir("src/");
 project.addExclude("src/g5/**");
