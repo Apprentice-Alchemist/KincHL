@@ -32,11 +32,10 @@ function main() {
 			"KincHL.xcodeproj",
 			"ARCHS=x86_64",
 			// "EXECUTABLE_PATH=kinc.hdll",
-			"EXECUTABLE_NAME=kinc",
-			"EXECUTABLE_SUFFIX=hdll",
-			"EXECUTABLE_FOLDER_PATH=bin"
+			"EXECUTABLE_NAME=kinc.hdll",
 		]) != 0)
 			Sys.exit(1);
+			File.copy("build/Release/kinc.hdll","bin/kinc.hdll");
 	} else if (sys_name == "windows") {
 		if (Sys.command("MSBuild", [
 			"KincHL.vcxproj",
