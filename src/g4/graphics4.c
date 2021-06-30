@@ -32,12 +32,12 @@ HL_PRIM void HL_NAME(hl_g4_set_vertex_buffer)(hl_g4_vertex_buffer *buf) {
 }
 HL_PRIM void HL_NAME(hl_g4_set_vertex_buffers)(varray *bufs) {
     kinc_g4_vertex_buffer_t **arr = malloc(sizeof(kinc_g4_vertex_buffer_t *) * bufs->size);
-    memset(arr, 0, sizeof(sizeof(kinc_g4_vertex_buffer_t *) * bufs->size));
+    memset(arr, 0, sizeof(kinc_g4_vertex_buffer_t *) * bufs->size);
     for (int i = 0; i < bufs->size; i++) {
         hl_g4_vertex_buffer *b = hl_aptr(bufs, hl_g4_vertex_buffer *)[i];
         arr[i] = &(b->t);
     }
-    arr[bufs->size] = NULL;
+    // arr[bufs->size] = NULL;
     kinc_g4_set_vertex_buffers(arr, bufs->size);
     free(arr);
 }

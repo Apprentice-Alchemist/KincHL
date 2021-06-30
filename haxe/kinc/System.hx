@@ -72,4 +72,24 @@ enum abstract GraphicsApi(Int) {
 	var Metal = 4;
 	var Vulkan = 5;
 	var Other = -1;
+
+	inline function toString() {
+		var g:GraphicsApi = cast this;
+		switch g {
+			case D3D9:
+				"D3D9";
+			case D3D11:
+				"D3D11";
+			case D3D12:
+				"D3D12";
+			case OpenGL:
+				"OpenGL";
+			case Metal:
+				"Metal";
+			case Vulkan:
+				"Vulkan";
+			case Other:
+				"Other";
+		}
+	}
 }

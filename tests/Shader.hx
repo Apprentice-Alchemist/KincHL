@@ -30,6 +30,7 @@ class Shader {
 			case OpenGL: "OpenGL";
 			case Metal: "Metal";
 			case Vulkan: "Vulkan";
+			case Other: "Uh, idk what we're running on";
 		});
 		kinc.System.init("Shader", 500, 500, null, null);
 		kinc.System.setUpdateCallback(update);
