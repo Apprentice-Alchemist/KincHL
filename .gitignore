@@ -1,8 +1,8 @@
 src/*.glsl
 build/*
-Deployment/*.vert
-Deployment/*.frag
-Deployment/*.dll
+*.vert
+*.frag
+*.dll
 *.hdll
 *.hl
 haxe/kinc/g5

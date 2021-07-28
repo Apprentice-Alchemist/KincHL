@@ -39,8 +39,8 @@ class Shader {
 		texture = new kinc.g4.Texture();
 		texture.initFromImage(img);
 
-		fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/shader.frag"), FragmentShader);
-		vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/shader.vert"), VertexShader);
+		fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("shader.frag"), FragmentShader);
+		vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("shader.vert"), VertexShader);
 
 		structure = new VertexStructure();
 		structure.add("pos", Float3);

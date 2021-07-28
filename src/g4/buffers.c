@@ -23,7 +23,7 @@ HL_PRIM int HL_NAME(hl_g4_vertex_buffer_stride)(hl_g4_vertex_buffer *buf) {
 }
 
 HL_PRIM void HL_NAME(hl_g4_index_buffer_init)(hl_g4_index_buffer *buf, int count, int format) {
-    kinc_g4_index_buffer_init(&buf->t, count, format);
+    kinc_g4_index_buffer_init(&buf->t, count, format, KINC_G4_USAGE_STATIC);
 }
 HL_PRIM int *HL_NAME(hl_g4_index_buffer_lock)(hl_g4_index_buffer *buf) {
     return kinc_g4_index_buffer_lock(&buf->t);

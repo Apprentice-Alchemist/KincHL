@@ -73,9 +73,9 @@ enum abstract GraphicsApi(Int) {
 	var Vulkan = 5;
 	var Other = -1;
 
-	inline function toString() {
+	public inline function toString() {
 		var g:GraphicsApi = cast this;
-		switch g {
+		return switch g {
 			case D3D9:
 				"D3D9";
 			case D3D11:
