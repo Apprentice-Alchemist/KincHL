@@ -3,5 +3,4 @@
 --debug
 -m Shader
 kinc
--D hl_check_align
 -hl out.hl

@@ -16,8 +16,8 @@ class Shader {
 	static var index_buffer:IndexBuffer;
 	static var texture:kinc.g4.Texture;
 	static var vertices = [
-		0,  0.5, 0,
-		 -0.5,  -0.5, 0,
+		   0,  0.5, 0,
+		-0.5, -0.5, 0,
 		 0.5, -0.5, 0
 	];
 	static var indices = [0, 1, 2];
@@ -55,7 +55,7 @@ class Shader {
 
 		vertex_buffer = new VertexBuffer(3, structure, StaticUsage, 0);
 		{
-			var v = vertex_buffer.lock(0,3);
+			var v = vertex_buffer.lock(0, 3);
 			for (i in 0...vertices.length)
 				v[i] = vertices[i];
 			vertex_buffer.unlock(3);

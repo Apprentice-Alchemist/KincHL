@@ -18,22 +18,22 @@ class Compute {
 	static var texunit:TextureUnit;
 	static var offset:ConstantLocation;
 	static var texture:kinc.g4.Texture;
-    static var computeShader:ComputeShader;
-    static var computeUnit:ComputeTextureUnit;
-    static var computeLocation:ComputeConstantLocation;
+	static var computeShader:ComputeShader;
+	static var computeUnit:ComputeTextureUnit;
+	static var computeLocation:ComputeConstantLocation;
 
 	public static function main() {
 		kinc.System.init("Texture", 500, 500);
 		kinc.System.setUpdateCallback(update);
 
 		texture = new kinc.g4.Texture();
-        texture.init(256,256,FORMAT_RGBA128);
+		texture.init(256, 256, FORMAT_RGBA128);
 
 		var fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("texture.frag"), FragmentShader);
 		var vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("texture.vert"), VertexShader);
-        computeShader = new ComputeShader(sys.io.File.getBytes("shader.comp"));
-        computeUnit = computeShader.getTextureUnit("destTex");
-        computeLocation = computeShader.getConstantLocation("roll");
+		computeShader = new ComputeShader(sys.io.File.getBytes("shader.comp"));
+		computeUnit = computeShader.getTextureUnit("destTex");
+		computeLocation = computeShader.getConstantLocation("roll");
 		structure = new kinc.g4.VertexStructure();
 		structure.add("pos", Float3);
 		structure.add("tex", Float2);
