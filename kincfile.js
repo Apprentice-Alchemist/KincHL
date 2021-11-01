@@ -8,12 +8,10 @@ project.addFile("tests/**"); // shaders
 project.addIncludeDir("src/");
 project.addExclude("src/g5/**");
 
-let krafix = true;
-
-if(krafix) {
+if(process.env["INCLUDE_KRAFIX"]) {
     project.addProject("krafix");
+    project.addDefine("INCLUDE_KRAFIX");
 }
-
 
 switch (platform) {
     case Platform.Linux:

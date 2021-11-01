@@ -19,18 +19,34 @@ function main() {
 		Sys.putEnv("HASHLINK_SRC", Path.normalize(gw + "/hashlink/src"));
 		Sys.putEnv("HASHLINK_BIN", Path.normalize(gw + "/hashlink/x64/Release"));
 	}
+	var debug = Sys.getEnv("DEBUG") != null;
+	var krafix = Sys.getEnv("INCLUDE_KRAFIX") != null;
+	var g_api = Sys.getEnv("KINCHL_GRAPHICS");
+	for (arg in args) {
+		if (arg == "-g") {
+			g_api = args.shift();
+		}
+		if (arg == "--debug")
+			debug = true;
+		if (arg == "--krafix")
+			krafix = true;
+	}
 
-	final debug = args.contains("--debug") || Sys.getEnv("DEBUG") != null;
-
-	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders"];
+	if (krafix) {
+		Sys.putEnv("INCLUDE_KRAFIX", "1");
+	}
+	sys.io.File.saveContent("krafix/kincfile.js", sys.io.File.getContent("krafix/kincfile.js").replace("let library = false;", "let library = true;"));
+	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders","-k","../Kinc"];
 	if (g_api != null) {
 		args.push("-g");
 		args.push(g_api);
 	}
+
 	if (debug)
 		n_args.push("--debug");
 	if (Sys.command("node", n_args) != 0)
 		Sys.exit(1);
+	sys.io.File.saveContent("krafix/kincfile.js", sys.io.File.getContent("krafix/kincfile.js").replace("let library = true;", "let library = false;"));
 	Sys.setCwd("build");
 	FileSystem.createDirectory("bin");
 	if (sys_name == "mac") {

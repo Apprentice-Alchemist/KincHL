@@ -1,6 +1,7 @@
 [submodule "Kinc"]
 	path = Kinc
-	url = https://github.com/Kode/Kinc
+	url = https://github.com/Apprentice-Alchemist/Kinc
+	branch = bugfix/shader_from_source
 [submodule "krafix"]
 	path = krafix
 	url = https://github.com/Kode/krafix
