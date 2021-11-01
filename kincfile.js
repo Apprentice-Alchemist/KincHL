@@ -8,6 +8,13 @@ project.addFile("tests/**"); // shaders
 project.addIncludeDir("src/");
 project.addExclude("src/g5/**");
 
+let krafix = true;
+
+if(krafix) {
+    project.addProject("krafix");
+}
+
+
 switch (platform) {
     case Platform.Linux:
         project.addLib("hl");

@@ -81,7 +81,7 @@ class Compute {
 
 	public static function update() {
 		Graphics4.begin(0);
-		Graphics4.clear(1, 0, 0, 0);
+		Graphics4.clear(Color, 0, 0, 0);
 
 		kinc.compute.Compute.setShader(computeShader);
 		kinc.compute.Compute.setTexture(computeUnit, texture, WRITE);

@@ -2,6 +2,7 @@ src/*.glsl
 build/*
 *.vert
 *.frag
+*.comp
 *.dll
 *.hdll
 *.hl

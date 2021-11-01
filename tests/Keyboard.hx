@@ -30,7 +30,7 @@ class Keyboard {
 
 	public static function update() {
 		Graphics4.begin(0);
-		Graphics4.clear(1, space_pressed ? 0x00ff00 : 0xff0000, 0, 0);
+		Graphics4.clear(Color, space_pressed ? 0x00ff00 : 0xff0000, 0, 0);
 		Graphics4.end(0);
 		Graphics4.swapBuffers();
 	}

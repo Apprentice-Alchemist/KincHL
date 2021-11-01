@@ -18,7 +18,7 @@ class Mouse {
 
 	public static function update() {
 		Graphics4.begin(0);
-		Graphics4.clear(1, delta, 0, 0);
+		Graphics4.clear(Color, delta, 0, 0);
 		Graphics4.end(0);
 		Graphics4.swapBuffers();
 	}

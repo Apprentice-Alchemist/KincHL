@@ -73,7 +73,7 @@ class Shader {
 
 	public static function update() {
 		Graphics4.begin(0);
-		Graphics4.clear(1, 0, 0, 0);
+		Graphics4.clear(Color, 0, 0, 0);
 		Graphics4.setPipeline(pipeline);
 		Graphics4.setVertexBuffer(vertex_buffer);
 		Graphics4.setIndexBuffer(index_buffer);

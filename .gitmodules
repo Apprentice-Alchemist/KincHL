@@ -1,3 +1,6 @@
 [submodule "Kinc"]
 	path = Kinc
 	url = https://github.com/Kode/Kinc
+[submodule "krafix"]
+	path = krafix
+	url = https://github.com/Kode/krafix

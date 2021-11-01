@@ -83,7 +83,7 @@ class Texture {
 
 	public static function update() {
 		Graphics4.begin(0);
-		Graphics4.clear(1, 0, 0, 0);
+		Graphics4.clear(Color, 0, 0, 0);
 		Graphics4.setPipeline(pipeline);
 		var matrix = Matrix3.rotationZ(kinc.System.time());
 		Graphics4.setMatrix3(offset, matrix);
