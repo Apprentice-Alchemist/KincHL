@@ -40,7 +40,7 @@ function main() {
 			configuration,
 			"-project",
 			"KincHL.xcodeproj",
-			// "ARCHS=x86_64",
+			"ARCHS=x86_64",
 			"EXECUTABLE_NAME=kinc.hdll",
 		]) != 0)
 			Sys.exit(1);
