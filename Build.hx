@@ -19,42 +19,52 @@ function main() {
 		Sys.putEnv("HASHLINK_SRC", Path.normalize(gw + "/hashlink/src"));
 		Sys.putEnv("HASHLINK_BIN", Path.normalize(gw + "/hashlink/x64/Release"));
 	}
-	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders", "-g", g_api];
+
+	final debug = args.contains("--debug") || Sys.getEnv("DEBUG") != null;
+
+	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders"];
+	if (g_api != null) {
+		args.push("-g");
+		args.push(g_api);
+	}
+	if (debug)
+		n_args.push("--debug");
 	if (Sys.command("node", n_args) != 0)
 		Sys.exit(1);
 	Sys.setCwd("build");
 	FileSystem.createDirectory("bin");
 	if (sys_name == "mac") {
+		final configuration = debug ? "Debug" : "Release";
 		if (Sys.command("xcodebuild", [
 			"-configuration",
-			"Release",
+			configuration,
 			"-project",
 			"KincHL.xcodeproj",
-			"ARCHS=x86_64",
-			// "EXECUTABLE_PATH=kinc.hdll",
+			// "ARCHS=x86_64",
 			"EXECUTABLE_NAME=kinc.hdll",
 		]) != 0)
 			Sys.exit(1);
-			File.copy("build/Release/kinc.hdll","bin/kinc.hdll");
+		File.copy('build/$configuration/kinc.hdll', "bin/kinc.hdll");
 	} else if (sys_name == "windows") {
+		final configuration = debug ? "Debug" : "Release";
 		if (Sys.command("MSBuild", [
 			"KincHL.vcxproj",
 			"/m",
-			"/p:Configuration=Release,Platform=x64,OutDir=bin/,TargetExt=.hdll,TargetName=kinc"
+			'/p:Configuration=$configuration,Platform=x64,OutDir=bin/,TargetExt=.hdll,TargetName=kinc'
 		]) != 0)
 			Sys.exit(1);
 	} else if (sys_name == "linux") {
-		File.saveContent("Release/makefile", File.getContent("Release/makefile").replace('-o "KincHL.so"', '-o "kinc.hdll"'));
-		Sys.setCwd("Release");
-		if (Sys.command("make", ["KincHL.so"]) != 0)
+		final configuration = debug ? "Debug" : "Release";
+		File.saveContent('$configuration/makefile', File.getContent('$configuration/makefile').replace('KincHL.so', 'kinc.hdll'));
+		Sys.setCwd(configuration);
+		if (Sys.command("make") != 0)
 			Sys.exit(1);
 		Sys.setCwd("..");
-		File.copy("Release/kinc.hdll", "bin/kinc.hdll");
+		File.copy('$configuration/kinc.hdll', "bin/kinc.hdll");
 	}
 
-	File.copy("bin/kinc.hdll", Path.normalize(gw + "/" + "kinc.hdll"));
-
-	try
-		File.copy("bin/kinc.lib", Path.normalize(gw + "/" + "kinc.lib"))
-	catch (_) {};
+	try {
+		File.copy("bin/kinc.hdll", Path.normalize(gw + "/" + "kinc.hdll"));
+		File.copy("bin/kinc.lib", Path.normalize(gw + "/" + "kinc.lib"));
+	} catch (_) {};
 }

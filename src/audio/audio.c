@@ -4,11 +4,11 @@
 // AUDIO 1
 // DEFINE_OBJ_EX(a1_channel,kinc_a1_channel_t)
 // ALLOC_OBJ_EX(a1_channel,kinc_a1_channel_t,kinc_a1_channel)
-MAKE_GET(kinc_a1_channel_t, a1_channel, sound, kinc_a1_sound_t *, _ABSTRACT(kinc_a1_channel_t), _ABSTRACT(kinc_a1_sound_t))
-MAKE_GET_SET(kinc_a1_channel_t, a1_channel, position, float, _ABSTRACT(kinc_a1_channel_t), _F32)
-MAKE_GET_SET(kinc_a1_channel_t, a1_channel, loop, bool, _ABSTRACT(kinc_a1_channel_t), _BOOL)
-MAKE_GET_SET(kinc_a1_channel_t, a1_channel, volume, float, _ABSTRACT(kinc_a1_channel_t), _F32)
-MAKE_GET_SET(kinc_a1_channel_t, a1_channel, pitch, float, _ABSTRACT(kinc_a1_channel_t), _F32)
+// MAKE_GET(kinc_a1_channel_t, a1_channel, sound, kinc_a1_sound_t *, _ABSTRACT(kinc_a1_channel_t), _ABSTRACT(kinc_a1_sound_t))
+// MAKE_GET_SET(kinc_a1_channel_t, a1_channel, position, float, _ABSTRACT(kinc_a1_channel_t), _F32)
+// MAKE_GET_SET(kinc_a1_channel_t, a1_channel, loop, bool, _ABSTRACT(kinc_a1_channel_t), _BOOL)
+// MAKE_GET_SET(kinc_a1_channel_t, a1_channel, volume, float, _ABSTRACT(kinc_a1_channel_t), _F32)
+// MAKE_GET_SET(kinc_a1_channel_t, a1_channel, pitch, float, _ABSTRACT(kinc_a1_channel_t), _F32)
 HL_PRIM kinc_a2_buffer_format_t *HL_NAME(hl_a1_sound_get_format)(kinc_a1_sound_t *o) {
     return &(o->format);
 }

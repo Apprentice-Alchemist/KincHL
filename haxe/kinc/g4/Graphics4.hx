@@ -3,10 +3,22 @@ package kinc.g4;
 import kinc.math.Matrix4;
 import kinc.math.Matrix3;
 
+// #define KINC_G4_CLEAR_COLOR 1
+// #define KINC_G4_CLEAR_DEPTH 2
+// #define KINC_G4_CLEAR_STENCIL 4
+
+enum abstract ClearMode(Int) {
+	var Color = 1;
+	var Depth = 2;
+	var Stencil = 4;
+
+	@:op(A | B) static function and(a:ClearMode, b:ClearMode):ClearMode;
+}
+
 @:hlNative("kinc", "hl_g4_")
 extern class Graphics4 {
 	static function begin(index:Int):Void;
-	static function clear(f:Int, c:Int, d:hl.F32, s:hl.F32):Void;
+	static function clear(flags:ClearMode, color:Int, depth:hl.F32, stencil:Int):Void;
 	static function end(index:Int):Void;
 	static function flush():Void;
 	static function swapBuffers():Bool;

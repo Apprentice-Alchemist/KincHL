@@ -123,7 +123,7 @@ HL_PRIM void HL_NAME(hl_g4_set_antialiasing_samples)(int samples) {
 }
 
 DEFINE_PRIM(_VOID, hl_g4_begin, _I32)
-DEFINE_PRIM(_VOID, hl_g4_clear, _I32 _I32 _F32 _F32)
+DEFINE_PRIM(_VOID, hl_g4_clear, _I32 _I32 _F32 _I32)
 DEFINE_PRIM(_VOID, hl_g4_end, _I32)
 DEFINE_PRIM(_BOOL, hl_g4_swap_buffers, _NO_ARG)
 DEFINE_PRIM(_VOID, hl_g4_flush, _NO_ARG)
