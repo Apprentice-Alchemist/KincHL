@@ -1,6 +1,7 @@
 #ifndef HL_NAME
 #define HL_NAME(n) kinc_##n
 
+#include <stdbool.h>
 #include <hl.h>
 
 #define EMPTY_INIT(obj)
@@ -18,7 +19,7 @@ void handle_exception(const char *where, vdynamic *exc);
     HL_PRIM void HL_NAME(hl_##name##_destroy)(hl_##name * obj) {              \
         destroy_func(&obj->t);                                                \
     }                                                                         \
-    HL_PRIM hl_##name *HL_NAME(hl_##name##_alloc)() {                         \
+    HL_PRIM hl_##name *HL_NAME(hl_##name##_alloc)(void) {                         \
         hl_##name *o = (hl_##name *)hl_gc_alloc_finalizer(sizeof(hl_##name)); \
         o->finalizer = (void (*)(type_name *))kinc_hl_##name##_destroy;       \
         memset(&o->t, 0, sizeof(type_name));                                  \
@@ -29,7 +30,7 @@ void handle_exception(const char *where, vdynamic *exc);
     DEFINE_PRIM(_VOID, hl_##name##_destroy, _ABSTRACT(name))
 
 #define ALLOC_OBJ(type, name, hl_type, init, destroy)    \
-    HL_PRIM type *HL_NAME(name##_hl_alloc)() {           \
+    HL_PRIM type *HL_NAME(name##_hl_alloc)(void) {           \
         type *o = (type *)hl_gc_alloc_raw(sizeof(type)); \
         return o;                                        \
     }                                                    \

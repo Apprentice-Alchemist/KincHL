@@ -12,6 +12,17 @@ inline function assert(b:Bool, err = "assert")
 
 function main() {
 	final gw = Sys.getEnv("GITHUB_WORKSPACE");
+	var num_cpus:Null<Int> = null;
+	try {
+		if (Sys.getEnv("NUMBER_OF_PROCESSORS") != null) {
+			num_cpus = Std.parseInt(Sys.getEnv("NUMBER_OF_PROCESSORS"));
+		} else {
+			#if eval
+			final cpus = eval.luv.SystemInfo.cpuInfo().resolve();
+			num_cpus = cpus.length;
+			#end
+		}
+	}
 
 	final sys_name = Sys.systemName().toLowerCase();
 	var debug = Sys.getEnv("DEBUG") != null;
@@ -40,7 +51,7 @@ function main() {
 	}
 	sys.io.File.saveContent("krafix/kincfile.js", sys.io.File.getContent("krafix/kincfile.js").replace("let library = false;", "let library = true;"));
 	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders", "-k", "../Kinc"];
-	if(sys_name == "windows") {
+	if (sys_name == "windows") {
 		n_args.push("-v");
 		n_args.push("vs2019");
 	}
@@ -71,7 +82,7 @@ function main() {
 		final configuration = debug ? "Debug" : "Release";
 		if (Sys.command("MSBuild", [
 			"KincHL.vcxproj",
-			"/m",
+			"/m" + (num_cpus == null ? "" : ':$num_cpus'),
 			'/p:Configuration=$configuration,Platform=x64,OutDir=bin/,TargetExt=.hdll,TargetName=kinc'
 		]) != 0)
 			Sys.exit(1);
@@ -79,7 +90,12 @@ function main() {
 		final configuration = debug ? "Debug" : "Release";
 		File.saveContent('$configuration/makefile', File.getContent('$configuration/makefile').replace('KincHL.so', 'kinc.hdll'));
 		Sys.setCwd(configuration);
-		if (Sys.command("make") != 0)
+		final m_args = [];
+		if (num_cpus != null) {
+			Sys.println('Using $num_cpus cores.');
+			m_args.push("-j" + num_cpus);
+		}
+		if (Sys.command("make", m_args) != 0)
 			Sys.exit(1);
 		Sys.setCwd("..");
 		File.copy('$configuration/kinc.hdll', "bin/kinc.hdll");

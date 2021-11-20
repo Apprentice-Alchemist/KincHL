@@ -38,7 +38,7 @@ HL_PRIM int HL_NAME(hl_window_create)(win_opts_hl *win, fb_opts_hl *fb) {
 HL_PRIM void HL_NAME(hl_window_destroy)(int index) {
     kinc_window_destroy(index);
 }
-HL_PRIM int HL_NAME(hl_count_windows)() {
+HL_PRIM int HL_NAME(hl_count_windows)(void) {
     return kinc_count_windows();
 }
 HL_PRIM void HL_NAME(hl_window_resize)(int window_index, int width, int height) {

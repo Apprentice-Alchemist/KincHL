@@ -1,7 +1,7 @@
 #include "kinchl.h"
 #include <kinc/math/matrix.h>
 
-HL_PRIM kinc_matrix3x3_t *HL_NAME(hl_matrix3x3_alloc)() {
+HL_PRIM kinc_matrix3x3_t *HL_NAME(hl_matrix3x3_alloc)(void) {
     kinc_matrix3x3_t *m = hl_gc_alloc_raw(sizeof(kinc_matrix3x3_t));
     memset(m->m, 0, sizeof(m->m));
     return m;
@@ -15,7 +15,7 @@ HL_PRIM void HL_NAME(hl_matrix3x3_set)(kinc_matrix3x3_t *mat, int x, int y, floa
 HL_PRIM void HL_NAME(hl_matrix3x3_transpose)(kinc_matrix3x3_t *mat) {
     kinc_matrix3x3_transpose(mat);
 }
-HL_PRIM kinc_matrix3x3_t *HL_NAME(hl_matrix3x3_identity)() {
+HL_PRIM kinc_matrix3x3_t *HL_NAME(hl_matrix3x3_identity)(void) {
     kinc_matrix3x3_t *ret = hl_gc_alloc_raw(sizeof(kinc_matrix3x3_t));
     *ret = kinc_matrix3x3_identity();
     return ret;
@@ -44,7 +44,7 @@ DEFINE_PRIM(_ABSTRACT(kinc_matrix3x3_t), hl_matrix3x3_rotation_x, _F32)
 DEFINE_PRIM(_ABSTRACT(kinc_matrix3x3_t), hl_matrix3x3_rotation_y, _F32)
 DEFINE_PRIM(_ABSTRACT(kinc_matrix3x3_t), hl_matrix3x3_rotation_z, _F32)
 
-HL_PRIM kinc_matrix4x4_t *HL_NAME(hl_matrix4x4_alloc)() {
+HL_PRIM kinc_matrix4x4_t *HL_NAME(hl_matrix4x4_alloc)(void) {
     kinc_matrix4x4_t *m = hl_gc_alloc_raw(sizeof(kinc_matrix4x4_t));
     memset(m->m, 0, sizeof(m->m));
     return m;

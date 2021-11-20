@@ -18,10 +18,10 @@ HL_PRIM void HL_NAME(hl_g4_clear)(unsigned int flags, unsigned int color, float 
 HL_PRIM void HL_NAME(hl_g4_end)(int index) {
     kinc_g4_end(index);
 }
-HL_PRIM bool HL_NAME(hl_g4_swap_buffers)() {
+HL_PRIM bool HL_NAME(hl_g4_swap_buffers)(void) {
     return kinc_g4_swap_buffers();
 }
-HL_PRIM void HL_NAME(hl_g4_flush)() {
+HL_PRIM void HL_NAME(hl_g4_flush)(void) {
     kinc_g4_flush();
 }
 HL_PRIM void HL_NAME(hl_g4_set_pipeline)(hl_g4_pipeline *state) {
@@ -44,7 +44,7 @@ HL_PRIM void HL_NAME(hl_g4_set_vertex_buffers)(varray *bufs) {
 HL_PRIM void HL_NAME(hl_g4_set_index_buffer)(hl_g4_index_buffer *buf) {
     kinc_g4_set_index_buffer(&buf->t);
 }
-HL_PRIM void HL_NAME(hl_g4_draw_indexed_vertices)() {
+HL_PRIM void HL_NAME(hl_g4_draw_indexed_vertices)(void) {
     kinc_g4_draw_indexed_vertices();
 }
 HL_PRIM void HL_NAME(hl_g4_viewport)(int x, int y, int width, int height) {
@@ -53,7 +53,7 @@ HL_PRIM void HL_NAME(hl_g4_viewport)(int x, int y, int width, int height) {
 HL_PRIM void HL_NAME(hl_g4_scissor)(int x, int y, int width, int height) {
     kinc_g4_scissor(x, y, width, height);
 }
-HL_PRIM void HL_NAME(hl_g4_disable_scissor)() {
+HL_PRIM void HL_NAME(hl_g4_disable_scissor)(void) {
     kinc_g4_disable_scissor();
 }
 HL_PRIM void HL_NAME(hl_g4_draw_indexed_vertices_from_to)(int start, int count) {
@@ -74,16 +74,16 @@ HL_PRIM void HL_NAME(hl_g4_set_texture_addressing)(kinc_g4_texture_unit_t *unit,
 HL_PRIM void HL_NAME(hl_g4_set_texture3d_addressing)(kinc_g4_texture_unit_t *unit, kinc_g4_texture_direction_t dir, kinc_g4_texture_addressing_t addressing) {
     kinc_g4_set_texture3d_addressing(*unit, dir, addressing);
 }
-HL_PRIM int HL_NAME(hl_g4_max_bound_textures)() {
+HL_PRIM int HL_NAME(hl_g4_max_bound_textures)(void) {
     return kinc_g4_max_bound_textures();
 }
-HL_PRIM bool HL_NAME(hl_g4_render_targets_inverted_y)() {
+HL_PRIM bool HL_NAME(hl_g4_render_targets_inverted_y)(void) {
     return kinc_g4_render_targets_inverted_y();
 }
-HL_PRIM bool HL_NAME(hl_g4_non_pow2_textures_supported)() {
+HL_PRIM bool HL_NAME(hl_g4_non_pow2_textures_supported)(void) {
     return kinc_g4_non_pow2_textures_supported();
 }
-HL_PRIM void HL_NAME(hl_g4_restore_render_target)() {
+HL_PRIM void HL_NAME(hl_g4_restore_render_target)(void) {
     kinc_g4_restore_render_target();
 }
 HL_PRIM void HL_NAME(hl_g4_set_render_targets)(varray *targets) {
@@ -115,7 +115,7 @@ HL_PRIM void HL_NAME(hl_g4_set_image_texture)(kinc_g4_texture_unit_t *unit, hl_g
 HL_PRIM void HL_NAME(hl_g4_set_texture_array)(kinc_g4_texture_unit_t *unit, hl_g4_texture_array *array) {
     kinc_g4_set_texture_array(*unit, &array->t);
 }
-HL_PRIM int HL_NAME(hl_g4_antialiasing_samples)() {
+HL_PRIM int HL_NAME(hl_g4_antialiasing_samples)(void) {
     return kinc_g4_antialiasing_samples();
 }
 HL_PRIM void HL_NAME(hl_g4_set_antialiasing_samples)(int samples) {

@@ -171,6 +171,7 @@ MAKE_CALLBACK(
         }
     },
     _FUN(_VOID, _NO_ARG))
+#undef MAKE_CALLBACK
 
 void hl_callbacks_init() {
 #define _INIT(name)          \

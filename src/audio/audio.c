@@ -84,7 +84,7 @@ HL_PRIM void HL_NAME(hl_a2_set_callback)(vclosure *cb) {
         kinc_a2_set_callback(NULL);
     }
 }
-HL_PRIM int HL_NAME(a2_get_samples_per_second)() {
+HL_PRIM int HL_NAME(a2_get_samples_per_second)(void) {
     return kinc_a2_samples_per_second;
 }
 HL_PRIM int HL_NAME(a2_set_samples_per_second)(int v) {

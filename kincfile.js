@@ -3,7 +3,7 @@ const process = require("process");
 let project = new Project("KincHL");
 project.setDebugDir("");
 project.addDefine("KORE_DEBUGDIR=\"\"");
-project.addFile("src/**");
+project.addFile("src/kinchl.c");
 project.addFile("tests/**"); // shaders
 project.addIncludeDir("src/");
 project.addExclude("src/g5/**");

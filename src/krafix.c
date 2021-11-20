@@ -1,6 +1,6 @@
+#ifdef INCLUDE_KRAFIX
 #include "kinchl.h"
 
-#ifdef INCLUDE_KRAFIX
 extern void krafix_compile(const char *source, char *output, int *length, const char *targetlang, const char *system, const char *shadertype);
 
 HL_PRIM void HL_NAME(krafix_compile)(vbyte *source, vbyte *output, int *length, vbyte *targetlang, vbyte *system, vbyte *shadertype) {

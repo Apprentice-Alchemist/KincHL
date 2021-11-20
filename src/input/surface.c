@@ -27,6 +27,7 @@
 MAKE_CB(touch_start)
 MAKE_CB(move)
 MAKE_CB(touch_end)
+#undef MAKE_CB
 
 void hl_surface_init() {
     hl_add_root(&surface_touch_start_cb);

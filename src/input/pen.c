@@ -29,6 +29,7 @@
 MAKE_CB(press)
 MAKE_CB(move)
 MAKE_CB(release)
+#undef MAKE_CB
 
 void hl_pen_init() {
     hl_add_root(&pen_press_cb);
