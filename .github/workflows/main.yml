@@ -64,7 +64,7 @@ jobs:
     - name: Build KincHL
       run: |
         cd KincHL
-        haxe --run Build -g ${{matrix.graphics}} --krafix
+        haxe --run Build -g ${{matrix.graphics}}
       
     - name: Upload Artifact
       uses: 'actions/upload-artifact@v2'

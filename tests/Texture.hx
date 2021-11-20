@@ -33,8 +33,8 @@ class Texture {
 		texture.initFromImage(img);
 		img = null;
 
-		var fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/texture.frag"), FragmentShader);
-		var vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/texture.vert"), VertexShader);
+		var fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("texture.frag"), FragmentShader);
+		var vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("texture.vert"), VertexShader);
 
 		structure = new kinc.g4.VertexStructure();
 		structure.add("pos", Float3);

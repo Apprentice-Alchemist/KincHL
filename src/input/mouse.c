@@ -2,7 +2,7 @@
 #include <kinc/input/mouse.h>
 
 #define MAKE_CALLBACK(cb_name)                                            \
-    HL_PRIM void HL_NAME(mouse_set_##cb_name##_callback)(vclosure * cb) { \
+    HL_PRIM void HL_NAME(hl_mouse_set_##cb_name##_callback)(vclosure * cb) { \
         mouse_##cb_name##_cb = cb;                                        \
     }
 
@@ -117,7 +117,7 @@ static void internal_mouse_leave_window_cb(int window) {
 void hl_mouse_init() {
 #define _INIT(name)                  \
     hl_add_root(&mouse_##name##_cb); \
-    kinc_mouse_##name##_callback = internal_mouse_##name##_cb;
+    kinc_mouse_set_##name##_callback(internal_mouse_##name##_cb);
     _INIT(press)
     _INIT(release)
     _INIT(move)
@@ -142,9 +142,9 @@ DEFINE_PRIM(_VOID, mouse_show, _NO_ARG)
 DEFINE_PRIM(_VOID, mouse_hide, _NO_ARG)
 DEFINE_PRIM(_VOID, mouse_set_position, _I32 _I32 _I32)
 DEFINE_PRIM(_VOID, mouse_get_position, _I32 _REF(_I32) _REF(_I32))
-DEFINE_PRIM(_VOID, mouse_set_press_callback, _FUN(_VOID, _I32 _I32 _I32 _I32))
-DEFINE_PRIM(_VOID, mouse_set_release_callback, _FUN(_VOID, _I32 _I32 _I32 _I32))
-DEFINE_PRIM(_VOID, mouse_set_move_callback, _FUN(_VOID, _I32 _I32 _I32 _I32 _I32))
-DEFINE_PRIM(_VOID, mouse_set_scroll_callback, _FUN(_VOID, _I32 _I32))
-DEFINE_PRIM(_VOID, mouse_set_enter_window_callback, _FUN(_VOID, _I32))
-DEFINE_PRIM(_VOID, mouse_set_leave_window_callback, _FUN(_VOID, _I32))
+DEFINE_PRIM(_VOID, hl_mouse_set_press_callback, _FUN(_VOID, _I32 _I32 _I32 _I32))
+DEFINE_PRIM(_VOID, hl_mouse_set_release_callback, _FUN(_VOID, _I32 _I32 _I32 _I32))
+DEFINE_PRIM(_VOID, hl_mouse_set_move_callback, _FUN(_VOID, _I32 _I32 _I32 _I32 _I32))
+DEFINE_PRIM(_VOID, hl_mouse_set_scroll_callback, _FUN(_VOID, _I32 _I32))
+DEFINE_PRIM(_VOID, hl_mouse_set_enter_window_callback, _FUN(_VOID, _I32))
+DEFINE_PRIM(_VOID, hl_mouse_set_leave_window_callback, _FUN(_VOID, _I32))

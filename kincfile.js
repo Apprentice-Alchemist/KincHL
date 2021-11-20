@@ -9,7 +9,7 @@ project.addIncludeDir("src/");
 project.addExclude("src/g5/**");
 
 if(process.env["INCLUDE_KRAFIX"]) {
-    project.addProject("krafix");
+    project.addProject("../krafix");
     project.addDefine("INCLUDE_KRAFIX");
 }
 

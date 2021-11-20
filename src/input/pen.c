@@ -22,10 +22,10 @@
             }                                                                        \
         }                                                                            \
     }                                                                                \
-    HL_PRIM void HL_NAME(pen_set_##name##_callback)(vclosure * cb) {                 \
+    HL_PRIM void HL_NAME(hl_pen_set_##name##_callback)(vclosure * cb) {                 \
         pen_##name##_cb = cb;                                                        \
     }                                                                                \
-    DEFINE_PRIM(_VOID, pen_set_##name##_callback, _FUN(_VOID, _I32 _I32 _I32 _F32))
+    DEFINE_PRIM(_VOID, hl_pen_set_##name##_callback, _FUN(_VOID, _I32 _I32 _I32 _F32))
 MAKE_CB(press)
 MAKE_CB(move)
 MAKE_CB(release)
@@ -34,7 +34,7 @@ void hl_pen_init() {
     hl_add_root(&pen_press_cb);
     hl_add_root(&pen_move_cb);
     hl_add_root(&pen_release_cb);
-    kinc_pen_press_callback = internal_pen_press_cb;
-    kinc_pen_move_callback = internal_pen_move_cb;
-    kinc_pen_release_callback = internal_pen_release_cb;
+    kinc_pen_set_press_callback(internal_pen_press_cb);
+    kinc_pen_set_move_callback(internal_pen_move_cb);
+    kinc_pen_set_release_callback(internal_pen_release_cb);
 }

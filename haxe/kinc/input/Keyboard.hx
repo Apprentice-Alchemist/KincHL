@@ -5,8 +5,11 @@ extern class Keyboard {
 	static function show():Void;
 	static function hide():Void;
 	static function active():Bool;
+	@:hlNative("kinc", "hl_keyboard_set_key_down_callback")
 	static function setKeyDownCallback(cb:KeyCode->Void):Void;
+	@:hlNative("kinc", "hl_keyboard_set_key_up_callback")
 	static function setKeyUpCallback(cb:KeyCode->Void):Void;
+	@:hlNative("kinc", "hl_keyboard_set_key_press_callback")
 	static function setKeyPressCallback(cb:Int->Void):Void;
 }
 

@@ -55,26 +55,26 @@ static void internal_key_press_cb(unsigned c) {
 }
 
 void hl_keyboard_init() {
-    kinc_keyboard_key_down_callback = internal_key_down_cb;
-    kinc_keyboard_key_up_callback = internal_key_up_cb;
-    kinc_keyboard_key_press_callback = internal_key_press_cb;
+    kinc_keyboard_set_key_down_callback(internal_key_down_cb);
+    kinc_keyboard_set_key_up_callback(internal_key_up_cb);
+    kinc_keyboard_set_key_press_callback(internal_key_press_cb);
     hl_add_root(&key_down_cb);
     hl_add_root(&key_up_cb);
     hl_add_root(&key_press_cb);
 }
 
-HL_PRIM void HL_NAME(keyboard_set_key_down_callback)(vclosure *cb) {
+HL_PRIM void HL_NAME(hl_keyboard_set_key_down_callback)(vclosure *cb) {
     key_down_cb = cb;
 }
 
-HL_PRIM void HL_NAME(keyboard_set_key_up_callback)(vclosure *cb) {
+HL_PRIM void HL_NAME(hl_keyboard_set_key_up_callback)(vclosure *cb) {
     key_up_cb = cb;
 }
 
-HL_PRIM void HL_NAME(keyboard_set_key_press_callback)(vclosure *cb) {
+HL_PRIM void HL_NAME(hl_keyboard_set_key_press_callback)(vclosure *cb) {
     key_press_cb = cb;
 }
 
-DEFINE_PRIM(_VOID, keyboard_set_key_down_callback, _FUN(_VOID, _I32))
-DEFINE_PRIM(_VOID, keyboard_set_key_up_callback, _FUN(_VOID, _I32))
-DEFINE_PRIM(_VOID, keyboard_set_key_press_callback, _FUN(_VOID, _I32))
+DEFINE_PRIM(_VOID, hl_keyboard_set_key_down_callback, _FUN(_VOID, _I32))
+DEFINE_PRIM(_VOID, hl_keyboard_set_key_up_callback, _FUN(_VOID, _I32))
+DEFINE_PRIM(_VOID, hl_keyboard_set_key_press_callback, _FUN(_VOID, _I32))

@@ -44,17 +44,17 @@ static void internal_rotation_cb(float x, float y, float z) {
 void hl_sensor_init() {
     hl_add_root(&acceleration_cb);
     hl_add_root(&rotation_cb);
-    kinc_acceleration_callback = internal_acceleration_cb;
-    kinc_rotation_callback = internal_rotation_cb;
+    kinc_acceleration_set_callback(internal_acceleration_cb);
+    kinc_rotation_set_callback(internal_rotation_cb);
 }
 
-HL_PRIM void HL_NAME(set_acceleration_callback)(vclosure *cb) {
+HL_PRIM void HL_NAME(hl_set_acceleration_callback)(vclosure *cb) {
     acceleration_cb = cb;
 }
 
-HL_PRIM void HL_NAME(set_rotation_callback)(vclosure *cb) {
+HL_PRIM void HL_NAME(hl_set_rotation_callback)(vclosure *cb) {
     rotation_cb = cb;
 }
 
-DEFINE_PRIM(_VOID, set_acceleration_callback, _FUN(_VOID, _F32 _F32 _F32))
-DEFINE_PRIM(_VOID, set_rotation_callback, _FUN(_VOID, _F32 _F32 _F32))
+DEFINE_PRIM(_VOID, hl_set_acceleration_callback, _FUN(_VOID, _F32 _F32 _F32))
+DEFINE_PRIM(_VOID, hl_set_rotation_callback, _FUN(_VOID, _F32 _F32 _F32))

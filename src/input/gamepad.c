@@ -43,8 +43,8 @@ static void internal_gamepad_button_cb(int gamepad, int button, float value) {
 }
 
 void hl_gamepad_init() {
-    kinc_gamepad_axis_callback = internal_gamepad_axis_cb;
-    kinc_gamepad_button_callback = internal_gamepad_button_cb;
+    kinc_gamepad_set_axis_callback(internal_gamepad_axis_cb);
+    kinc_gamepad_set_button_callback(internal_gamepad_button_cb);
     hl_add_root(&gamepad_axis_cb);
     hl_add_root(&gamepad_button_cb);
 }

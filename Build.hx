@@ -12,8 +12,7 @@ inline function assert(b:Bool, err = "assert")
 
 function main() {
 	final gw = Sys.getEnv("GITHUB_WORKSPACE");
-	final args = Sys.args();
-	final g_api = args[0];
+
 	final sys_name = Sys.systemName().toLowerCase();
 	if (sys_name == "windows") {
 		Sys.putEnv("HASHLINK_SRC", Path.normalize(gw + "/hashlink/src"));
@@ -22,26 +21,33 @@ function main() {
 	var debug = Sys.getEnv("DEBUG") != null;
 	var krafix = Sys.getEnv("INCLUDE_KRAFIX") != null;
 	var g_api = Sys.getEnv("KINCHL_GRAPHICS");
-	for (arg in args) {
-		if (arg == "-g") {
-			g_api = args.shift();
+	{
+		final args = Sys.args();
+		while (true) {
+			switch args.shift() {
+				case null:
+					break;
+				case var arg:
+					if (arg == "-g") {
+						g_api = args.shift();
+					}
+					if (arg == "--debug")
+						debug = true;
+					if (arg == "--krafix")
+						krafix = true;
+			}
 		}
-		if (arg == "--debug")
-			debug = true;
-		if (arg == "--krafix")
-			krafix = true;
 	}
 
 	if (krafix) {
 		Sys.putEnv("INCLUDE_KRAFIX", "1");
 	}
 	sys.io.File.saveContent("krafix/kincfile.js", sys.io.File.getContent("krafix/kincfile.js").replace("let library = false;", "let library = true;"));
-	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders","-k","../Kinc"];
+	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders", "-k", "../Kinc"];
 	if (g_api != null) {
-		args.push("-g");
-		args.push(g_api);
+		n_args.push("-g");
+		n_args.push(g_api);
 	}
-
 	if (debug)
 		n_args.push("--debug");
 	if (Sys.command("node", n_args) != 0)
