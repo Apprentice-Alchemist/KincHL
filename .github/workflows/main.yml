@@ -57,10 +57,14 @@ jobs:
         sudo make install
     - name: Build Hashlink
       if: matrix.os == 'windows-latest'
+      shell: cmd
       run: |
         cd hashlink
-        MSBuild libhl.vcxproj /nologo /clp:ErrorsOnly "-p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
-        MSBuild hl.vcxproj /nologo /clp:ErrorsOnly "-p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
+        MSBuild libhl.vcxproj /nologo /clp:ErrorsOnly "-p:Configuration=ReleaseVS2017;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
+        MSBuild hl.vcxproj /nologo /clp:ErrorsOnly "-p:Configuration=ReleaseVS2017;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
+        echo HASHLINK_SRC=%GITHUB_WORKSPACE%/hashlink/src >> %GITHUB_ENV%
+        echo HASHLINK_BIN=%GITHUB_WORKSPACE%/hashlink/ReleaseVS2017 >> %GITHUB_ENV%
+
     - name: Build KincHL
       run: |
         cd KincHL

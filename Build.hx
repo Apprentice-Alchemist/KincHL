@@ -14,10 +14,6 @@ function main() {
 	final gw = Sys.getEnv("GITHUB_WORKSPACE");
 
 	final sys_name = Sys.systemName().toLowerCase();
-	if (sys_name == "windows") {
-		Sys.putEnv("HASHLINK_SRC", Path.normalize(gw + "/hashlink/src"));
-		Sys.putEnv("HASHLINK_BIN", Path.normalize(gw + "/hashlink/x64/Release"));
-	}
 	var debug = Sys.getEnv("DEBUG") != null;
 	var krafix = Sys.getEnv("INCLUDE_KRAFIX") != null;
 	var g_api = Sys.getEnv("KINCHL_GRAPHICS");
@@ -44,6 +40,10 @@ function main() {
 	}
 	sys.io.File.saveContent("krafix/kincfile.js", sys.io.File.getContent("krafix/kincfile.js").replace("let library = false;", "let library = true;"));
 	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders", "-k", "../Kinc"];
+	if(sys_name == "windows") {
+		n_args.push("-v");
+		n_args.push("vs2019");
+	}
 	if (g_api != null) {
 		n_args.push("-g");
 		n_args.push(g_api);
