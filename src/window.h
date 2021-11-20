@@ -1,5 +1,5 @@
-#ifndef _WINDOW_H_
-#define _WINDOW_H_
+#ifndef _KINCHL_WINDOW_H_
+#define _KINCHL_WINDOW_H_
 #include <kinc/window.h>
 #include <kinchl.h>
 

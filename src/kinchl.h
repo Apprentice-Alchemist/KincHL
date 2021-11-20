@@ -1,4 +1,5 @@
-#ifndef HL_NAME
+#ifndef _KINCHL_H_
+#define _KINCHL_H_
 #define HL_NAME(n) kinc_##n
 
 #include <stdbool.h>
