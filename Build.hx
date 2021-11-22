@@ -50,7 +50,7 @@ function main() {
 		Sys.putEnv("INCLUDE_KRAFIX", "1");
 	}
 	sys.io.File.saveContent("krafix/kincfile.js", sys.io.File.getContent("krafix/kincfile.js").replace("let library = false;", "let library = true;"));
-	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders", "-k", "../Kinc"];
+	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders"];
 	if (sys_name == "windows") {
 		n_args.push("-v");
 		n_args.push("vs2019");
