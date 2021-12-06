@@ -4,12 +4,6 @@ import haxe.io.Path;
 
 using StringTools;
 
-inline function assert(b:Bool, err = "assert")
-	if (!b) {
-		Sys.println(err);
-		Sys.exit(1);
-	}
-
 function main() {
 	final gw = Sys.getEnv("GITHUB_WORKSPACE");
 	var num_cpus:Null<Int> = null;
@@ -49,6 +43,11 @@ function main() {
 	if (krafix) {
 		Sys.putEnv("INCLUDE_KRAFIX", "1");
 	}
+
+	if (debug) {
+		Sys.putEnv("KINCHL_VALIDATE_VULKAN", "1");
+	}
+
 	sys.io.File.saveContent("krafix/kincfile.js", sys.io.File.getContent("krafix/kincfile.js").replace("let library = false;", "let library = true;"));
 	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders"];
 	if (sys_name == "windows") {

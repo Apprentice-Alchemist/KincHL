@@ -1,6 +1,5 @@
 -cp haxe
 -cp tests
 --debug
--m AudioWave
-kinc
+-m Shader
 -hl out.hl

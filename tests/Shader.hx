@@ -43,8 +43,7 @@ class Shader {
 		vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("shader.vert"), VertexShader);
 
 		structure = new VertexStructure();
-		structure.add("pos", Float3);
-		// structure.add("uv", Float2);
+		structure.add("pos", KINC_G4_VERTEX_DATA_F32_3X);
 
 		pipeline = new Pipeline();
 		pipeline.vertex_shader = vertex_shader;
@@ -61,11 +60,11 @@ class Shader {
 			vertex_buffer.unlock(3);
 		}
 
-		index_buffer = new IndexBuffer(3, IbFormat16BIT);
+		index_buffer = new IndexBuffer(3, IbFormat32BIT);
 		{
 			var idx = index_buffer.lock();
-			for (i in 0...indices.length)
-				idx[0 + i] = indices[i];
+			for (i in 0...3)
+				idx[i] = indices[i];
 			index_buffer.unlock();
 		}
 		kinc.System.start();

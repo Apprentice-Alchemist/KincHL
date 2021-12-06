@@ -7,8 +7,11 @@ project.addFile("src/kinchl.c");
 project.addFile("tests/**"); // shaders
 project.addIncludeDir("src/");
 project.addExclude("src/g5/**");
+if (process.env["KINCHL_VALIDATE_VULKAN"]) {
+    project.addDefine("VALIDATE");
+}
 
-if(process.env["INCLUDE_KRAFIX"]) {
+if (process.env["INCLUDE_KRAFIX"]) {
     project.addProject("../krafix");
     project.addDefine("INCLUDE_KRAFIX");
 }
