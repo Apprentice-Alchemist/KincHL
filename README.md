@@ -22,7 +22,6 @@ On windows the kincfile expects an environment variable called HASHLINK to point
 ```
 
 ```bash
-# windows
 $ cd path/to/kinchl
 $ haxe --run Build
 
