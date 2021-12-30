@@ -23,13 +23,9 @@ On windows the kincfile expects an environment variable called HASHLINK to point
 
 ```bash
 # windows
-$ cd path/to/this/repo
-$ ./build.bat
-$ copy build/bin/ %HASHLINK%
+$ cd path/to/kinchl
+$ haxe --run Build
 
-# linux or macos
-$ node Kinc/make --dynlib --noshaders --compile
-$ cp Deployment/KincHL.so /usr/bin/kinc.hdll # Linux
-$ cp Deployment/KincHL.dylib /usr/bin/kinc.hdll # Macos
-# And hope it all works out fine
+$ copy build/bin/kinc.hdll /path/to/hashlink/ # Windows
+$ sudo cp build/bin/kinc.hdll /usr/local/lib/ # Linux/Mac
 ```
