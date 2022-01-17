@@ -3,10 +3,6 @@ package kinc.g4;
 import kinc.math.Matrix4;
 import kinc.math.Matrix3;
 
-// #define KINC_G4_CLEAR_COLOR 1
-// #define KINC_G4_CLEAR_DEPTH 2
-// #define KINC_G4_CLEAR_STENCIL 4
-
 enum abstract ClearMode(Int) {
 	var Color = 1;
 	var Depth = 2;
@@ -46,12 +42,6 @@ extern class Graphics4 {
 	static function setTexture(unit:TextureUnit, tex:Texture):Void;
 	static function setImageTexture(unit:TextureUnit, tex:Texture):Void;
 
-	// static function initOcclusionQuery(q:hl.Ref<Int>):Bool;
-	// static function deleteOcclusionQuery(q:Int):Void;
-	// static function startOcclusionQuery(q:Int):Void;
-	// static function endOcclusionQuery(q:Int):Void;
-	// static function areQueryResultsAvailable(q:Int):Bool;
-	// static function getQueryResults(q:Int, pixelCount:hl.Ref<Int>):Void;
 	static function setTextureArray(unit:TextureUnit, array:TextureArray):Void;
 	static function antialiasingSamples():Int;
 	static function setAntialiasingSamples(samles:Int):Void;

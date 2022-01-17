@@ -1,5 +1,5 @@
-#ifndef _KINCHL_H_
-#define _KINCHL_H_
+#pragma once
+
 #define HL_NAME(n) kinc_##n
 
 #include <stdbool.h>
@@ -95,5 +95,3 @@ void handle_exception(const char *where, vdynamic *exc);
     DEFINE_PRIM(_REF(hl_obj), hl_##name##_array_alloc, _I32)            \
     DEFINE_PRIM(hl_obj, hl_##name##_array_get, _REF(hl_obj) _I32)       \
     DEFINE_PRIM(hl_obj, hl_##name##_array_set, _REF(hl_obj) _I32 hl_obj)
-
-#endif

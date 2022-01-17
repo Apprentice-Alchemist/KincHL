@@ -60,9 +60,11 @@ HL_PRIM void HL_NAME(hl_gamepad_set_button_callback)(vclosure *cb) {
 HL_PRIM vbyte *HL_NAME(hl_gamepad_vendor)(int gamepad) {
     return (vbyte *)kinc_gamepad_vendor(gamepad);
 }
+
 HL_PRIM vbyte *HL_NAME(hl_gamepad_product_name)(int gamepad) {
     return (vbyte *)kinc_gamepad_product_name(gamepad);
 }
+
 HL_PRIM bool HL_NAME(hl_gamepad_connected)(int gamepad) {
     return kinc_gamepad_connected(gamepad);
 }

@@ -22,10 +22,11 @@
             }                                                                        \
         }                                                                            \
     }                                                                                \
-    HL_PRIM void HL_NAME(hl_pen_set_##name##_callback)(vclosure * cb) {                 \
+    HL_PRIM void HL_NAME(hl_pen_set_##name##_callback)(vclosure * cb) {              \
         pen_##name##_cb = cb;                                                        \
     }                                                                                \
     DEFINE_PRIM(_VOID, hl_pen_set_##name##_callback, _FUN(_VOID, _I32 _I32 _I32 _F32))
+
 MAKE_CB(press)
 MAKE_CB(move)
 MAKE_CB(release)

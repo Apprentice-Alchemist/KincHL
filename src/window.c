@@ -38,48 +38,63 @@ HL_PRIM int HL_NAME(hl_window_create)(win_opts_hl *win, fb_opts_hl *fb) {
 HL_PRIM void HL_NAME(hl_window_destroy)(int index) {
     kinc_window_destroy(index);
 }
+
 HL_PRIM int HL_NAME(hl_count_windows)(void) {
     return kinc_count_windows();
 }
+
 HL_PRIM void HL_NAME(hl_window_resize)(int window_index, int width, int height) {
     kinc_window_resize(window_index, width, height);
 }
+
 HL_PRIM void HL_NAME(hl_window_move)(int window_index, int x, int y) {
     kinc_window_move(window_index, x, y);
 }
+
 HL_PRIM void HL_NAME(hl_window_change_mode)(int window_index, kinc_window_mode_t mode) {
     kinc_window_change_mode(window_index, mode);
 }
+
 HL_PRIM void HL_NAME(hl_window_change_features)(int window_index, int features) {
     kinc_window_change_features(window_index, features);
 }
+
 HL_PRIM void HL_NAME(hl_window_change_framebuffer)(int window_index, fb_opts_hl *frame) {
     kinc_window_change_framebuffer(window_index, convert_fb_opts_hl(frame));
 }
+
 HL_PRIM int HL_NAME(hl_window_x)(int window_index) {
     return kinc_window_x(window_index);
 }
+
 HL_PRIM int HL_NAME(hl_window_y)(int window_index) {
     return kinc_window_y(window_index);
 }
+
 HL_PRIM int HL_NAME(hl_window_width)(int window_index) {
     return kinc_window_width(window_index);
 }
+
 HL_PRIM int HL_NAME(hl_window_height)(int window_index) {
     return kinc_window_height(window_index);
 }
+
 HL_PRIM int HL_NAME(hl_window_display)(int window_index) {
     return kinc_window_display(window_index);
 }
+
 HL_PRIM kinc_window_mode_t HL_NAME(hl_window_get_mode)(int window_index) {
     return kinc_window_get_mode(window_index);
 }
+
 HL_PRIM void HL_NAME(hl_window_show)(int window_index) {
     kinc_window_show(window_index);
 }
+
 HL_PRIM void HL_NAME(hl_window_hide)(int window_index) {
     kinc_window_hide(window_index);
 }
+
 HL_PRIM void HL_NAME(hl_window_set_title)(int window_index, vstring *title) {
     kinc_window_set_title(window_index, hl_to_utf8(title->bytes));
 }

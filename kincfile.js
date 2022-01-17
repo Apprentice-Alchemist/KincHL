@@ -7,12 +7,13 @@ project.addFile("src/kinchl.c");
 project.addFile("tests/**"); // shaders
 project.addIncludeDir("src/");
 project.addExclude("src/g5/**");
+
 if (process.env["KINCHL_VALIDATE_VULKAN"]) {
     project.addDefine("VALIDATE");
 }
 
 if (process.env["INCLUDE_KRAFIX"]) {
-    project.addProject("../krafix");
+    project.addProject(process.env["KRAFIX_PATH"] ?? "krafix");
     project.addDefine("INCLUDE_KRAFIX");
 }
 
@@ -29,16 +30,17 @@ switch (platform) {
         }
         break;
     case Platform.Windows:
-        let hl_inc = "";
-        if (process.env["HASHLINK_SRC"]) hl_inc = process.env["HASHLINK_SRC"];
-        else if (process.env["HASHLINK"]) hl_inc = process.env["HASHLINK"] + "/include";
-        else if (process.env["HASHLINKPATH"]) hl_inc = process.env["HASHLINKPATH"] + "/include";
-        else throw "could not find hashlink include path";
-        let hl_bin = "";
-        if (process.env["HASHLINK_BIN"]) hl_bin = process.env["HASHLINK_BIN"];
-        else if (process.env["HASHLINK"]) hl_bin = process.env["HASHLINK"];
-        else if (process.env["HASHLINKPATH"]) hl_bin = process.env["HASHLINKPATH"];
-        else throw "could not find hashlink binaries";
+        let hl_inc = null;
+        console.log(process.env);
+        if (process.env["HASHLINK_SRC"]) {
+            hl_inc = process.env["HASHLINK_SRC"]
+        } else if (process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"]) {
+            hl_inc = (process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"]) + "/include";
+        }
+        if (hl_inc == null) throw "could not find hashlink include path";
+
+        let hl_bin = process.env["HASHLINK_BIN"] ?? process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"] ?? null;
+        if (hl_bin == null) throw "could not find hashlink binaries";
         project.addLib(hl_bin + "/libhl");
         project.addIncludeDir(hl_inc);
         break;

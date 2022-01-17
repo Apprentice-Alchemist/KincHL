@@ -62,13 +62,14 @@ jobs:
         cd hashlink
         MSBuild libhl.vcxproj /nologo "-p:Configuration=ReleaseVS2017;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
         MSBuild hl.vcxproj /nologo "-p:Configuration=ReleaseVS2017;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
+        echo "${{ github.workspace }}\hashlink\x64\ReleaseVS2017" >> $GITHUB_PATH
     - name: Build KincHL
       env:
         HASHLINK_SRC: ${{ github.workspace }}\hashlink\src
         HASHLINK_BIN: ${{ github.workspace }}\hashlink\x64\ReleaseVS2017
       run: |
         cd KincHL
-        haxe --run Build -g ${{matrix.graphics}}
+        haxe --run Build -g ${{matrix.graphics}} --krafix
       
     - name: Upload Artifact
       uses: 'actions/upload-artifact@v2'

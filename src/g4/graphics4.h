@@ -1,5 +1,5 @@
-#ifndef _GRAPHICS4_H_
-#define _GRAPHICS4_H_
+#pragma once
+
 #include "kinchl.h"
 #include <kinc/graphics4/graphics.h>
 #include <kinc/graphics4/indexbuffer.h>
@@ -30,4 +30,3 @@ DEFINE_OBJ_EX(g4_texture_array, kinc_g4_texture_array_t)
 #define _TEXTURE_ARRAY _ABSTRACT(g4_texture_array)
 #define _LOC _ABSTRACT(g4_constant_location)
 #define _TUNIT _ABSTRACT(g4_texture_unit)
-#endif

@@ -1,5 +1,5 @@
-#ifndef _KINCHL_WINDOW_H_
-#define _KINCHL_WINDOW_H_
+#pragma once
+
 #include <kinc/window.h>
 #include <kinchl.h>
 
@@ -31,4 +31,3 @@ typedef struct {
 
 kinc_window_options_t *convert_win_opts_hl(win_opts_hl *o);
 kinc_framebuffer_options_t *convert_fb_opts_hl(fb_opts_hl *o);
-#endif

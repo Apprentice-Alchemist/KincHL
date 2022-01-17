@@ -48,7 +48,8 @@ function main() {
 		Sys.putEnv("KINCHL_VALIDATE_VULKAN", "1");
 	}
 
-	sys.io.File.saveContent("krafix/kincfile.js", sys.io.File.getContent("krafix/kincfile.js").replace("let library = false;", "let library = true;"));
+	Sys.command("git", ["-C", "krafix", "apply", '../patches/krafix.diff']);
+
 	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders"];
 	if (sys_name == "windows") {
 		n_args.push("-v");
@@ -62,7 +63,7 @@ function main() {
 		n_args.push("--debug");
 	if (Sys.command("node", n_args) != 0)
 		Sys.exit(1);
-	sys.io.File.saveContent("krafix/kincfile.js", sys.io.File.getContent("krafix/kincfile.js").replace("let library = true;", "let library = false;"));
+
 	Sys.setCwd("build");
 	FileSystem.createDirectory("bin");
 	if (sys_name == "mac") {

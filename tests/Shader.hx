@@ -60,7 +60,7 @@ class Shader {
 			vertex_buffer.unlock(3);
 		}
 
-		index_buffer = new IndexBuffer(3, IbFormat32BIT);
+		index_buffer = new IndexBuffer(3, IbFormat16BIT);
 		{
 			var idx = index_buffer.lock();
 			for (i in 0...3)

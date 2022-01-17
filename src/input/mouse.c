@@ -32,6 +32,7 @@ static void internal_mouse_press_cb(int window, int button, int x, int y) {
         }
     }
 }
+
 static void internal_mouse_release_cb(int window, int button, int x, int y) {
     if (mouse_release_cb != NULL) {
         vdynamic args[4];
@@ -51,6 +52,7 @@ static void internal_mouse_release_cb(int window, int button, int x, int y) {
         }
     }
 }
+
 static void internal_mouse_move_cb(int window, int x, int y, int movement_x, int movement_y) {
     if (mouse_move_cb != NULL) {
         vdynamic args[5];
@@ -72,6 +74,7 @@ static void internal_mouse_move_cb(int window, int x, int y, int movement_x, int
         }
     }
 }
+
 static void internal_mouse_scroll_cb(int window, int delta) {
     if (mouse_scroll_cb != NULL) {
         vdynamic args[2];
@@ -87,6 +90,7 @@ static void internal_mouse_scroll_cb(int window, int delta) {
         }
     }
 }
+
 static void internal_mouse_enter_window_cb(int window) {
     if (mouse_enter_window_cb != NULL) {
         vdynamic args[2];
@@ -100,6 +104,7 @@ static void internal_mouse_enter_window_cb(int window) {
         }
     }
 }
+
 static void internal_mouse_leave_window_cb(int window) {
     if (mouse_leave_window_cb != NULL) {
         vdynamic args[2];
