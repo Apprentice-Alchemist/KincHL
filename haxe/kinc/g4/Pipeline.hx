@@ -25,10 +25,12 @@ class Pipeline {
 	public var stencil_reference_value:Int;
 	public var stencil_read_mask:Int;
 	public var stencil_write_mask:Int;
-	public var blend_source:BlendingOperation;
-	public var blend_destination:BlendingOperation;
-	public var alpha_blend_source:BlendingOperation;
-	public var alpha_blend_destination:BlendingOperation;
+	public var blend_source:BlendingFactor;
+	public var blend_destination:BlendingFactor;
+	public var blend_operation:BlendingOperation;
+	public var alpha_blend_source:BlendingFactor;
+	public var alpha_blend_destination:BlendingFactor;
+	public var alpha_blend_operation:BlendingOperation;
 
 	public var color_write_mask_red(default, null):NativeArray<Bool>;
 	public var color_write_mask_green(default, null):NativeArray<Bool>;
@@ -63,8 +65,10 @@ class Pipeline {
 
 		this.blend_source = ONE;
 		this.blend_destination = ZERO;
+		this.blend_operation = ADD;
 		this.alpha_blend_source = ONE;
 		this.alpha_blend_destination = ZERO;
+		this.alpha_blend_operation = ADD;
 
 		@:bypassAccessor this.color_write_mask_red = new hl.NativeArray(8);
 		for (i in 0...8)
@@ -133,7 +137,7 @@ class Pipeline {
 	@:hlNative("kinc", "hl_g4_pipeline_destroy") @:noCompletion static function destroyPipeline(state:hl.Abstract<"g4_pipeline">):Void {}
 }
 
-enum abstract BlendingOperation(Int) from Int to Int {
+enum abstract BlendingFactor(Int) from Int to Int {
 	var ONE;
 	var ZERO;
 	var SOURCE_ALPHA;
@@ -144,6 +148,14 @@ enum abstract BlendingOperation(Int) from Int to Int {
 	var DEST_COLOR;
 	var INV_SOURCE_COLOR;
 	var INV_DEST_COLOR;
+}
+
+enum abstract BlendingOperation(Int) {
+	var ADD;
+	var SUBSTRACT;
+	var REVERSE_SUBSTRACT;
+	var MIN;
+	var MAX;
 }
 
 enum abstract CompareMode(Int) from Int to Int {

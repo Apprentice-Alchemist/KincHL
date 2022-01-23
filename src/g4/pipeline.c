@@ -12,21 +12,23 @@ typedef struct {
     hl_g4_shader *geometry_shader;
     hl_g4_shader *tessellation_control_shader;
     hl_g4_shader *tessellation_evaluation_shader;
-    kinc_g4_cull_mode_t cull_mode;
+    int cull_mode;
     bool depth_write;
-    kinc_g4_compare_mode_t depth_mode;
-    kinc_g4_compare_mode_t stencil_mode;
-    kinc_g4_stencil_action_t stencil_both_pass;
-    kinc_g4_stencil_action_t stencil_depth_fail;
-    kinc_g4_stencil_action_t stencil_fail;
+    int depth_mode;
+    int stencil_mode;
+    int stencil_both_pass;
+    int stencil_depth_fail;
+    int stencil_fail;
     int stencil_reference_value;
     int stencil_read_mask;
     int stencil_write_mask;
-    kinc_g4_blending_operation_t blend_source;
-    kinc_g4_blending_operation_t blend_destination;
-    // BlendingOperation blendOperation;
-    kinc_g4_blending_operation_t alpha_blend_source;
-    kinc_g4_blending_operation_t alpha_blend_destination;
+
+    int blend_source;
+    int blend_destination;
+    int blend_operation;
+    int alpha_blend_source;
+    int alpha_blend_destination;
+    int alpha_blend_operation;
     // BlendingOperation alphaBlendOperation;
     varray *color_write_mask_red;
     varray *color_write_mask_green;
@@ -40,8 +42,8 @@ typedef struct {
 } hl_g4_pipeline_haxe;
 
 HL_PRIM void HL_NAME(hl_g4_pipeline_compile)(hl_g4_pipeline_haxe *state) {
-#define GET(n) n == NULL ? NULL : &(n->t);
-#define COPY(x) pipe->x = state->x;
+#define GET(n) n == NULL ? NULL : &(n->t)
+#define COPY(x) pipe->x = state->x
     kinc_g4_pipeline_t *pipe = &(state->_handle->t);
     hl_g4_vertex_structure **arr = hl_aptr(state->input_layout, hl_g4_vertex_structure *);
     for (int i = 0; i < 16 && arr[i] != NULL; i++) {
@@ -65,8 +67,10 @@ HL_PRIM void HL_NAME(hl_g4_pipeline_compile)(hl_g4_pipeline_haxe *state) {
     COPY(stencil_write_mask);
     COPY(blend_source);
     COPY(blend_destination);
+    COPY(blend_operation);
     COPY(alpha_blend_source);
     COPY(alpha_blend_destination);
+    COPY(alpha_blend_operation);
     for (int i = 0; i < 8 && i < state->color_write_mask_red->size; i++) {
         pipe->color_write_mask_red[i] = hl_aptr(state->color_write_mask_red, bool)[i];
     }

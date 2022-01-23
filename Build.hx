@@ -4,6 +4,14 @@ import haxe.io.Path;
 
 using StringTools;
 
+function applyPatch(dir:String, patch:String) {
+	Sys.command("git", ["-C", dir, "apply", '../patches/$patch']);
+}
+
+function resetPatch(dir:String) {
+	Sys.command("git", ["-C", dir, "reset", "--hard", "--quiet"]);
+}
+
 function main() {
 	final gw = Sys.getEnv("GITHUB_WORKSPACE");
 	var num_cpus:Null<Int> = null;
@@ -17,7 +25,7 @@ function main() {
 			#end
 		}
 	}
-
+	final working_dir = Sys.getCwd();
 	final sys_name = Sys.systemName().toLowerCase();
 	var debug = Sys.getEnv("DEBUG") != null;
 	var krafix = Sys.getEnv("INCLUDE_KRAFIX") != null;
@@ -48,7 +56,7 @@ function main() {
 		Sys.putEnv("KINCHL_VALIDATE_VULKAN", "1");
 	}
 
-	Sys.command("git", ["-C", "krafix", "apply", '../patches/krafix.diff']);
+	applyPatch("krafix", "krafix.diff");
 
 	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders"];
 	if (sys_name == "windows") {
@@ -105,4 +113,6 @@ function main() {
 		File.copy("bin/kinc.hdll", Path.normalize(gw + "/" + "kinc.hdll"));
 		File.copy("bin/kinc.lib", Path.normalize(gw + "/" + "kinc.lib"));
 	} catch (_) {};
+	Sys.setCwd(working_dir);
+	resetPatch("krafix");
 }
