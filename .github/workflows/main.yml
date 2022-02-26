@@ -17,6 +17,8 @@ jobs:
             graphics: metal
           - os: windows-latest
             graphics: direct3d11
+          - os: ubuntu-latest
+            graphics: vulkan
     steps:
     - name: Install Haxe
       uses: krdlab/setup-haxe@master
@@ -32,7 +34,13 @@ jobs:
       with:
         repository: "HaxeFoundation/hashlink"
         path: "hashlink"
-
+      run: echo "hashlink-commit=$(git rev-parse HEAD)"" >> $GITHUB_ENV
+    - name: Cache hashlink
+      id: cache
+      uses: actions/cache@v2
+      with:
+        path:
+        key: ${{ runner.os }}-${{ env.hashlink-commit }}
     - name: Checkout KincHL
       uses: actions/checkout@v2
       with:
@@ -45,8 +53,7 @@ jobs:
       continue-on-error: true
     - name: Apt Install
       if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get install libasound2-dev libxinerama-dev libxrandr-dev libgl1-mesa-dev libxi-dev libxcursor-dev libudev-dev --yes --quiet
-
+      run: sudo apt-get install libasound2-dev libxinerama-dev libxrandr-dev libgl1-mesa-dev libxi-dev libxcursor-dev libudev-dev libwayland-dev wayland-protocols libxkbcommon-dev libvulkan-dev --yes --quiet
     - name: Build Hashlink
       if: matrix.os != 'windows-latest'
       run: |
