@@ -58,7 +58,7 @@ function main() {
 
 	applyPatch("krafix", "krafix.diff");
 
-	final n_args = ["Kinc/make.js", "--dynlib", "--noshaders"];
+	final n_args = ["--dynlib", "--noshaders"];
 	if (sys_name == "windows") {
 		n_args.push("-v");
 		n_args.push("vs2019");
@@ -69,7 +69,7 @@ function main() {
 	}
 	if (debug)
 		n_args.push("--debug");
-	if (Sys.command("node", n_args) != 0)
+	if (Sys.command(sys_name == "windows" ? "Kinc/make.bat" : "Kinc/make", n_args) != 0)
 		Sys.exit(1);
 
 	Sys.setCwd("build");
