@@ -34,19 +34,6 @@ jobs:
       with:
         repository: "HaxeFoundation/hashlink"
         path: "hashlink"
-    - run: |
-        cd hashlink
-        echo "hashlink-commit=$(git rev-parse HEAD)" >> $GITHUB_ENV
-    - name: Cache hashlink
-      id: cache
-      uses: actions/cache@v2
-      with:
-        path: |
-          ${{ github.workspace }}\hashlink\x64\ReleaseVS2017
-          ${{ github.workspace }}/hashlink/**.o
-          ${{ github.workspace }}/hashlink/hl
-          ${{ github.workspace }}/hashlink/libhl.so
-        key: ${{ runner.os }}-${{ env.hashlink-commit }}
     - name: Checkout KincHL
       uses: actions/checkout@v2
       with:
@@ -68,7 +55,7 @@ jobs:
       if: matrix.graphics == 'vulkan'
       run: sudo apt-get install vulkan-sdk
     - name: Build Hashlink
-      if: matrix.os != 'windows-latest' && steps.cache.outputs.cache-hit != 'true'
+      if: matrix.os != 'windows-latest'
       run: |
         cd hashlink
         make libhl
@@ -76,7 +63,7 @@ jobs:
         make ui
         sudo make install
     - name: Build Hashlink
-      if: matrix.os == 'windows-latest' && steps.cache.outputs.cache-hit != 'true'
+      if: matrix.os == 'windows-latest'
       shell: cmd
       run: |
         cd hashlink
