@@ -10,7 +10,7 @@ abstract IndexBuffer(hl.Abstract<"g4_index_buffer">) {
 
 	function init(count:Int, format:Int):Void;
 
-	public function lock():hl.BytesAccess<Int>;
+	public function lock():hl.Bytes;
 
 	public function unlock():Void;
 

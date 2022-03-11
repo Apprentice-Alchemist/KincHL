@@ -1,3 +1,4 @@
+import hl.UI16;
 import kinc.g4.TextureUnit;
 import kinc.g4.RenderTarget;
 import kinc.g4.Pipeline;
@@ -49,6 +50,7 @@ class Shader {
 		pipeline.vertex_shader = vertex_shader;
 		pipeline.fragment_shader = fragment_shader;
 		pipeline.input_layout[0] = structure;
+		pipeline.cull_mode = CullMode.NOTHING;
 
 		pipeline.compile();
 
@@ -62,7 +64,7 @@ class Shader {
 
 		index_buffer = new IndexBuffer(3, IbFormat16BIT);
 		{
-			var idx = index_buffer.lock();
+			var idx:hl.BytesAccess<UI16> = index_buffer.lock();
 			for (i in 0...3)
 				idx[i] = indices[i];
 			index_buffer.unlock();
@@ -72,7 +74,7 @@ class Shader {
 
 	public static function update() {
 		Graphics4.begin(0);
-		Graphics4.clear(Color, 0, 0, 0);
+		Graphics4.clear(Color, 0xFF000000, 0, 0);
 		Graphics4.setPipeline(pipeline);
 		Graphics4.setVertexBuffer(vertex_buffer);
 		Graphics4.setIndexBuffer(index_buffer);

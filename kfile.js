@@ -5,7 +5,7 @@ let project = new Project("KincHL");
 await project.addProject(process.env["KINC_PATH"] ?? "Kinc");
 
 project.setDebugDir("");
-project.addDefine("KORE_DEBUGDIR=\"\"");
+project.addDefine("KORE_DEBUGDIR=");
 project.addFile("src/kinchl.c");
 project.addFile("tests/**"); // shaders
 project.addIncludeDir("src/");
@@ -32,7 +32,7 @@ switch (platform) {
 			project.addLib("libhl.dylib");
 		}
 		break;
-	case Platform.Windows:
+	case Platform.Windows: {
 		let hl_inc = null;
 		console.log(process.env);
 		if (process.env["HASHLINK_SRC"]) {
@@ -47,6 +47,24 @@ switch (platform) {
 		project.addLib(hl_bin + "/libhl");
 		project.addIncludeDir(hl_inc);
 		break;
+	}
+	case Platform.Android:
+	case Platform.iOS: {
+		let hl_inc = null;
+		console.log(process.env);
+		if (process.env["HASHLINK_SRC"]) {
+			hl_inc = process.env["HASHLINK_SRC"]
+		} else if (process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"]) {
+			hl_inc = (process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"]) + "/include";
+		}
+		if (hl_inc == null) throw "could not find hashlink include path";
+
+		let hl_bin = process.env["HASHLINK_BIN"] ?? process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"] ?? null;
+		if (hl_bin == null) throw "could not find hashlink binaries";
+		project.addLib("hl");
+		project.addIncludeDir(hl_inc);
+		break;
+	}
 }
 
 project.flatten();
