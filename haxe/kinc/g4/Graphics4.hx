@@ -88,17 +88,6 @@ enum abstract TextureDirection(Int) {
 	var DirectionW;
 }
 
-enum abstract TextureOperation(Int) {
-	var MODULATE;
-	var SELECT_FIRST;
-	var SELECT_SECOND;
-}
-
-enum abstract TextureArgument(Int) {
-	var CURRENT_COLOR;
-	var TEXTURE_COLOR;
-}
-
 enum abstract TextureFilter(Int) {
 	var POINT;
 	var LINEAR;
