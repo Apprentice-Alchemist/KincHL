@@ -1,10 +1,10 @@
 const process = require("process");
+const path = require("path");
 
 let project = new Project("KincHL");
 
 await project.addProject(process.env["KINC_PATH"] ?? "Kinc");
 
-project.setDebugDir("");
 project.addDefine('KORE_DEBUGDIR=""');
 project.addFile("src/kinchl.c");
 project.addFile("tests/**"); // shaders
@@ -32,6 +32,10 @@ switch (platform) {
 			project.addLib("libhl.dylib");
 		}
 		break;
+	case Platform.iOS:
+		if (process.env["HASHLINK_BIN"]) project.addIncludeDir(process.env["HASHLINK_BIN"]);
+		project.addLib(path.join(process.env["HASHLINK_BIN"], "libhl.dylib"));
+		break;
 	case Platform.Windows: {
 		let hl_inc = null;
 		console.log(process.env);
@@ -49,22 +53,22 @@ switch (platform) {
 		break;
 	}
 	case Platform.Android:
-	case Platform.iOS: {
-		let hl_inc = null;
-		console.log(process.env);
-		if (process.env["HASHLINK_SRC"]) {
-			hl_inc = process.env["HASHLINK_SRC"]
-		} else if (process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"]) {
-			hl_inc = (process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"]) + "/include";
-		}
-		if (hl_inc == null) throw "could not find hashlink include path";
+		{
+			let hl_inc = null;
+			console.log(process.env);
+			if (process.env["HASHLINK_SRC"]) {
+				hl_inc = process.env["HASHLINK_SRC"]
+			} else if (process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"]) {
+				hl_inc = (process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"]) + "/include";
+			}
+			if (hl_inc == null) throw "could not find hashlink include path";
 
-		let hl_bin = process.env["HASHLINK_BIN"] ?? process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"] ?? null;
-		if (hl_bin == null) throw "could not find hashlink binaries";
-		project.addLib("hl");
-		project.addIncludeDir(hl_inc);
-		break;
-	}
+			let hl_bin = process.env["HASHLINK_BIN"] ?? process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"] ?? null;
+			if (hl_bin == null) throw "could not find hashlink binaries";
+			project.addLib("hl");
+			project.addIncludeDir(hl_inc);
+			break;
+		}
 }
 
 project.flatten();

@@ -4,6 +4,23 @@ import haxe.io.Path;
 
 using StringTools;
 
+enum abstract Target(String) to String {
+	var Windows = "windows";
+	var Linux = "linux";
+	var macOS = "macos";
+	var Android = "android";
+	var iOS = "ios";
+
+	public static function fromString(s:String):Target {
+		switch (cast s : Target) {
+			case Windows, Linux, macOS, Android, iOS:
+				return cast s;
+			default:
+				throw "Invalid target";
+		}
+	}
+}
+
 function applyPatch(dir:String, patch:String) {
 	Sys.command("git", ["-C", dir, "apply", '../patches/$patch']);
 }
@@ -30,12 +47,17 @@ function main() {
 	var debug = Sys.getEnv("DEBUG") != null;
 	var krafix = Sys.getEnv("INCLUDE_KRAFIX") != null;
 	var g_api = Sys.getEnv("KINCHL_GRAPHICS");
+	var target = null;
 	{
 		final args = Sys.args();
 		while (true) {
 			switch args.shift() {
 				case null:
 					break;
+				case "-g":
+					g_api = args.shift();
+				case "-t":
+					target = Target.fromString(args.shift());
 				case var arg:
 					if (arg == "-g") {
 						g_api = args.shift();
@@ -67,6 +89,10 @@ function main() {
 		n_args.push("-g");
 		n_args.push(g_api);
 	}
+	if (target != null) {
+		n_args.push("-t");
+		n_args.push(target);
+	}
 	if (debug)
 		n_args.push("--debug");
 	if (Sys.command(sys_name == "windows" ? "Kinc/make.bat" : "Kinc/make", n_args) != 0)
@@ -74,39 +100,51 @@ function main() {
 
 	Sys.setCwd("build");
 	FileSystem.createDirectory("bin");
-	if (sys_name == "mac") {
-		final configuration = debug ? "Debug" : "Release";
-		if (Sys.command("xcodebuild", [
-			"-configuration",
-			configuration,
-			"-project",
-			"KincHL.xcodeproj",
-			"ARCHS=x86_64",
-			"EXECUTABLE_NAME=kinc.hdll",
-		]) != 0)
-			Sys.exit(1);
-		File.copy('build/$configuration/kinc.hdll', "bin/kinc.hdll");
-	} else if (sys_name == "windows") {
-		final configuration = debug ? "Debug" : "Release";
-		if (Sys.command("MSBuild", [
-			"KincHL.vcxproj",
-			"/m" + (num_cpus == null ? "" : ':$num_cpus'),
-			'/p:Configuration=$configuration,Platform=x64,OutDir=bin/,TargetExt=.hdll,TargetName=kinc'
-		]) != 0)
-			Sys.exit(1);
-	} else if (sys_name == "linux") {
-		final configuration = debug ? "Debug" : "Release";
-		File.saveContent('$configuration/makefile', File.getContent('$configuration/makefile').replace('KincHL.so', 'kinc.hdll'));
-		Sys.setCwd(configuration);
-		final m_args = [];
-		if (num_cpus != null) {
-			Sys.println('Using $num_cpus cores.');
-			m_args.push("-j" + num_cpus);
-		}
-		if (Sys.command("make", m_args) != 0)
-			Sys.exit(1);
-		Sys.setCwd("..");
-		File.copy('$configuration/kinc.hdll', "bin/kinc.hdll");
+	switch target {
+		case Windows:
+			final configuration = debug ? "Debug" : "Release";
+			if (Sys.command("MSBuild", [
+				"KincHL.vcxproj",
+				"/m" + (num_cpus == null ? "" : ':$num_cpus'),
+				'/p:Configuration=$configuration,Platform=x64,OutDir=bin/,TargetExt=.hdll,TargetName=kinc'
+			]) != 0)
+				Sys.exit(1);
+		case Linux:
+			final configuration = debug ? "Debug" : "Release";
+			File.saveContent('$configuration/makefile', File.getContent('$configuration/makefile').replace('KincHL.so', 'kinc.hdll'));
+			Sys.setCwd(configuration);
+			final m_args = [];
+			if (num_cpus != null) {
+				Sys.println('Using $num_cpus cores.');
+				m_args.push("-j" + num_cpus);
+			}
+			if (Sys.command("make", m_args) != 0)
+				Sys.exit(1);
+			Sys.setCwd("..");
+			File.copy('$configuration/kinc.hdll', "bin/kinc.hdll");
+		case macOS, iOS:
+			final configuration = debug ? "Debug" : "Release";
+			final args = [
+				"-configuration",
+				configuration,
+				"-project",
+				"KincHL.xcodeproj",
+				"EXECUTABLE_NAME=kinc.hdll",
+			];
+			if (target != iOS)
+				args.push("ARCHS=x86_64");
+			if (Sys.command("xcodebuild", args) != 0)
+				Sys.exit(1);
+			File.copy('build/$configuration/kinc.hdll', "bin/kinc.hdll");
+		case Android:
+			Sys.setCwd("KincHL");
+			File.saveContent("app/CMakeLists.txt", File.getContent("app/CMakeLists.txt") + '\nset_target_properties(kinc PROPERTIES SUFFIX ".hdll")');			final configuration = debug ? "Debug" : "Release";
+			switch sys_name {
+				case "windows":
+					Sys.command("gradlew.bat", ['assemble$configuration']);
+				case _:
+					Sys.command("bash", ["gradlew", 'assemble$configuration']);
+			}
 	}
 
 	try {
