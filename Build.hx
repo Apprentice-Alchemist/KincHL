@@ -58,14 +58,13 @@ function main() {
 					g_api = args.shift();
 				case "-t":
 					target = Target.fromString(args.shift());
+				case "--debug":
+					debug = true;
+				case "--krafix":
+					krafix = true;
 				case var arg:
-					if (arg == "-g") {
-						g_api = args.shift();
-					}
-					if (arg == "--debug")
-						debug = true;
-					if (arg == "--krafix")
-						krafix = true;
+					trace('Unknown argument: $arg');
+					Sys.exit(1);
 			}
 		}
 	}
@@ -100,7 +99,7 @@ function main() {
 
 	Sys.setCwd("build");
 	FileSystem.createDirectory("bin");
-	switch target {
+	switch target == null ? Target.fromString(sys_name) : target {
 		case Windows:
 			final configuration = debug ? "Debug" : "Release";
 			if (Sys.command("MSBuild", [
