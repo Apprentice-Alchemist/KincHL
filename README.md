@@ -8,6 +8,17 @@ Hashlink bindings for [Kinc](https://github.com/Kode/Kinc)
 
 ## Building
 
+First get Kinc and its tools
+```bash
+$ git submodule update --init
+$ Kinc/get_dlc
+```
+Then build with
+```bash
+$ haxe --run Build
+```
+The resulting kinc.hdll file can be found in `build/bin`.
+
 ### Windows
 
 The kfile expects an environment variable called HASHLINK to point to your hashlink installation, which should have the following structure :
@@ -21,14 +32,6 @@ The kfile expects an environment variable called HASHLINK to point to your hashl
         - hl.h
         - hlc.h
         - hlc_main.c
-```
-
-```bash
-$ cd path/to/kinchl
-$ haxe --run Build
-
-$ copy build/bin/kinc.hdll /path/to/hashlink/ # Windows
-$ sudo cp build/bin/kinc.hdll /usr/local/lib/ # Linux/Mac
 ```
 
 ### iOS

@@ -38,7 +38,7 @@ switch (platform) {
 		break;
 	case Platform.Windows: {
 		let hl_inc = null;
-		console.log(process.env);
+
 		if (process.env["HASHLINK_SRC"]) {
 			hl_inc = process.env["HASHLINK_SRC"]
 		} else if (process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"]) {
@@ -55,7 +55,7 @@ switch (platform) {
 	case Platform.Android:
 		{
 			let hl_inc = null;
-			console.log(process.env);
+
 			if (process.env["HASHLINK_SRC"]) {
 				hl_inc = process.env["HASHLINK_SRC"]
 			} else if (process.env["HASHLINK"] ?? process.env["HASHLINK_PATH"]) {

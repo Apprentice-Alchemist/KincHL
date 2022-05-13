@@ -102,12 +102,28 @@ function main() {
 	switch target == null ? Target.fromString(sys_name) : target {
 		case Windows:
 			final configuration = debug ? "Debug" : "Release";
-			if (Sys.command("MSBuild", [
-				"KincHL.vcxproj",
-				"/m" + (num_cpus == null ? "" : ':$num_cpus'),
-				'/p:Configuration=$configuration,Platform=x64,OutDir=bin/,TargetExt=.hdll,TargetName=kinc'
-			]) != 0)
-				Sys.exit(1);
+
+			final vswhere = new sys.io.Process('C:/Program Files (x86)/Microsoft Visual Studio/Installer/vswhere.exe',
+				['-products', '*', '-latest', '-find', 'VC\\Auxiliary\\Build\\vcvars64.bat']);
+
+			if (vswhere.exitCode(true) == 0) {
+				final path = vswhere.stdout.readAll().toString();
+				File.saveContent("build.bat",
+					'@call "'
+					+ path
+					+ '"\n'
+					+ "@MSBuild.exe"
+					+ " KincHL.vcxproj"
+					+ " /m"
+					+ (num_cpus == null ? "" : ':$num_cpus')
+					+ ' /p:Configuration=$configuration,Platform=x64,OutDir=bin/,TargetExt=.hdll,TargetName=kinc');
+				if (Sys.command("build.bat") != 0)
+					Sys.exit(1);
+			} else {
+				Sys.println("Visual Studio not found.");
+				Sys.exit(0);
+			}
+
 		case Linux:
 			final configuration = debug ? "Debug" : "Release";
 			File.saveContent('$configuration/makefile', File.getContent('$configuration/makefile').replace('KincHL.so', 'kinc.hdll'));
@@ -137,7 +153,8 @@ function main() {
 			File.copy('build/$configuration/kinc.hdll', "bin/kinc.hdll");
 		case Android:
 			Sys.setCwd("KincHL");
-			File.saveContent("app/CMakeLists.txt", File.getContent("app/CMakeLists.txt") + '\nset_target_properties(kinc PROPERTIES SUFFIX ".hdll")');			final configuration = debug ? "Debug" : "Release";
+			File.saveContent("app/CMakeLists.txt", File.getContent("app/CMakeLists.txt") + '\nset_target_properties(kinc PROPERTIES SUFFIX ".hdll")');
+			final configuration = debug ? "Debug" : "Release";
 			switch sys_name {
 				case "windows":
 					Sys.command("gradlew.bat", ['assemble$configuration']);
