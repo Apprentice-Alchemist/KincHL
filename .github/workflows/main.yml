@@ -23,7 +23,11 @@ jobs:
     - name: Install Haxe
       uses: krdlab/setup-haxe@master
       with:
-          haxe-version: 4.2.0
+          haxe-version: 4.2.5
+
+    - name: Set up MSVC
+      if: matrix.os == 'windows-latest'
+      uses: ilammy/msvc-dev-cmd@v1
 
     - name: Checkout hashlink
       uses: actions/checkout@v2
@@ -40,6 +44,8 @@ jobs:
         cd KincHL
         git submodule update --init
         Kinc/get_dlc
+        cd krafix
+        git submodule update --init --recursive
 
     - name: Get LunarG package list.
       if: matrix.graphics == 'vulkan'

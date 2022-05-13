@@ -12,9 +12,12 @@ enum abstract Target(String) to String {
 	var iOS = "ios";
 
 	public static function fromString(s:String):Target {
-		switch (cast s : Target) {
-			case Windows, Linux, macOS, Android, iOS:
-				return cast s;
+		return switch s {
+			case "windows": Windows;
+			case "linux": Linux;
+			case "macos", "mac": macOS;
+			case "android": Android;
+			case "ios": iOS;
 			default:
 				throw "Invalid target";
 		}
