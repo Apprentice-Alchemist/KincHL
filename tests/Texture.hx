@@ -33,12 +33,12 @@ class Texture {
 		texture.initFromImage(img);
 		img = null;
 
-		var fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("texture.frag"), FragmentShader);
-		var vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("texture.vert"), VertexShader);
+		var fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/texture.frag"), FragmentShader);
+		var vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/texture.vert"), VertexShader);
 
 		structure = new kinc.g4.VertexStructure();
-		structure.add("pos", Float3);
-		structure.add("tex", Float2);
+		structure.add("pos", KINC_G4_VERTEX_DATA_F32_3X);
+		structure.add("tex", KINC_G4_VERTEX_DATA_F32_2X);
 
 		pipeline = new kinc.g4.Pipeline();
 		pipeline.vertex_shader = vertex_shader;
@@ -71,7 +71,7 @@ class Texture {
 		}
 		index_buffer = new IndexBuffer(4, IbFormat32BIT);
 		{
-			var i = index_buffer.lock();
+			var i:hl.BytesAccess<Int> = index_buffer.lock();
 			i[0] = 0;
 			i[1] = 1;
 			i[2] = 2;

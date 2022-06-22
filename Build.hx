@@ -7,7 +7,7 @@ using StringTools;
 enum abstract Target(String) to String {
 	var Windows = "windows";
 	var Linux = "linux";
-	var macOS = "macos";
+	var macOS = "mac";
 	var Android = "android";
 	var iOS = "ios";
 
@@ -79,8 +79,6 @@ function main() {
 	if (debug) {
 		Sys.putEnv("KINCHL_VALIDATE_VULKAN", "1");
 	}
-
-	applyPatch("krafix", "krafix.diff");
 
 	final n_args = ["--dynlib", "--noshaders"];
 	if (sys_name == "windows") {

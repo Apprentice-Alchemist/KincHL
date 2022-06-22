@@ -15,10 +15,15 @@ typedef struct {
     int cull_mode;
     bool depth_write;
     int depth_mode;
-    int stencil_mode;
-    int stencil_both_pass;
-    int stencil_depth_fail;
-    int stencil_fail;
+    int stencil_front_mode;
+    int stencil_front_both_pass;
+    int stencil_front_depth_fail;
+    int stencil_front_fail;
+
+    int stencil_back_mode;
+    int stencil_back_both_pass;
+    int stencil_back_depth_fail;
+    int stencil_back_fail;
     int stencil_reference_value;
     int stencil_read_mask;
     int stencil_write_mask;
@@ -58,10 +63,15 @@ HL_PRIM void HL_NAME(hl_g4_pipeline_compile)(hl_g4_pipeline_haxe *state) {
     COPY(cull_mode);
     COPY(depth_write);
     COPY(depth_mode);
-    COPY(stencil_mode);
-    COPY(stencil_both_pass);
-    COPY(stencil_depth_fail);
-    COPY(stencil_fail);
+    COPY(stencil_front_mode);
+    COPY(stencil_front_both_pass);
+    COPY(stencil_front_depth_fail);
+    COPY(stencil_front_fail);
+
+    COPY(stencil_back_mode);
+    COPY(stencil_back_both_pass);
+    COPY(stencil_back_depth_fail);
+    COPY(stencil_back_fail);
     COPY(stencil_reference_value);
     COPY(stencil_read_mask);
     COPY(stencil_write_mask);

@@ -10,13 +10,15 @@ project.addFile("src/kinchl.c");
 project.addFile("tests/**"); // shaders
 project.addIncludeDir("src/");
 project.addExclude("src/g5/**");
+project.setDebugDir("Deployment");
 
 if (process.env["KINCHL_VALIDATE_VULKAN"]) {
 	project.addDefine("VALIDATE");
 }
 
 if (process.env["INCLUDE_KRAFIX"]) {
-	await project.addProject(process.env["KRAFIX_PATH"] ?? "krafix");
+	let krafix = await project.addProject(process.env["KRAFIX_PATH"] ?? "krafix");
+	krafix.useAsLibrary();
 	project.addDefine("INCLUDE_KRAFIX");
 }
 

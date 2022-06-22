@@ -31,7 +31,7 @@ class Shader {
 			case OpenGL: "OpenGL";
 			case Metal: "Metal";
 			case Vulkan: "Vulkan";
-			case Other: "Uh, idk what we're running on";
+			case Other: "Unknown graphics api";
 		});
 		kinc.System.init("Shader", 500, 500, null, null);
 		kinc.System.setUpdateCallback(update);
@@ -40,8 +40,8 @@ class Shader {
 		texture = new kinc.g4.Texture();
 		texture.initFromImage(img);
 
-		fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("shader.frag"), FragmentShader);
-		vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("shader.vert"), VertexShader);
+		fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/shader.frag"), FragmentShader);
+		vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/shader.vert"), VertexShader);
 
 		structure = new VertexStructure();
 		structure.add("pos", KINC_G4_VERTEX_DATA_F32_3X);

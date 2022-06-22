@@ -18,10 +18,15 @@ class Pipeline {
 	public var cull_mode:CullMode;
 	public var depth_write:Bool;
 	public var depth_mode:CompareMode;
-	public var stencil_mode:CompareMode;
-	public var stencil_both_pass:StencilAction;
-	public var stencil_depth_fail:StencilAction;
-	public var stencil_fail:StencilAction;
+	public var stencil_front_mode:CompareMode;
+	public var stencil_front_both_pass:StencilAction;
+	public var stencil_front_depth_fail:StencilAction;
+	public var stencil_front_fail:StencilAction;
+
+	public var stencil_back_mode:CompareMode;
+	public var stencil_back_both_pass:StencilAction;
+	public var stencil_back_depth_fail:StencilAction;
+	public var stencil_back_fail:StencilAction;
 	public var stencil_reference_value:Int;
 	public var stencil_read_mask:Int;
 	public var stencil_write_mask:Int;
@@ -55,10 +60,14 @@ class Pipeline {
 		this.depth_write = false;
 		this.depth_mode = ALWAYS;
 
-		this.stencil_mode = ALWAYS;
-		this.stencil_both_pass = KEEP;
-		this.stencil_depth_fail = KEEP;
-		this.stencil_fail = KEEP;
+		this.stencil_front_mode = ALWAYS;
+		this.stencil_front_both_pass = KEEP;
+		this.stencil_front_depth_fail = KEEP;
+		this.stencil_front_fail = KEEP;
+		this.stencil_back_mode = ALWAYS;
+		this.stencil_back_both_pass = KEEP;
+		this.stencil_back_depth_fail = KEEP;
+		this.stencil_back_fail = KEEP;
 		this.stencil_reference_value = 0;
 		this.stencil_read_mask = 0xff;
 		this.stencil_write_mask = 0xff;
