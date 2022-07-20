@@ -13,12 +13,14 @@ class Keyboard {
 				space_pressed = true;
 			if (k == KEY_CONTROL)
 				ctrl_down = true;
+			trace("Key down", k);
 		});
 		kinc.input.Keyboard.setKeyUpCallback(function(k) {
 			if (k == KEY_SPACE)
 				space_pressed = false;
 			if (k == KEY_CONTROL)
 				ctrl_down = false;
+			trace("Key up", k);
 		});
 		kinc.input.Keyboard.setKeyPressCallback(key -> if (!ctrl_down) trace(String.fromCharCode(key)));
 		System.setCopyCallback(() -> "Hello World");

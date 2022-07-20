@@ -6,7 +6,5 @@ build/*
 *.dll
 *.hdll
 *.hl
-haxe/kinc/g5
-src/g5
 .vscode/
 .cache/
