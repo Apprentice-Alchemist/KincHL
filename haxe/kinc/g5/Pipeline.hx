@@ -167,18 +167,18 @@ class Pipeline {
 	public function getTextureUnit(name:String):TextureUnit
 		return getPipelineTextureUnit(this._handle, name);
 
-	@:hlNative("kinc", "hl_g5_pipeline_alloc") @:noCompletion static function allocNative():hl.Abstract<"g4_pipeline">
+	@:hlNative("kinc", "hl_g5_pipeline_alloc") @:noCompletion static function allocNative():hl.Abstract<"g5_pipeline">
 		return null;
 
 	@:hlNative("kinc", "hl_g5_pipeline_compile") @:noCompletion static function compilePipeline(state:Dynamic):Void {}
 
-	@:hlNative("kinc", "hl_g5_pipeline_get_texture_unit") @:noCompletion static function getPipelineTextureUnit(state:hl.Abstract<"g4_pipeline">,
+	@:hlNative("kinc", "hl_g5_pipeline_get_texture_unit") @:noCompletion static function getPipelineTextureUnit(state:hl.Abstract<"g5_pipeline">,
 			name:String):TextureUnit
 		return null;
 
-	@:hlNative("kinc", "hl_g5_pipeline_get_constant_location") @:noCompletion static function getPipelineConstantLocation(state:hl.Abstract<"g4_pipeline">,
+	@:hlNative("kinc", "hl_g5_pipeline_get_constant_location") @:noCompletion static function getPipelineConstantLocation(state:hl.Abstract<"g5_pipeline">,
 			name:String):ConstantLocation
 		return null;
 
-	@:hlNative("kinc", "hl_g5_pipeline_destroy") @:noCompletion static function destroyPipeline(state:hl.Abstract<"g4_pipeline">):Void {}
+	@:hlNative("kinc", "hl_g5_pipeline_destroy") @:noCompletion static function destroyPipeline(state:hl.Abstract<"g5_pipeline">):Void {}
 }

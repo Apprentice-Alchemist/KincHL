@@ -24,9 +24,9 @@ abstract CommandList(hl.Abstract<"g5_command_list">) {
 
 	public function clear(target:RenderTarget, flags:ClearFlags, color:Int, depth:Single, stencil:Int):Void;
 
-	public function renderTargetToFramebufferBarrie(target:RenderTarget):Void;
+	public function renderTargetToFramebufferBarrier(target:RenderTarget):Void;
 
-	public function frameBufferToRenderTargetBarrier(target:RenderTarget):Void;
+	public function framebufferToRenderTargetBarrier(target:RenderTarget):Void;
 
 	public function textureToRenderTargetBarrier(target:RenderTarget):Void;
 
@@ -48,9 +48,14 @@ abstract CommandList(hl.Abstract<"g5_command_list">) {
 
 	public function disableScissor():Void;
 
-	public function setPipeline(pipeline:Pipeline):Void;
+	public inline function setPipeline(pipeline:Pipeline):Void {
+		__setPipeline(@:privateAccess pipeline._handle);
+	}
 
-	public function setVertexBuffers(buffers:hl.NativeArray<VertexBuffer>, offsets:hl.NativeArray<Int>):Void;
+	@:hlNative("kinc", "hl_g5_command_list_set_pipeline")
+	private function __setPipeline(pipeline:hl.Abstract<"g5_pipeline">):Void;
+
+	public function setVertexBuffers(buffers:hl.NativeArray<VertexBuffer>, offsets:hl.Bytes):Void;
 
 	public function setIndexBuffer(buffer:IndexBuffer):Void;
 
@@ -72,13 +77,13 @@ abstract CommandList(hl.Abstract<"g5_command_list">) {
 
 	public function executeAndWait():Void;
 
-	public function getRenderTargetPixels(target:RenderTarget, buffer:hl.Bytes):Void;
+	// public function getRenderTargetPixels(target:RenderTarget, buffer:hl.Bytes):Void;
 
 	// public function compute(x:Int, y:Int, z:Int):Void;
 
-	public function setTexture(unit:TextureUnit, texture:Texture):Void;
+	// public function setTexture(unit:TextureUnit, texture:Texture):Void;
 
-	public function setRenderTargetFace(target:RenderTarget, face:Int):Void;
+	// public function setRenderTargetFace(target:RenderTarget, face:Int):Void;
 
 	// public function setTextureAddressing(unit:TextureUnit, addressing:TextureAddressing):Void;
 }

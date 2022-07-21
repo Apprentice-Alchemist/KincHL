@@ -18,10 +18,10 @@ abstract ConstantBuffer(hl.Abstract<"g5_constant_buffer">) {
 
 	public function setBool(offset:Int, value:Bool):Void;
 	public function setInt(offset:Int, value:Int):Void;
-	public function setFloat(offset:Int, value:Float):Void;
-	public function setFloat2(offset:Int, v1:Float, v2:Float):Void;
-	public function setFloat3(offset:Int, v1:Float, v2:Float, v3:Float):Void;
-	public function setFloat4(offset:Int, v1:Float, v2:Float, v3:Float, v4:Float):Void;
+	public function setFloat(offset:Int, value:hl.F32):Void;
+	public function setFloat2(offset:Int, v1:hl.F32, v2:hl.F32):Void;
+	public function setFloat3(offset:Int, v1:hl.F32, v2:hl.F32, v3:hl.F32):Void;
+	public function setFloat4(offset:Int, v1:hl.F32, v2:hl.F32, v3:hl.F32, v4:hl.F32):Void;
 	public function setFloats(offset:Int, values:hl.Bytes, count:Int):Void;
 	public function setMatrix3(offset:Int, value:Matrix3):Void;
 	public function setMatrix4(offset:Int, value:Matrix4):Void;

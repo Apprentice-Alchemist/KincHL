@@ -15,7 +15,7 @@ abstract IndexBuffer(hl.Abstract<"g5_index_buffer">) {
 
 	function init(count:Int, format:IndexBufferFormat, gpu_memory:Bool):Void;
 
-	public function lock(start:Int):hl.Bytes;
+	public function lock():hl.Bytes;
 
 	public function unlock():Void;
 

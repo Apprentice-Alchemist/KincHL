@@ -49,7 +49,7 @@ abstract Texture(hl.Abstract<"g5_texture">) {
 
 	public function generateMipmaps(levels:Int):Void;
 
-	public function setMipmap(mipmap:Texture, level:Int):Void;
+	public function setMipmap(mipmap:Image, level:Int):Void;
 
 	public function stride():Int;
 }

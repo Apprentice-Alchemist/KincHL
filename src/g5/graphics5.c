@@ -15,6 +15,8 @@ HL_PRIM bool HL_NAME(hl_g5_fullscreen)() {
     return kinc_g5_fullscreen;
 }
 
+DEFINE_PRIM(_BOOL, hl_g5_fullscreen, _NO_ARG)
+
 HL_PRIM void HL_NAME(hl_g5_begin)(hl_g5_render_target *render_target, int window) {
     kinc_g5_begin(&render_target->t, window);
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "kinchl.h"
 #include <kinc/graphics5/commandlist.h>
 // #include <kinc/graphics5/compute.h>

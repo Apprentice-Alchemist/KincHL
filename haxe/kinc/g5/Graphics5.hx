@@ -10,7 +10,7 @@ extern class Graphics5 {
 	static function flush():Void;
 	static function end(window:Int):Void;
 	static function swapBuffers():Void;
-	static function maxBoundTexture():Int;
+	static function maxBoundTextures():Int;
 	static function nonPow2TexturesSupported():Bool;
 	static function renderTargetsInvertedY():Bool;
 	static function antialiasingSamples():Int;

@@ -12,7 +12,7 @@ abstract VertexBuffer(hl.Abstract<"g5_vertex_buffer">) {
 
 	function init(count:Int, structure:VertexStructure, gpuMemory:Bool, instanceDataStepRate:Int):Void;
 
-	public function lockAll(start:Int):hl.Bytes;
+	public function lockAll():hl.Bytes;
 
 	public function unlockAll():Void;
 

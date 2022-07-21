@@ -11,15 +11,15 @@ enum abstract RenderTargetFormat(Int) {
 }
 
 @:build(kinc.Macros.build_struct("g5_render_target", true))
-@:hlNative("kinc", "hl_g5_render_target")
+@:hlNative("kinc", "hl_g5_render_target_")
 abstract RenderTarget(hl.Abstract<"g5_render_target">) {
 	public var width(get, set):Int;
 	public var height(get, set):Int;
 	public var texWidth(get, set):Int;
 	public var texHeight(get, set):Int;
 	public var contextId(get, set):Int;
-	public var isCubeMap(get, never):Int;
-	public var isDepthAttachment(get, never):Int;
+	public var isCubeMap(get, never):Bool;
+	public var isDepthAttachment(get, never):Bool;
 
 	public static function create(width:Int, height:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int,
 			contextId:Int):RenderTarget {
