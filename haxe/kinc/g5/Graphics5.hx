@@ -15,5 +15,4 @@ extern class Graphics5 {
 	static function renderTargetsInvertedY():Bool;
 	static function antialiasingSamples():Int;
 	static function setAntialiasingSamples(samples:Int):Void;
-
 }
