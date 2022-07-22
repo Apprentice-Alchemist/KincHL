@@ -1,4 +1,5 @@
 #include "graphics5.h"
+#include "kinchl.h"
 
 HL_PRIM void HL_NAME(hl_g5_command_list_init)(hl_g5_command_list *list) {
     kinc_g5_command_list_init(&list->t);
@@ -103,11 +104,7 @@ HL_PRIM void HL_NAME(hl_g5_command_list_set_pipeline)(hl_g5_command_list *list, 
 DEFINE_PRIM(_VOID, hl_g5_command_list_set_pipeline, _COMMAND_LIST _PIPELINE)
 
 HL_PRIM void HL_NAME(hl_g5_command_list_set_vertex_buffers)(hl_g5_command_list *list, varray *buffers, vbyte *offsets) {
-#ifdef _MSC_VER
-    kinc_g5_vertex_buffer_t **vbuffers = alloca(sizeof(kinc_g5_vertex_buffer_t *) * buffers->size);
-#else
-    kinc_g5_vertex_buffer_t *vbuffers[buffers->size];
-#endif
+    STACK_ALLOC(kinc_g5_vertex_buffer_t*, buffers->size, vbuffers);
     for (int i = 0; i < buffers->size; i++) {
         vbuffers[i] = &(hl_aptr(buffers, hl_g5_vertex_buffer*)[i]->t);
     }
@@ -123,11 +120,7 @@ HL_PRIM void HL_NAME(hl_g5_command_list_set_index_buffer)(hl_g5_command_list *li
 DEFINE_PRIM(_VOID, hl_g5_command_list_set_index_buffer, _COMMAND_LIST _INDEX_BUFFER)
 
 HL_PRIM void HL_NAME(hl_g5_command_list_set_render_targets)(hl_g5_command_list *list, varray *targets) {
-#ifdef _MSC_VER
-	kinc_g5_render_target_t **rtargets = alloca(sizeof(kinc_g5_render_target_t *) * targets->size);
-#else
-	kinc_g5_render_target_t *rtargets[targets->size];
-#endif
+    STACK_ALLOC(kinc_g5_render_target_t*, targets->size, rtargets);
     hl_g5_render_target **rt = hl_aptr(targets, hl_g5_render_target*);
 	for (int i = 0; i < targets->size; i++) {
 		rtargets[i] = &(rt[i]->t);

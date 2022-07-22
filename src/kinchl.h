@@ -95,3 +95,10 @@ void handle_exception(const char *where, vdynamic *exc);
     DEFINE_PRIM(_REF(hl_obj), hl_##name##_array_alloc, _I32)            \
     DEFINE_PRIM(hl_obj, hl_##name##_array_get, _REF(hl_obj) _I32)       \
     DEFINE_PRIM(hl_obj, hl_##name##_array_set, _REF(hl_obj) _I32 hl_obj)
+
+#ifdef _MSC_VER
+#include <malloc.h>
+#define STACK_ALLOC(type, size, name) type **name = _alloca(sizeof(type) * size)
+#else
+#define STACK_ALLOC(type, size, name) type name[size]
+#endif

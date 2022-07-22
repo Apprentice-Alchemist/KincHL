@@ -1,4 +1,5 @@
 #include "graphics4.h"
+#include "kinchl.h"
 
 ALLOC_OBJ_EX(g4_pipeline, kinc_g4_pipeline_t, kinc_g4_pipeline_init, kinc_g4_pipeline_destroy)
 ALLOC_OBJ_EX(g4_render_target, kinc_g4_render_target_t, EMPTY_INIT, kinc_g4_render_target_destroy)
@@ -38,15 +39,13 @@ HL_PRIM void HL_NAME(hl_g4_set_vertex_buffer)(hl_g4_vertex_buffer *buf) {
 }
 
 HL_PRIM void HL_NAME(hl_g4_set_vertex_buffers)(varray *bufs) {
-    kinc_g4_vertex_buffer_t **arr = malloc(sizeof(kinc_g4_vertex_buffer_t *) * bufs->size);
+    STACK_ALLOC(kinc_g4_vertex_buffer_t*, bufs->size, arr);
     memset(arr, 0, sizeof(kinc_g4_vertex_buffer_t *) * bufs->size);
     for (int i = 0; i < bufs->size; i++) {
         hl_g4_vertex_buffer *b = hl_aptr(bufs, hl_g4_vertex_buffer *)[i];
         arr[i] = &(b->t);
     }
-    // arr[bufs->size] = NULL;
     kinc_g4_set_vertex_buffers(arr, bufs->size);
-    free(arr);
 }
 
 HL_PRIM void HL_NAME(hl_g4_set_index_buffer)(hl_g4_index_buffer *buf) {
@@ -110,13 +109,12 @@ HL_PRIM void HL_NAME(hl_g4_restore_render_target)(void) {
 }
 
 HL_PRIM void HL_NAME(hl_g4_set_render_targets)(varray *targets) {
-    kinc_g4_render_target_t **arr = malloc(sizeof(kinc_g4_render_target_t *) * targets->size);
+    STACK_ALLOC(kinc_g4_render_target_t*, targets->size, arr);
     for (int i = 0; i < targets->size; i++) {
         kinc_g4_render_target_t *t = &(hl_aptr(targets, hl_g4_render_target *)[i]->t);
         arr[i] = t;
     }
     kinc_g4_set_render_targets(arr, targets->size);
-    free(arr);
 }
 
 HL_PRIM void HL_NAME(hl_g4_set_render_target_face)(hl_g4_render_target *texture, int face) {
