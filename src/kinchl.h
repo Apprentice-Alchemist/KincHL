@@ -98,7 +98,7 @@ void handle_exception(const char *where, vdynamic *exc);
 
 #ifdef _MSC_VER
 #include <malloc.h>
-#define STACK_ALLOC(type, size, name) type **name = _alloca(sizeof(type) * size)
+#define STACK_ALLOC(type, size, name) type *name = _alloca(sizeof(type) * size)
 #else
 #define STACK_ALLOC(type, size, name) type name[size]
 #endif
