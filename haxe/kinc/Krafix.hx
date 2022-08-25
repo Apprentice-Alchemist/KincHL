@@ -74,10 +74,10 @@ class Krafix {
 	@:hlNative("kinc", "krafix_compile") static function __compile(source:hl.Bytes, output:hl.Bytes, len:hl.Ref<Int>, targetlang:CString, system:CString,
 		shadertype:CString):Void {};
 
-	public static function compile(source:haxe.io.Bytes, target:KrafixTarget, system:KrafixPlatform, type:KrafixShaderType):haxe.io.Bytes {
+	public static function compile(source:String, target:KrafixTarget, system:KrafixPlatform, type:KrafixShaderType):haxe.io.Bytes {
 		var length = 1024;
 		final output = new hl.Bytes(length);
-		__compile(source, output, length, target, system, type);
+		__compile(@:privateAccess source.toUtf8(), output, length, target, system, type);
 		return output.toBytes(length);
 	}
 }
