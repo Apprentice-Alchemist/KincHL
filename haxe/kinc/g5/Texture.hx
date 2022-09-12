@@ -10,27 +10,31 @@ abstract Texture(hl.Abstract<"g5_texture">) {
 	public var format(get, set):ImageFormat;
 
 	public static function create(width:Int, height:Int, format:ImageFormat):Texture {
-		var self:Texture = alloc();
+		var self = new Texture();
 		self.init(width, height, format);
 		return self;
 	}
 
 	public static function create3d(width:Int, height:Int, depth:Int, format:ImageFormat):Texture {
-		var self:Texture = alloc();
+		var self = new Texture();
 		self.init3d(width, height, depth, format);
 		return self;
 	}
 
 	public static function createFromImage(image:Image):Texture {
-		var self:Texture = alloc();
+		var self = new Texture();
 		self.initFromImage(image);
 		return self;
 	}
 
 	public static function createNonSampledAccess(width:Int, height:Int, format:ImageFormat):Texture {
-		var self:Texture = alloc();
+		var self = new Texture();
 		self.initNonSampledAccess(width, height, format);
 		return self;
+	}
+
+	private function new() {
+		this = alloc();
 	}
 
 	function init(width:Int, height:Int, format:ImageFormat):Void;

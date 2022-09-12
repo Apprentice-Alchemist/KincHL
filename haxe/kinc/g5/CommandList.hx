@@ -75,7 +75,7 @@ abstract CommandList(hl.Abstract<"g5_command_list">) {
 
 	public function execute():Void;
 
-	public function executeAndWait():Void;
+	public function waitForExecutionToFinish():Void;
 
 	// public function getRenderTargetPixels(target:RenderTarget, buffer:hl.Bytes):Void;
 

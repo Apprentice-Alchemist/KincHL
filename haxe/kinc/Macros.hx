@@ -31,6 +31,10 @@ class Macros {
 	public static function build_struct(s:String, no_new:Bool = false, no_alloc = false, no_destroy = false) {
 		var fields = haxe.macro.Context.getBuildFields();
 		var ret:Array<Field> = [];
+		var real_type = switch Context.getLocalType() {
+			case TInst(_.get() => _.kind => KAbstractImpl(_.get() => _.type => t), []): t.toComplexType();
+			case _: null;
+		}
 
 		for (x in fields) {
 			ret.push(switch x.kind {
@@ -96,10 +100,7 @@ class Macros {
 				kind: FFun({
 					args: [],
 					expr: macro return null,
-					ret: switch Context.getLocalType() {
-						case TAbstract(t, params): t.get().type.toComplexType();
-						default: null;
-					}
+					ret: real_type
 				}),
 				access: [AStatic],
 				meta: [

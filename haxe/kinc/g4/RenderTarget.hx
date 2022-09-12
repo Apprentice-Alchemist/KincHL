@@ -7,28 +7,45 @@ abstract RenderTarget(hl.Abstract<"g4_render_target">) {
 	public var height(get, set):Int;
 	public var texWidth(get, set):Int;
 	public var texHeight(get, set):Int;
-	public var contextId(get, set):Int;
+	// public var contextId(get, set):Int;
 	public var isCubeMap(get, set):Bool;
 	public var isDepthAttachment(get, set):Bool;
 
-	public static function create(width:Int, height:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int,
-			contextId:Int):RenderTarget {
+	public static function create(width:Int, height:Int, format:RenderTargetFormat, depthBufferBits:Int, stencilBufferBits:Int):RenderTarget {
 		var ret = new RenderTarget();
-		ret.init(width, height, depthBufferBits, antialiasing, format, stencilBufferBits, contextId);
+		ret.init(width, height, format, depthBufferBits, stencilBufferBits);
 		return ret;
 	}
 
-	public static function createCube(cubeMapSize:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int,
-			contextId:Int):RenderTarget {
+	public static function createWithMultisampling(width:Int, height:Int, format:RenderTargetFormat, depthBufferBits:Int, stencilBufferBits:Int,
+			samplesPerPixel:Int):RenderTarget {
 		var ret = new RenderTarget();
-		ret.initCube(cubeMapSize, depthBufferBits, antialiasing, format, stencilBufferBits, contextId);
+		ret.initWithMultisampling(width, height, format, depthBufferBits, stencilBufferBits, samplesPerPixel);
 		return ret;
 	}
 
-	@:hlNative("kinc", "hl_g4_render_target_init") private function init(width:Int, height:Int, depthBufferBits:Int, antialiasing:Bool,
-		format:RenderTargetFormat, stencilBufferBits:Int, contextId:Int):Void;
+	public static function createCube(cubeMapSize:Int, format:RenderTargetFormat, depthBufferBits:Int, stencilBufferBits:Int):RenderTarget {
+		var ret = new RenderTarget();
+		ret.initCube(cubeMapSize, format, depthBufferBits, stencilBufferBits);
+		return ret;
+	}
 
-	private function initCube(cubeMapSize:Int, depthBufferBits:Int, antialiasing:Bool, format:RenderTargetFormat, stencilBufferBits:Int, contextId:Int):Void;
+	public static function createCubeWithMultisampling(cubeMapSize:Int, format:RenderTargetFormat, depthBufferBits:Int, stencilBufferBits:Int,
+			samplesPerPixel:Int):RenderTarget {
+		var ret = new RenderTarget();
+		ret.initCubeWithMultisampling(cubeMapSize, format, depthBufferBits, stencilBufferBits, samplesPerPixel);
+		return ret;
+	}
+
+	private function init(width:Int, height:Int, format:RenderTargetFormat, depthBufferBits:Int, stencilBufferBits:Int):Void;
+
+	private function initWithMultisampling(width:Int, height:Int, format:RenderTargetFormat, depthBufferBits:Int, stencilBufferBits:Int,
+		samplesPerPixel:Int):Void;
+
+	private function initCube(cubeMapSize:Int, format:RenderTargetFormat, depthBufferBits:Int, stencilBufferBits:Int):Void;
+
+	private function initCubeWithMultisampling(cubeMapSize:Int, format:RenderTargetFormat, depthBufferBits:Int, stencilBufferBits:Int,
+		samplesPerPixel:Int):Void;
 
 	public function useColorAsTexture(unit:TextureUnit):Void;
 

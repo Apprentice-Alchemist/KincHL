@@ -1,4 +1,5 @@
 #include "graphics5.h"
+#include "kinc/graphics5/commandlist.h"
 #include "kinchl.h"
 
 HL_PRIM void HL_NAME(hl_g5_command_list_init)(hl_g5_command_list *list) {
@@ -172,8 +173,8 @@ HL_PRIM void HL_NAME(hl_g5_command_list_execute)(hl_g5_command_list *list) {
 
 DEFINE_PRIM(_VOID, hl_g5_command_list_execute, _COMMAND_LIST)
 
-HL_PRIM void HL_NAME(hl_g5_command_list_execute_and_wait)(hl_g5_command_list *list) {
-    kinc_g5_command_list_execute_and_wait(&list->t);
+HL_PRIM void HL_NAME(hl_g5_command_list_wait_for_execution_to_finish)(hl_g5_command_list *list) {
+    kinc_g5_command_list_wait_for_execution_to_finish(&list->t);
 }
 
-DEFINE_PRIM(_VOID, hl_g5_command_list_execute_and_wait, _COMMAND_LIST)
+DEFINE_PRIM(_VOID, hl_g5_command_list_wait_for_execution_to_finish, _COMMAND_LIST)

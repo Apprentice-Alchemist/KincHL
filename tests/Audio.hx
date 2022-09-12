@@ -43,16 +43,18 @@ class Audio {
 			Sys.println("Usage : hl out.hl file");
 			Sys.exit(0);
 		}
-		kinc.System.init("Audio", 500, 500);
+		// kinc.System.init("Audio", 500, 500);
 		Audio2.init();
 		sound = Audio1.createSound(f);
 		Audio2.setCallback(on_audio);
-		kinc.System.setUpdateCallback(() -> {
-			Graphics4.begin(0);
-			Graphics4.end(0);
-			Graphics4.swapBuffers();
-		});
-		kinc.System.start();
+		while(true) {}
+		// kinc.System.setUpdateCallback(() -> {
+		// 	Graphics4.begin(0);
+		// 	Audio2.update();
+		// 	Graphics4.end(0);
+		// 	Graphics4.swapBuffers();
+		// });
+		// kinc.System.start();
 		Audio2.shutdown();
 	}
 }
