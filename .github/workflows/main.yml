@@ -54,7 +54,17 @@ jobs:
         # sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-focal.list https://packages.lunarg.com/vulkan/lunarg-vulkan-focal.list
         sudo apt update
         sudo apt upgrade
-        sudo apt-get install libasound2-dev libxinerama-dev libxrandr-dev libgl1-mesa-dev libxi-dev libxcursor-dev libudev-dev libwayland-dev wayland-protocols libxkbcommon-dev libvulkan-sdk --yes --quiet
+        sudo apt install --yes --quiet\
+                libasound2-dev \
+                libxinerama-dev\
+                libxrandr-dev\
+                libgl1-mesa-dev\
+                libxi-dev libxcursor-dev\
+                libudev-dev\
+                libwayland-dev\
+                wayland-protocols\
+                libxkbcommon-dev\
+                libvulkan-dev
     - name: Build Hashlink
       if: matrix.os != 'windows-latest'
       run: |
