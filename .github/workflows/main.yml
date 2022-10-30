@@ -3,14 +3,13 @@ name: Build
 on: [push]
 
 jobs:
-
   build:
     if: ${{ !contains(join(github.event.commits.*.message),'[skip ci]') }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest,ubuntu-latest]
+        os: [windows-latest, macos-latest, ubuntu-latest]
         graphics: [opengl]
         include:
           - os: macos-latest
@@ -20,81 +19,81 @@ jobs:
           - os: ubuntu-latest
             graphics: vulkan
     steps:
-    - name: Install Haxe
-      uses: krdlab/setup-haxe@master
-      with:
+      - name: Install Haxe
+        uses: krdlab/setup-haxe@master
+        with:
           haxe-version: 4.2.5
 
-    - name: Set up MSVC
-      if: matrix.os == 'windows-latest'
-      uses: ilammy/msvc-dev-cmd@v1
+      - name: Set up MSVC
+        if: matrix.os == 'windows-latest'
+        uses: ilammy/msvc-dev-cmd@v1
 
-    - name: Checkout hashlink
-      uses: actions/checkout@v2
-      with:
-        repository: "HaxeFoundation/hashlink"
-        path: "hashlink"
-    - name: Checkout KincHL
-      uses: actions/checkout@v2
-      with:
-        path: "KincHL"
+      - name: Checkout hashlink
+        uses: actions/checkout@v2
+        with:
+          repository: "HaxeFoundation/hashlink"
+          path: "hashlink"
+      - name: Checkout KincHL
+        uses: actions/checkout@v2
+        with:
+          path: "KincHL"
 
-    - name: Get Kinc Tools
-      run: |
-        cd KincHL
-        git submodule update --init
-        Kinc/get_dlc
-        cd krafix
-        git submodule update --init --recursive
+      - name: Get Kinc Tools
+        run: |
+          cd KincHL
+          git submodule update --init
+          Kinc/get_dlc
+          cd krafix
+          git submodule update --init --recursive
 
-    - name: Apt Install
-      if: matrix.os == 'ubuntu-latest'
-      run: |
-        # wget -qO - https://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo apt-key add -
-        # sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-focal.list https://packages.lunarg.com/vulkan/lunarg-vulkan-focal.list
-        sudo apt update
-        sudo apt upgrade
-        sudo apt install --yes --quiet\
-                libasound2-dev \
-                libxinerama-dev\
-                libxrandr-dev\
-                libgl1-mesa-dev\
-                libxi-dev libxcursor-dev\
-                libudev-dev\
-                libwayland-dev\
-                wayland-protocols\
-                libxkbcommon-dev\
-                libvulkan-dev
-    - name: Build Hashlink
-      if: matrix.os != 'windows-latest'
-      run: |
-        cd hashlink
-        make libhl hl ui
-        sudo make install
-    - name: Build Hashlink
-      if: matrix.os == 'windows-latest'
-      shell: cmd
-      run: |
-        cd hashlink
-        MSBuild libhl.vcxproj /nologo "-p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
-        MSBuild hl.vcxproj /nologo "-p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
-        echo "${{ github.workspace }}\hashlink\x64\Release" >> $GITHUB_PATH
-    - name: Build KincHL
-      env:
-        HASHLINK_SRC: ${{ github.workspace }}\hashlink\src
-        HASHLINK_BIN: ${{ github.workspace }}\hashlink\x64\Release
-      run: |
-        cd KincHL
-        haxe --run Build -g ${{matrix.graphics}} --krafix
-      
-    - name: Upload Artifact
-      uses: 'actions/upload-artifact@v2'
-      with:
-        name: ${{ matrix.os }} ${{ matrix.graphics }}
-        path: kinc.hdll
-    - name: Upload Windows Artifact
-      if: matrix.os == 'windows-latest'
-      uses: 'actions/upload-artifact@v2'
-      with:
-        name: ${{ matrix.os }} ${{ matrix.graphics }}
-        path: kinc.lib
+      - name: Apt Install
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          wget -qO - https://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo apt-key add -
+          sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-focal.list https://packages.lunarg.com/vulkan/lunarg-vulkan-focal.list
+          sudo apt-get update -y -q --no-install-recommends
+          sudo apt-get upgrade -y -q --no-install-recommends
+          sudo apt-get install --yes --quiet --no-install-recommends\
+                  libasound2-dev \
+                  libxinerama-dev\
+                  libxrandr-dev\
+                  libgl1-mesa-dev\
+                  libxi-dev libxcursor-dev\
+                  libudev-dev\
+                  libwayland-dev\
+                  wayland-protocols\
+                  libxkbcommon-dev\
+                  vulkan-sdk
+      - name: Build Hashlink
+        if: matrix.os != 'windows-latest'
+        run: |
+          cd hashlink
+          make libhl hl ui
+          sudo make install
+      - name: Build Hashlink
+        if: matrix.os == 'windows-latest'
+        shell: cmd
+        run: |
+          cd hashlink
+          MSBuild libhl.vcxproj /nologo "-p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
+          MSBuild hl.vcxproj /nologo "-p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
+          echo "${{ github.workspace }}\hashlink\x64\Release" >> $GITHUB_PATH
+      - name: Build KincHL
+        env:
+          HASHLINK_SRC: ${{ github.workspace }}\hashlink\src
+          HASHLINK_BIN: ${{ github.workspace }}\hashlink\x64\Release
+        run: |
+          cd KincHL
+          haxe --run Build -g ${{matrix.graphics}} --krafix
+
+      - name: Upload Artifact
+        uses: "actions/upload-artifact@v2"
+        with:
+          name: ${{ matrix.os }} ${{ matrix.graphics }}
+          path: kinc.hdll
+      - name: Upload Windows Artifact
+        if: matrix.os == 'windows-latest'
+        uses: "actions/upload-artifact@v2"
+        with:
+          name: ${{ matrix.os }} ${{ matrix.graphics }}
+          path: kinc.lib
