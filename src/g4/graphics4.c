@@ -101,7 +101,7 @@ HL_PRIM bool HL_NAME(hl_g4_render_targets_inverted_y)(void) {
 }
 
 HL_PRIM bool HL_NAME(hl_g4_non_pow2_textures_supported)(void) {
-    return kinc_g4_non_pow2_textures_supported();
+    return kinc_g4_supports_non_pow2_textures();
 }
 
 HL_PRIM void HL_NAME(hl_g4_restore_render_target)(void) {

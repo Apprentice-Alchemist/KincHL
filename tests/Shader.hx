@@ -36,12 +36,14 @@ class Shader {
 		kinc.System.init("Shader", 500, 500, null, null);
 		kinc.System.setUpdateCallback(update);
 
-		var img = Image.fromFile("Deployment/parrot.png");
-		texture = new kinc.g4.Texture();
-		texture.initFromImage(img);
+		// var img = Image.fromFile("Deployment/parrot.png");
+		// texture = new kinc.g4.Texture();
+		// texture.initFromImage(img);
 
-		fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/shader.frag"), FragmentShader);
-		vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/shader.vert"), VertexShader);
+		vertex_shader = kinc.g4.Shader.fromFile("Deployment/shader.vert", VertexShader);
+		fragment_shader = kinc.g4.Shader.fromFile("Deployment/shader.frag", FragmentShader);
+		// fragment_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/shader.frag"), FragmentShader);
+		// vertex_shader = kinc.g4.Shader.create(sys.io.File.getBytes("Deployment/shader.vert"), VertexShader);
 
 		structure = new VertexStructure();
 		structure.add("pos", KINC_G4_VERTEX_DATA_F32_3X);

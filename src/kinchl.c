@@ -33,10 +33,10 @@
 #undef _INDEX_BUFFER
 #undef _LOC
 #undef _TUNIT
-#include "g5/buffers.c"
-#include "g5/commandlist.c"
-#include "g5/constantbuffer.c"
-#include "g5/graphics5.c"
-#include "g5/pipeline.c"
-#include "g5/texture.c"
-#include "g5/render_target.c"
+// #include "g5/buffers.c"
+// #include "g5/commandlist.c"
+// #include "g5/constantbuffer.c"
+// #include "g5/graphics5.c"
+// #include "g5/pipeline.c"
+// #include "g5/texture.c"
+// #include "g5/render_target.c"

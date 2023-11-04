@@ -7,10 +7,12 @@ await project.addProject(process.env["KINC_PATH"] ?? "Kinc");
 
 project.addDefine('KORE_DEBUGDIR=""');
 project.addFile("src/kinchl.c");
+project.addExclude("src/g5/**");
 project.addFile("tests/**"); // shaders
 project.addIncludeDir("src/");
-project.addExclude("src/g5/**");
 project.setDebugDir("Deployment");
+project.addExclude("src/g5/**");
+// project.addCFlags("-fsanitize=address,undefined");
 
 if (process.env["KINCHL_VALIDATE_VULKAN"]) {
 	project.addDefine("VALIDATE");

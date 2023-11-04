@@ -12,7 +12,7 @@
     DEFINE_PRIM(_VOID, hl_set_##name##_callback, hl_type)
 
 MAKE_CALLBACK(
-    update, void internal_update_callback(void) {
+    update, void internal_update_callback(void*data) {
         if (update_cb == NULL)
             return;
         bool isexc = false;
@@ -24,7 +24,7 @@ MAKE_CALLBACK(
     _FUN(_VOID, _NO_ARG))
 
 MAKE_CALLBACK(
-    foreground, void internal_foreground_callback(void) {
+    foreground, void internal_foreground_callback(void*data) {
         if (foreground_cb == NULL)
             return;
         bool isexc = false;
@@ -36,7 +36,7 @@ MAKE_CALLBACK(
     _FUN(_VOID, _NO_ARG))
 
 MAKE_CALLBACK(
-    resume, void internal_resume_callback(void) {
+    resume, void internal_resume_callback(void*data) {
         if (resume_cb == NULL)
             return;
         bool isexc = false;
@@ -48,7 +48,7 @@ MAKE_CALLBACK(
     _FUN(_VOID, _NO_ARG))
 
 MAKE_CALLBACK(
-    pause, void internal_pause_callback(void) {
+    pause, void internal_pause_callback(void*data) {
         if (pause_cb == NULL)
             return;
         bool isexc = false;
@@ -60,7 +60,7 @@ MAKE_CALLBACK(
     _FUN(_VOID, _NO_ARG))
 
 MAKE_CALLBACK(
-    background, void internal_background_callback(void) {
+    background, void internal_background_callback(void*data) {
         if (background_cb == NULL)
             return;
         bool isexc = false;
@@ -72,7 +72,7 @@ MAKE_CALLBACK(
     _FUN(_VOID, _NO_ARG))
 
 MAKE_CALLBACK(
-    shutdown, void internal_shutdown_callback(void) {
+    shutdown, void internal_shutdown_callback(void*data) {
         if (shutdown_cb == NULL)
             return;
         bool isexc = false;
@@ -91,7 +91,7 @@ static char *convert_to_utf8(const wchar_t *s) {
 }
 
 MAKE_CALLBACK(
-    drop_files, void internal_drop_files_callback(wchar_t *s) {
+    drop_files, void internal_drop_files_callback(wchar_t *s, void*data) {
         if (drop_files_cb == NULL)
             return;
         vdynamic *arg1 = hl_alloc_dynamic(&hlt_bytes);
@@ -106,7 +106,7 @@ MAKE_CALLBACK(
     _FUN(_VOID, _BYTES))
 
 MAKE_CALLBACK(
-    cut, char *internal_cut_callback(void) {
+    cut, char *internal_cut_callback(void*data) {
         if (cut_cb == NULL)
             return NULL;
         bool isexc = false;
@@ -120,7 +120,7 @@ MAKE_CALLBACK(
     _FUN(_STRING, _NO_ARG))
 
 MAKE_CALLBACK(
-    copy, char *internal_copy_callback(void) {
+    copy, char *internal_copy_callback(void*data) {
         if (copy_cb == NULL)
             return NULL;
         bool isexc = false;
@@ -134,7 +134,7 @@ MAKE_CALLBACK(
     _FUN(_STRING, _NO_ARG))
 
 MAKE_CALLBACK(
-    paste, void internal_paste_callback(char *s) {
+    paste, void internal_paste_callback(char *s,void*data) {
         if (paste_cb == NULL)
             return;
         vdynamic *arg1 = hl_alloc_dynamic(&hlt_bytes);
@@ -149,7 +149,7 @@ MAKE_CALLBACK(
     _FUN(_VOID, _BYTES))
 
 MAKE_CALLBACK(
-    login, void internal_login_callback(void) {
+    login, void internal_login_callback(void*data) {
         if (login_cb == NULL)
             return;
         bool isexc = false;
@@ -161,7 +161,7 @@ MAKE_CALLBACK(
     _FUN(_VOID, _NO_ARG))
 
 MAKE_CALLBACK(
-    logout, void internal_logout_callback(void) {
+    logout, void internal_logout_callback(void*data) {
         if (logout_cb == NULL)
             return;
         bool isexc = false;
@@ -176,7 +176,7 @@ MAKE_CALLBACK(
 void hl_callbacks_init() {
 #define _INIT(name)          \
     hl_add_root(&name##_cb); \
-    kinc_set_##name##_callback(internal_##name##_callback);
+    kinc_set_##name##_callback(internal_##name##_callback, NULL);
     _INIT(update);
     _INIT(foreground);
     _INIT(resume);

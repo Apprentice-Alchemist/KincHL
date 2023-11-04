@@ -17,7 +17,11 @@ DEFINE_OBJ_EX(g4_shader, kinc_g4_shader_t)
 DEFINE_OBJ_EX(g4_texture, kinc_g4_texture_t)
 DEFINE_OBJ_EX(g4_vertex_structure, kinc_g4_vertex_structure_t)
 DEFINE_OBJ_EX(g4_vertex_buffer, kinc_g4_vertex_buffer_t)
-DEFINE_OBJ_EX(g4_index_buffer, kinc_g4_index_buffer_t)
+typedef struct {
+    void (*finalizer)(kinc_g4_index_buffer_t *);
+    kinc_g4_index_buffer_t t;
+	int count;
+} hl_g4_index_buffer;
 DEFINE_OBJ_EX(g4_texture_array, kinc_g4_texture_array_t)
 
 #define _PIPELINE _ABSTRACT(g4_pipeline)

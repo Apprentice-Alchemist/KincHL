@@ -9,7 +9,7 @@ static vclosure *key_down_cb = NULL;
 static vclosure *key_up_cb = NULL;
 static vclosure *key_press_cb = NULL;
 
-static void internal_key_down_cb(int key) {
+static void internal_key_down_cb(int key, void *data) {
     if (key_down_cb != NULL) {
         vdynamic args[3];
         vdynamic *vargs[3] = {&args[0]};
@@ -24,7 +24,7 @@ static void internal_key_down_cb(int key) {
     }
 }
 
-static void internal_key_up_cb(int key) {
+static void internal_key_up_cb(int key, void *data) {
     if (key_up_cb != NULL) {
         vdynamic args[3];
         vdynamic *vargs[3] = {&args[0]};
@@ -39,7 +39,7 @@ static void internal_key_up_cb(int key) {
     }
 }
 
-static void internal_key_press_cb(unsigned c) {
+static void internal_key_press_cb(unsigned c, void *data) {
     if (key_press_cb != NULL) {
         vdynamic args[3];
         vdynamic *vargs[3] = {&args[0]};
@@ -55,9 +55,9 @@ static void internal_key_press_cb(unsigned c) {
 }
 
 void hl_keyboard_init() {
-    kinc_keyboard_set_key_down_callback(internal_key_down_cb);
-    kinc_keyboard_set_key_up_callback(internal_key_up_cb);
-    kinc_keyboard_set_key_press_callback(internal_key_press_cb);
+    kinc_keyboard_set_key_down_callback(internal_key_down_cb, NULL);
+    kinc_keyboard_set_key_up_callback(internal_key_up_cb, NULL);
+    kinc_keyboard_set_key_press_callback(internal_key_press_cb, NULL);
     hl_add_root(&key_down_cb);
     hl_add_root(&key_up_cb);
     hl_add_root(&key_press_cb);

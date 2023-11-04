@@ -30,14 +30,15 @@ HL_PRIM int HL_NAME(hl_g4_vertex_buffer_stride)(hl_g4_vertex_buffer *buf) {
 
 HL_PRIM void HL_NAME(hl_g4_index_buffer_init)(hl_g4_index_buffer *buf, int count, int format) {
     kinc_g4_index_buffer_init(&buf->t, count, format, KINC_G4_USAGE_STATIC);
+    buf->count = count;
 }
 
 HL_PRIM int *HL_NAME(hl_g4_index_buffer_lock)(hl_g4_index_buffer *buf) {
-    return kinc_g4_index_buffer_lock(&buf->t);
+    return kinc_g4_index_buffer_lock(&buf->t, 0, buf->count);
 }
 
 HL_PRIM void HL_NAME(hl_g4_index_buffer_unlock)(hl_g4_index_buffer *buf) {
-    kinc_g4_index_buffer_unlock(&buf->t);
+    kinc_g4_index_buffer_unlock(&buf->t, buf->count);
 }
 
 HL_PRIM int HL_NAME(hl_g4_index_buffer_count)(hl_g4_index_buffer *buf) {
